@@ -1,3 +1,6 @@
+Project created to track personal finance decisions using a react based system. Will include the abilities to add different expenses, incomes, savings, etc., and then check what one's savings accounts would look like given different changes made to inputs.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
