@@ -20,6 +20,15 @@ class App extends Component {
         initialSavings: e.target.value
       })
     }
+
+    saveInitialSavings = (e) =>{
+      e.preventDefault();
+      let newSavings = this.state.initialSavings;
+      this.setState({
+        savings: newSavings,
+        initialSavings: 0 
+      })
+    }
  
 
   render() {
@@ -28,9 +37,10 @@ class App extends Component {
         <Header />
         <Main 
           updateInitialSavings = {this.updateInitialSavings}
-          initialSavings = {this.state.initialSavings}/>
+          initialSavings = {this.state.initialSavings}
+          saveInitialSavings = {this.saveInitialSavings}/>
         <Counter 
-          savings={this.state.initialSavings}/>
+          savings={this.state.savings}/>
         <Footer />
       </div>
     );

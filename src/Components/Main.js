@@ -11,6 +11,10 @@ const Main = (props) =>{
                 onChange = {props.updateInitialSavings}
             >
             </input>
+            <button
+            onClick= {props.saveInitialSavings}
+            >Set Initial Savings
+            </button>
         </form>
         </div>
     )
