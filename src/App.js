@@ -46,7 +46,7 @@ class App extends Component {
     document.getElementById("initial_debt").style.display = "none";
     let newDebt = this.state.initialDebt;
     this.setState({
-      Debt: newDebt,
+      debt: newDebt,
       initialDebt: 0 
     })
   }
@@ -67,7 +67,8 @@ class App extends Component {
           
           />
         <Counter 
-          savings={this.state.savings}/>
+          savings={this.state.savings}
+          debt = {this.state.debt}/>
         <Footer />
       </div>
     );
