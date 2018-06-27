@@ -11,7 +11,7 @@ class App extends Component {
     super(props)
     this.state = {
       savings: 0,
-      'initialSavings': 0,
+      initialSavings: 0,
       debt: 0,
       initialDebt: 0
     }
