@@ -4,7 +4,8 @@ import './css/display.css';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Counter from './Components/Counter';
-import Main from './Components/Main';
+import StartingForm from './Components/StartingForm';
+import YearsContainer from './Components/YearsContainer'
 
 class App extends Component {
   constructor(props){
@@ -12,12 +13,12 @@ class App extends Component {
     this.state = {
       startingValues: {
         startFormStatus: 0,
-        savings: 0,
-        pendingSavings: 0,
-        debt: 0,
-        pendingDebt: 0,
-        pendingRetirment: 0,
-        retirmentYear: '',
+        Savings: 0,
+        pendingSavings: '',
+        Debt: 0,
+        pendingDebt: '',
+        pendingRetirment: '',
+        Retirment: '',
       },
       years: [
         
@@ -27,6 +28,7 @@ class App extends Component {
 
   updatePendingStartValue = (e, k)=>{
     e.preventDefault();
+    console.log("CHANGE" + e.target.value)
     this.setState({
       startingValues: {
         ...this.state.startingValues,
@@ -48,23 +50,24 @@ class App extends Component {
   savePendingStartValue = (e, k) =>{
     e.preventDefault();
     let newValue = this.state.startingValues["pending" + k];
-    console.log(newValue)
     let newStartingFormValue = () =>{
       if (this.state.startingValues.startFormStatus !== 2){ 
       return this.state.startingValues.startFormStatus + 1 ;
     }
     else{
+      document.getElementById("starting-form").style.display = "none";
       return 0;
     }
     } 
     this.setState({
       startingValues: {
         ...this.state.startingValues,
-        [k]: this.state.startingValues["pending" + k],
+        [k]: newValue,
         ["pending" + k]: 0,
         startFormStatus: newStartingFormValue()
       }
     })
+    console.log()
     document.getElementById("starting-form").reset();
   }
 
@@ -77,16 +80,25 @@ class App extends Component {
   }
 
   savePendingRetirment = (e) =>{
-    document.getElementById("starting-form").style.display = "none";
     this.savePendingStartValue(e, "Retirment")
     
+  }
+
+  getNumberOfRows = (retirmentYear) =>{
+    let today = new Date();
+    let year = today.getFullYear();
+    let rows = retirmentYear - year;
+    if(rows <= 0){
+      return "";
+    }
+    return rows;
   }
 
   render() {
     return (
       <div className="App">
         <Header />
-        <Main
+        <StartingForm
           startingValues = {this.state.startingValues}
           updatePendingSavings ={this.updatePendingSavings}
           updatePendingDebt = {this.updatePendingDebt}
@@ -95,9 +107,12 @@ class App extends Component {
           savePendingDebt = {this.savePendingDebt}
           savePendingRetirment = {this.savePendingRetirment}
           />
+        <YearsContainer />
         <Counter 
-          savings={this.state.startingValues.savings}
-          debt = {this.state.startingValues.debt}/>
+          savings={this.state.startingValues.Savings}
+          debt = {this.state.startingValues.Debt}
+          retirment = {this.state.startingValues.Retirment}
+          />
         <Footer />
       </div>
     );

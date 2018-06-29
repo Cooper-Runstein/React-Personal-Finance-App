@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Counter = (props) =>{
    
@@ -15,15 +16,26 @@ const Counter = (props) =>{
         }
         return {color: color}
     }
+
+    let getYearsToRetirment = (props) =>{
+        let currentYear = parseFloat(new Date().getFullYear());
+        let yearsToRetirement = props.retirment - currentYear;
+        if (yearsToRetirement > 0){
+            return "Years To Retirment:" + yearsToRetirement;
+        }
+    }
     
     return(
         <div id="counter">
-            <span>Savings: ${props.savings}  </span>
-            <span>Debt: ${props.debt}  </span>
+            <span>Savings: ${props.savings}</span>
+            <span>Debt: ${props.debt}</span>
             <span style={netWorthColor(props)}>Net Worth: ${props.savings - props.debt}</span>
+            <span>{getYearsToRetirment(props)}</span>
         </div>
     )
 }
 
+Counter.propTypes = {
+    debt: PropTypes.number.isRequired
+}
 export default Counter;
-
