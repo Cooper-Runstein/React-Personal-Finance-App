@@ -20,15 +20,16 @@ class App extends Component {
         pendingRetirment: '',
         Retirment: '',
       },
+      date: new Date().getFullYear(),
       years: [
         
-      ]
+      ],
+
     }
   }
 
   updatePendingStartValue = (e, k)=>{
     e.preventDefault();
-    console.log("CHANGE" + e.target.value)
     this.setState({
       startingValues: {
         ...this.state.startingValues,
@@ -50,15 +51,19 @@ class App extends Component {
   savePendingStartValue = (e, k) =>{
     e.preventDefault();
     let newValue = this.state.startingValues["pending" + k];
+    let renderYearsContainer = () =>{
+      document.getElementById("starting-form").style.display = "none";
+      document.getElementById("years-container").style.display = "block";
+    } 
     let newStartingFormValue = () =>{
       if (this.state.startingValues.startFormStatus !== 2){ 
       return this.state.startingValues.startFormStatus + 1 ;
+      }
+      else{
+        renderYearsContainer();
+        return 0;
+      }
     }
-    else{
-      document.getElementById("starting-form").style.display = "none";
-      return 0;
-    }
-    } 
     this.setState({
       startingValues: {
         ...this.state.startingValues,
@@ -67,7 +72,6 @@ class App extends Component {
         startFormStatus: newStartingFormValue()
       }
     })
-    console.log()
     document.getElementById("starting-form").reset();
   }
 
@@ -107,7 +111,12 @@ class App extends Component {
           savePendingDebt = {this.savePendingDebt}
           savePendingRetirment = {this.savePendingRetirment}
           />
-        <YearsContainer />
+        <YearsContainer 
+          retirmentYear = {this.state.startingValues.Retirment}
+          startingDebt = {this.state.startingValues.Debt}
+          startingSavings ={this.state.startingValues.Savings}
+          date = {this.state.date}
+        />
         <Counter 
           savings={this.state.startingValues.Savings}
           debt = {this.state.startingValues.Debt}
