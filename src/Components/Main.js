@@ -5,63 +5,40 @@ const Main = (props) =>{
     const formInfo = [{
         name: "Set Savings",
         placeholder: "Enter Starting Savings",
-        value: props.initalSavings,
-        onChange: props.updateInitialSavings,
-        onClick: props.saveInitialSavings
+        value: props.startingValues.pendingSavings,
+        onChange: props.updatePendingSavings,
+        onClick: props.savePendingSavings
     },
     {
         name: "Set Debt",
         placeholder: "Enter Starting Debt",
-        value: props.initalDebt,
-        onChange: props.updateInitialDebt,
-        onClick: props.saveInitialDebt
+        value: props.startingValues.initalDebt,
+        onChange: props.updatePendingDebt,
+        onClick: props.savePendingDebt
     },
-    {}]
-    console.log(props.startFormStatus)
+    {
+        name: "Set Retirment Year",
+        placeholder: "Enter Retirment Year",
+        value: props.startingValues.pendingRetirment,
+        onChange: props.updatePendingRetirment,
+        onClick: props.savePendingRetirment
+    }]
+   
     return(
         <div id="Main">
-        <div>
-            <form id="starting-form">
-                <input
-                    placeholder= {formInfo[props.startFormStatus].placeholder}
-                    value = {formInfo[props.startFormStatus].value}
-                    onChange = {formInfo[props.startFormStatus].onChange}
-                >
-                </input>
-                <button
-                onClick= {formInfo[props.startFormStatus].onClick}
-                >{formInfo[props.startFormStatus].name}
-                </button>
-            </form>
-        </div>
-        {/* <div id="initial_debt">
-            <form>
-                <input
-                    placeholder="Enter Starting Debt"
-                    value = {props.initalDebt}
-                    onChange = {props.updateInitialDebt}
-                >
-                </input>
-                <button
-                onClick= {props.saveInitialDebt}
-                >Set Initial Debt
-                </button>
-            </form>
-        </div>
-        <div id="create_table">
-            <form>
-                <input
-                    placeholder="Enter Year of Retirment"
-                    value = {props.retirmentYear}
-                    // onChange = {props.updateRetirmentYear}
-                >
-                </input>
-                <button
-                // onClick= {props.updateTableLength}
-                >Set Initial Debt
-                </button>
-            </form>
-        </div> */}
+            <div>
+                <form id="starting-form">
+                    <input
+                        placeholder= {formInfo[props.startingValues.startFormStatus].placeholder}
+                        onChange = {formInfo[props.startingValues.startFormStatus].onChange}
+                    >
+                    </input>
+                    <button
+                    onClick= {formInfo[props.startingValues.startFormStatus].onClick}
+                    >{formInfo[props.startingValues.startFormStatus].name}
+                    </button>
+                </form>
+            </div>
         </div>
     )
 }

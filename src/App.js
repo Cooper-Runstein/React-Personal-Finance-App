@@ -10,74 +10,94 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      startFormStatus: 0,
-      savings: 0,
-      initialSavings: 0,
-      debt: 0,
-      initialDebt: 0,
-      retirmentYear: '',
+      startingValues: {
+        startFormStatus: 0,
+        savings: 0,
+        pendingSavings: 0,
+        debt: 0,
+        pendingDebt: 0,
+        pendingRetirment: 0,
+        retirmentYear: '',
+      },
       years: [
         
       ]
     }
   }
 
-  updateInitialSavings = (e)=>{
+  updatePendingStartValue = (e, k)=>{
     e.preventDefault();
     this.setState({
-      initialSavings: e.target.value
+      startingValues: {
+        ...this.state.startingValues,
+        [k]: parseFloat(e.target.value)
+      }
     })
-    
   }
 
-  saveInitialSavings = (e) =>{
+  updatePendingSavings = (e)=>{
+    this.updatePendingStartValue(e, "pendingSavings")
+  }
+  updatePendingDebt = (e)=>{
+    this.updatePendingStartValue(e, "pendingDebt")
+  }
+  updatePendingRetirment = (e)=>{
+    this.updatePendingStartValue(e, "pendingRetirment")
+  }
+
+  savePendingStartValue = (e, k) =>{
     e.preventDefault();
-    let newSavings = this.state.initialSavings;
-    let newFormStatus = this.state.startFormStatus + 1;
+    let newValue = this.state.startingValues["pending" + k];
+    console.log(newValue)
+    let newStartingFormValue = () =>{
+      if (this.state.startingValues.startFormStatus !== 2){ 
+      return this.state.startingValues.startFormStatus + 1 ;
+    }
+    else{
+      return 0;
+    }
+    } 
     this.setState({
-      savings: newSavings,
-      initialSavings: 0,
-      startFormStatus: newFormStatus
+      startingValues: {
+        ...this.state.startingValues,
+        [k]: this.state.startingValues["pending" + k],
+        ["pending" + k]: 0,
+        startFormStatus: newStartingFormValue()
+      }
     })
     document.getElementById("starting-form").reset();
   }
-  updateInitialDebt = (e)=>{
-    e.preventDefault();
-    this.setState({
-      initialDebt: e.target.value
-    })
+
+  savePendingSavings = (e) =>{
+    this.savePendingStartValue(e, "Savings")
   }
 
-  saveInitialDebt = (e) =>{
-    e.preventDefault();
-    let newDebt = this.state.initialDebt;
-    let newFormStatus = this.state.startFormStatus + 1;
-    this.setState({
-      debt: newDebt,
-      initialDebt: 0,
-      startFormStatus: newFormStatus
-    })
+  savePendingDebt = (e) =>{
+    this.savePendingStartValue(e, "Debt")
   }
- 
- 
+
+  savePendingRetirment = (e) =>{
+    document.getElementById("starting-form").style.display = "none";
+    this.savePendingStartValue(e, "Retirment")
+    
+  }
 
   render() {
     return (
       <div className="App">
         <Header />
-        <Main 
-          updateInitialSavings = {this.updateInitialSavings}
-          initialSavings = {this.state.initialSavings}
-          saveInitialSavings = {this.saveInitialSavings}
-          initialDebt = {this.state.initialDebt}
-          updateInitialDebt = {this.updateInitialDebt}
-          saveInitialDebt = {this.saveInitialDebt}
-          startFormStatus = {this.state.startFormStatus}
-          
+        <Main
+          startingValues = {this.state.startingValues}
+          updatePendingSavings ={this.updatePendingSavings}
+          updatePendingDebt = {this.updatePendingDebt}
+          updatePendingRetirment = {this.updatePendingRetirment}
+          savePendingSavings = {this.savePendingSavings}
+          savePendingDebt = {this.savePendingDebt}
+          savePendingRetirment = {this.savePendingRetirment}
           />
         <Counter 
-          savings={this.state.savings}
-          debt = {this.state.debt}/>
+          savings={this.state.startingValues.savings}
+          debt = {this.state.startingValues.debt}/>
         <Footer />
       </div>
     );
