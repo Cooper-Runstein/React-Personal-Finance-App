@@ -5,7 +5,8 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Counter from './Components/Counter';
 import StartingForm from './Components/StartingForm';
-import YearsContainer from './Components/YearsContainer'
+import YearsContainer from './Components/YearsContainer';
+
 
 class App extends Component {
   constructor(props){
@@ -27,6 +28,12 @@ class App extends Component {
 
     }
   }
+
+  //==========================
+  //==========================
+  //====INITIAL FORM =========
+  //==========================
+  //==========================
 
   updatePendingStartValue = (e, k)=>{
     e.preventDefault();
@@ -54,10 +61,11 @@ class App extends Component {
     let renderYearsContainer = () =>{
       document.getElementById("starting-form").style.display = "none";
       document.getElementById("years-container").style.display = "block";
+      window.setTimeout(this.generateYears, 500);
     } 
     let newStartingFormValue = () =>{
       if (this.state.startingValues.startFormStatus !== 2){ 
-      return this.state.startingValues.startFormStatus + 1 ;
+        return this.state.startingValues.startFormStatus + 1 ;
       }
       else{
         renderYearsContainer();
@@ -73,6 +81,7 @@ class App extends Component {
       }
     })
     document.getElementById("starting-form").reset();
+    
   }
 
   savePendingSavings = (e) =>{
@@ -88,14 +97,41 @@ class App extends Component {
     
   }
 
+
+
+  //==========================
+  //==========================
+  //====Years Table =========
+  //==========================
+  //==========================
   getNumberOfRows = (retirmentYear) =>{
-    let today = new Date();
-    let year = today.getFullYear();
-    let rows = retirmentYear - year;
-    if(rows <= 0){
-      return "";
+    console.log(retirmentYear)
+    let currentYear = this.state.date;
+    console.log(currentYear)
+    let rows = parseInt(retirmentYear - currentYear);
+
+    if((rows <= 0) || !rows){
+      return 0;
     }
     return rows;
+  }
+
+  generateYears = () =>{
+    let years = [];
+    console.log(this.state.startingValues.Retirment)
+    let numYears = this.getNumberOfRows(this.state.startingValues.Retirment)
+    console.log(numYears);
+    for (let i = 0; i < numYears; i++){
+      years.push(
+        {
+          year: parseInt(this.state.date + i)
+        }
+      )
+    }
+    this.setState({
+      years: years
+    })
+    
   }
 
   render() {
@@ -115,7 +151,8 @@ class App extends Component {
           retirmentYear = {this.state.startingValues.Retirment}
           startingDebt = {this.state.startingValues.Debt}
           startingSavings ={this.state.startingValues.Savings}
-          date = {this.state.date}
+          currentYear = {this.state.date}
+          years = {this.state.years}
         />
         <Counter 
           savings={this.state.startingValues.Savings}
