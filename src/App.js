@@ -108,7 +108,7 @@ class App extends Component {
     console.log(retirmentYear)
     let currentYear = this.state.date;
     console.log(currentYear)
-    let rows = parseInt(retirmentYear - currentYear);
+    let rows = retirmentYear - currentYear;
 
     if((rows <= 0) || !rows){
       return 0;
@@ -124,7 +124,7 @@ class App extends Component {
     for (let i = 0; i < numYears; i++){
       years.push(
         {
-          year: parseInt(this.state.date + i)
+          year: this.state.date + i
         }
       )
     }

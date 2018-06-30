@@ -8,10 +8,10 @@ const YearsContainer = (props) =>{
         <div id="years-container">
             <h1>Years Container</h1>
             <div>
-                {props.years.map((year, i)=>{
-                    <Year 
+                {props.years.map((y, i)=>{
+                   return <Year 
                         key={i}
-                        year = {year.year}
+                        year= {y}
                     />
                 })}
             </div>
@@ -20,6 +20,7 @@ const YearsContainer = (props) =>{
 }
 
 YearsContainer.propTypes = {
-    debt: PropTypes.number.isRequired
+    startingDebt: PropTypes.number.isRequired,
+    years: PropTypes.array.isRequired
 }
 export default YearsContainer;

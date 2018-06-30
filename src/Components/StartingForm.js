@@ -43,8 +43,8 @@ const StartingForm = (props) =>{
 }
 
 StartingForm.propTypes = {
-    updateInitialSavings: PropTypes.func.isRequired,
-    initialSavings: PropTypes.number.isRequired
+    updatePendingSavings: PropTypes.func.isRequired,
+    startingValues: PropTypes.object.isRequired
 }
 export default StartingForm;
 
