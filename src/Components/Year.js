@@ -1,34 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactEditableList from 'react-editable-list';
+import Category from './Category';
+
 
 const Year =(props)=>{
-            const onListUpdated = (list)=>  {
-                console.log("Got updated list:", list)
-            }
-            const getTitles = (list)=> {
-                let newList = [];
-                list.map((e,i)=>{
-                    newList.push(e.title)
-                    }
-                )
-                return newList;
-            }
-            const getAmounts = (list)=> {
-                let newList = [];
-                list.map((e,i)=>{
-                    newList.push(e.amount)
-                    }
-                )
-                return newList;
-            }
+           
            return (
-            <div className="year">
-            <h3>{props.year.year}</h3>
-            <p>Job: {props.year.income.title}</p><p>Income: {props.year.income.amount}</p>
-            </div>
+            <tr className="year">
+                <td>{props.year.year}</td>
+                {props.year.income.map((e,i)=>{
+                    return <Category 
+                        key={i}
+                        category={e}
+                    />
+                })}
+                {props.year.expenses.map((e,i)=>{
+                    return <Category 
+                        key={i}
+                        category={e}
+                    />
+                })}
+                
+            </tr>
            )
-            } 
+    } 
 
 
 Year.propTypes = {

@@ -126,19 +126,33 @@ class App extends Component {
         {
           year: this.state.date + i,
           pendingValues: {},
-          income: 
-            {title: 'job title',
-            amount: 0
-          },
-          
-          expenses: [
-            {housing: 0},
-            {food: 0},
-            {expenses: 0},
+          income: [
+            {
+              jobs: [
+                {job_title: 2000}
+              ]
+            }
           ],
-          purchases: [],
+          expenses: [
+            {
+              housing: [
+                {rent: 1000},
+                {storage_locker: 50}
+              ]
+            },
+            {
+              food: [
+                {eating_out: 150},
+                {groceries: 200}
+              ]
+
+            }
+
+
+          ]
         })
-    }
+      }    
+    
     this.setState({
       years: years
     })

@@ -7,14 +7,16 @@ const YearsContainer = (props) =>{
     return(
         <div id="years-container">
             <h1>Years Container</h1>
-            <div>
-                {props.years.map((y, i)=>{
-                   return <Year 
-                        key={i}
-                        year= {y}
-                    />
-                })}
-            </div>
+            <table>
+                <tbody>
+                    {props.years.map((y, i)=>{
+                        return <Year 
+                                key={i}
+                                year= {y}
+                            />
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }
