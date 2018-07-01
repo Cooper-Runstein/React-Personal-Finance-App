@@ -146,9 +146,29 @@ class App extends Component {
                 {groceries: 200}
               ]
 
+            },
+            {taxes: [
+              {state: 300},
+              {federal: 500}
+            ]}
+          ],
+          debt: [
+            {
+              loans: [
+                {student_loan: 1000},
+                {auto_loan: 500}
+              ]
+            },
+          ],
+          savings:[
+            {
+              retirment_savings: [
+                {'401k': 10000}
+              ],
+              stocks: [
+                {company_shares: 1000}
+              ]
             }
-
-
           ]
         })
       }    

@@ -20,6 +20,18 @@ const Year =(props)=>{
                         category={e}
                     />
                 })}
+                {props.year.debt.map((e,i)=>{
+                    return <Category 
+                        key={i}
+                        category={e}
+                    />
+                })}
+                {props.year.savings.map((e,i)=>{
+                    return <Category 
+                        key={i}
+                        category={e}
+                    />
+                })}
                 
             </tr>
            )
