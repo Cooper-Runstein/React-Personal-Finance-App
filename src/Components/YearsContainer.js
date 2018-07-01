@@ -23,6 +23,7 @@ const YearsContainer = (props) =>{
 
 YearsContainer.propTypes = {
     startingDebt: PropTypes.number.isRequired,
+    startingSavings: PropTypes.number.isRequired,
     years: PropTypes.array.isRequired
 }
 export default YearsContainer;

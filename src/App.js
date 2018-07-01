@@ -58,12 +58,12 @@ class App extends Component {
   savePendingStartValue = (e, k) =>{
     e.preventDefault();
     let newValue = this.state.startingValues["pending" + k];
-    let renderYearsContainer = () =>{
+    const renderYearsContainer = () =>{
       document.getElementById("starting-form").style.display = "none";
       document.getElementById("years-container").style.display = "block";
       window.setTimeout(this.generateYears, 500);
     } 
-    let newStartingFormValue = () =>{
+    const newStartingFormValue = () =>{
       if (this.state.startingValues.startFormStatus !== 2){ 
         return this.state.startingValues.startFormStatus + 1 ;
       }
@@ -117,10 +117,8 @@ class App extends Component {
   }
 
   generateYears = () =>{
-    let years = [];
-    console.log(this.state.startingValues.Retirment)
+    const years = [];
     let numYears = this.getNumberOfRows(this.state.startingValues.Retirment)
-    console.log(numYears);
     for (let i = 0; i < numYears; i++){
       years.push(
         {
@@ -147,9 +145,10 @@ class App extends Component {
               ]
 
             },
-            {taxes: [
-              {state: 300},
-              {federal: 500}
+            {
+              taxes: [
+                {state: 300},
+                {federal: 500}
             ]}
           ],
           debt: [
@@ -164,14 +163,18 @@ class App extends Component {
             {
               retirment_savings: [
                 {'401k': 10000}
-              ],
+              ]
+            },
+            {
               stocks: [
                 {company_shares: 1000}
               ]
             }
           ]
         })
-      }    
+      }
+      console.log(years[0])    
+    years[0].savings[0].retirment_savings[0]['401k'] = this.state.startingValues.Savings;
     
     this.setState({
       years: years
