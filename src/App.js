@@ -124,9 +124,20 @@ class App extends Component {
     for (let i = 0; i < numYears; i++){
       years.push(
         {
-          year: this.state.date + i
-        }
-      )
+          year: this.state.date + i,
+          pendingValues: {},
+          income: 
+            {title: 'job title',
+            amount: 0
+          },
+          
+          expenses: [
+            {housing: 0},
+            {food: 0},
+            {expenses: 0},
+          ],
+          purchases: [],
+        })
     }
     this.setState({
       years: years
