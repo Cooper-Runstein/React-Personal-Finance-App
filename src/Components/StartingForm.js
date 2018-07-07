@@ -1,74 +1,142 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-const StartingForm = (props) =>{
-    const formInfo = [
-        
-        {
-        title: "How much money have you saved?",
-        forms: [
-            {
-                name: "Set 401k Savings",
-                description: "If you have a 401k or similar account, enter it here",
-                placeholder: "Enter 401k savings",
-                value: props.startingValues.pendingSavings,
-                onChange: props.updatePendingSavings,
-                onClick: props.savePendingSavings
+import Input from './Input.js';
+
+export default class StartingForm extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            formStatus: 0,
+            formInfo: [
+                {
+                    title: "Savings",
+                    
+                }
+            ],
+                
+                    
+            startingValues: {
+                income: {
+
+                },
+                savings: {
+
+                },
+                expenses:{
+
+                }, 
+                debts:{
+
+                }
             }
 
-        ]
-       
-    },
-    {   
-        title: "How much money do you owe?",
-        forms: [
-            {
-                name: "Set Debt",
-                placeholder: "Enter Starting Debt",
-                value: props.startingValues.pendingDebt,
-                onChange: props.updatePendingDebt,
-                onClick: props.savePendingDebt
-            }
+        }
+    }
 
-        ]
+    changePendingValueAt(e, i){
+        e.preventDefault();
         
-    },
-    {   
-        title: "When do you plan to retire?",
-        forms:[
-            {
-                name: "Set Retirment Year",
-                placeholder: "Enter Retirment Year",
-                value: props.startingValues.pendingRetirment,
-                onChange: props.updatePendingRetirment,
-                onClick: props.savePendingRetirment
-            }
-        ]
-        
-    }]
-   
+  // updatePendingStartValue = (e, k)=>{
+  //   e.preventDefault();
+  //   this.setState({
+  //     startingValues: {
+  //       ...this.state.startingValues,
+  //       [k]: parseFloat(e.target.value)
+  //     }
+  //   })
+  // }
+    }
+    
+   render() {
     return(
         <div>
-            <form id="starting-form">
-            <h3>{formInfo[props.startingValues.startFormStatus].title}</h3>
-                <input
-                    placeholder= {formInfo[props.startingValues.startFormStatus].forms[0].placeholder}
-                    value= {formInfo[props.startingValues.startFormStatus].forms[0].value}
-                    onChange = {formInfo[props.startingValues.startFormStatus].forms[0].onChange}
-                >
-                </input>
-                <button
-                onClick= {formInfo[props.startingValues.startFormStatus].forms[0].onClick}
-                >{formInfo[props.startingValues.startFormStatus].forms[0].name}
-                </button>
-            </form>
+            <h3>{this.state.formInfo[this.state.formStatus].title}</h3>
+            {this.state.formInfo[this.state.formStatus].forms.map((form, i)=>{
+                <Input
+                    key={i}
+                    form= {form}
+                />
+            })}
+            <button
+            onClick= {this.props.getInitialInputs(this.state.startingValues)}
+            id="submitStartingValues"
+            ></button>
         </div>
-    )
+    );
+}
 }
 
 StartingForm.propTypes = {
-    updatePendingSavings: PropTypes.func.isRequired,
-    startingValues: PropTypes.object.isRequired
+    getInitialInputs: PropTypes.func.isRequired,
 }
-export default StartingForm;
+
+ //==========================
+  //==========================
+  //====INITIAL FORM =========
+  //==========================
+  //==========================
+
+  // updatePendingStartValue = (e, k)=>{
+  //   e.preventDefault();
+  //   this.setState({
+  //     startingValues: {
+  //       ...this.state.startingValues,
+  //       [k]: parseFloat(e.target.value)
+  //     }
+  //   })
+  // }
+
+  // updatePendingSavings = (e)=>{
+  //   this.updatePendingStartValue(e, "pendingSavings")
+  // }
+  // updatePendingDebt = (e)=>{
+  //   this.updatePendingStartValue(e, "pendingDebt")
+  // }
+  // updatePendingRetirment = (e)=>{
+  //   this.updatePendingStartValue(e, "pendingRetirment")
+  // }
+
+  // savePendingStartValue = (e, k) =>{
+  //   e.preventDefault();
+  //   let newValue = this.state.startingValues["pending" + k];
+  //   const renderYearsContainer = () =>{
+  //     document.getElementById("starting-form").style.display = "none";
+  //     document.getElementById("years-container").style.display = "block";
+  //     window.setTimeout(this.generateYears, 500);
+  //   } 
+  //   const newStartingFormValue = () =>{
+  //     if (this.state.startingValues.startFormStatus !== 2){ 
+  //       return this.state.startingValues.startFormStatus + 1 ;
+  //     }
+  //     else{
+  //       renderYearsContainer();
+  //       return 0;
+  //     }
+  //   }
+  //   this.setState({
+  //     startingValues: {
+  //       ...this.state.startingValues,
+  //       [k]: newValue,
+  //       ["pending" + k]: 0,
+  //       startFormStatus: newStartingFormValue()
+  //     }
+  //   })
+  //   document.getElementById("starting-form").reset();
+    
+  // }
+
+  // savePendingSavings = (e) =>{
+  //   this.savePendingStartValue(e, "Savings")
+  // }
+
+  // savePendingDebt = (e) =>{
+  //   this.savePendingStartValue(e, "Debt")
+  // }
+
+  // savePendingRetirment = (e) =>{
+  //   this.savePendingStartValue(e, "Retirment")
+    
+  // }
+  
 

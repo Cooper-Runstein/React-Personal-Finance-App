@@ -1,3 +1,7 @@
 #years-container{
+    display: block;
+}
+#submitStartingValues{
     display: none;
 }
+
