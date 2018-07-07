@@ -63,48 +63,99 @@ class App extends Component {
           pendingValues: {},
           income: [
             {
-              jobs: [
-                {job_title: 2000}
+              title: 'jobs',
+              entries: [
+                {
+                  title: 'job_title',
+                  value: 2000,
+                  isEditing: false
+                }
               ]
             }
           ],
           expenses: [
             {
-              housing: [
-                {rent: 1000},
-                {storage_locker: 50}
+              title: 'housing',
+              entries: [
+                {
+                  title: 'rent',
+                  value: 1000,
+                  isEditing: false
+                },
+                {
+                  title: 'storage_locker',
+                  value: 50,
+                  isEditing: false
+                }
               ]
             },
             {
-              food: [
-                {eating_out: 150},
-                {groceries: 200}
+              title: 'food',
+              entries: [
+                {
+                  title: 'eating_out',
+                  value: 150,
+                  isEditing: false
+                },
+                {
+                  title: 'groceries',
+                  value: 200,
+                  isEditing: false
+                }
               ]
 
             },
             {
-              taxes: [
-                {state: 300},
-                {federal: 500}
-            ]}
+              title: 'taxes',
+              entries: [
+                {
+                  title: 'state',
+                  value: 300,
+                  isEditing: false
+                },
+                {
+                  title: 'federal',
+                  value: 500,
+                  isEditing: false
+                }
+            ]
+          }
           ],
           debt: [
             {
-              loans: [
-                {student_loan: 1000},
-                {auto_loan: 500}
+              title: 'loans',
+              entries: [
+                {
+                  title: 'student_loan',
+                  value: 1000,
+                  isEditing: false
+                },
+                {
+                  title: 'auto_loan',
+                  value: 500,
+                  isEditing: false}
               ]
             },
           ],
           savings:[
             {
-              retirment_savings: [
-                {'401k': 10000}
+              title: 'retirment savings',
+              entries: [
+                {
+                  title: '401k',
+                  value: 10000,
+                  isEditing: false
+                }
               ]
             },
             {
-              stocks: [
-                {company_shares: 1000}
+              title: 'stocks',
+              entries: [
+                {
+                  title: 'company_shares',
+                  value: 1000,
+                  isEditing: false
+                }
               ]
             }
           ]
@@ -118,6 +169,13 @@ class App extends Component {
     })
     
   }
+
+  editEntry= (yearIndex, index) =>{
+
+    this.setState({})
+  }
+
+  
 
   render() {
     return (
@@ -133,6 +191,7 @@ class App extends Component {
           startingSavings ={this.state.startingValues.Savings}
           currentYear = {this.state.date}
           years = {this.state.years}
+          editEntry = {this.editEntry}
         />
         <Counter 
           savings={this.state.startingValues.Savings}

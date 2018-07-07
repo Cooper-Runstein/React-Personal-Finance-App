@@ -13,6 +13,7 @@ const YearsContainer = (props) =>{
                         return <Year 
                                 key={i}
                                 year= {y}
+                                editEntry = {props.editEntry}
                             />
                     })}
                 </tbody>

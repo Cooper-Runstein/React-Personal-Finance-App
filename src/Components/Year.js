@@ -12,24 +12,28 @@ const Year =(props)=>{
                     return <Category 
                         key={i}
                         category={e}
+                        editEntry={props.editEntry}
                     />
                 })}
                 {props.year.expenses.map((e,i)=>{
                     return <Category 
                         key={i}
                         category={e}
+                        editEntry={props.editEntry}
                     />
                 })}
                 {props.year.debt.map((e,i)=>{
                     return <Category 
                         key={i}
                         category={e}
+                        editEntry={props.editEntry}
                     />
                 })}
                 {props.year.savings.map((e,i)=>{
                     return <Category 
                         key={i}
                         category={e}
+                        editEntry={props.editEntry}
                     />
                 })}
                 
