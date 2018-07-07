@@ -18,6 +18,14 @@ const Instance = (props) =>{
     return(
         <div id="instance">
             <h4>{getTitle(props.instance)}- Amount:{getValues(props.instance)}</h4>
+            <button 
+                className="editButton">
+                Edit
+            </button>
+            <button 
+                className="removeButton">
+                Remove
+            </button>
         </div>
     )
 }
