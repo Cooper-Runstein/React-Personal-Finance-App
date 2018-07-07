@@ -12,6 +12,7 @@ const YearsContainer = (props) =>{
                     {props.years.map((y, i)=>{
                         return <Year 
                                 key={i}
+                                yearIndex={i}
                                 year= {y}
                                 editEntry = {props.editEntry}
                             />
@@ -25,6 +26,7 @@ const YearsContainer = (props) =>{
 YearsContainer.propTypes = {
     startingDebt: PropTypes.number.isRequired,
     startingSavings: PropTypes.number.isRequired,
-    years: PropTypes.array.isRequired
+    years: PropTypes.array.isRequired,
+    editEntry: PropTypes.func.isRequired
 }
 export default YearsContainer;

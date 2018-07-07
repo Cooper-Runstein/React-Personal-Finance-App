@@ -5,10 +5,11 @@ const Instance = (props) =>{
 
     return(
         <div id="instance">
-            <h4>{props.instance.title}- Amount:{props.instance.value}</h4>
+            <span>{props.instance.title}</span><span> Amount:{props.instance.value}</span>
             <button 
                 className="editButton"
-                onClick={props.editInstance}>
+                onClick={props.editInstance}
+            >
                 Edit
             </button>
             <button 

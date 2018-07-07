@@ -9,7 +9,9 @@ const Year =(props)=>{
             <tr className="year">
                 <td>{props.year.year}</td>
                 {props.year.income.map((e,i)=>{
-                    return <Category 
+                    return <Category
+                        yearIndex={props.yearIndex}
+                        catName= "income"
                         key={i}
                         category={e}
                         editEntry={props.editEntry}
@@ -17,7 +19,9 @@ const Year =(props)=>{
                 })}
                 {props.year.expenses.map((e,i)=>{
                     return <Category 
+                    yearIndex={props.yearIndex}
                         key={i}
+                        catName= "expenses"
                         category={e}
                         editEntry={props.editEntry}
                     />
@@ -25,6 +29,8 @@ const Year =(props)=>{
                 {props.year.debt.map((e,i)=>{
                     return <Category 
                         key={i}
+                        yearIndex={props.yearIndex}
+                        catName= "debt"
                         category={e}
                         editEntry={props.editEntry}
                     />
@@ -32,6 +38,8 @@ const Year =(props)=>{
                 {props.year.savings.map((e,i)=>{
                     return <Category 
                         key={i}
+                        yearIndex={props.yearIndex}
+                        catName= "savings"
                         category={e}
                         editEntry={props.editEntry}
                     />
@@ -43,6 +51,7 @@ const Year =(props)=>{
 
 
 Year.propTypes = {
-    year: PropTypes.object.isRequired
+    year: PropTypes.object.isRequired,
+    editEntry: PropTypes.func.isRequired
 }
 export default Year;

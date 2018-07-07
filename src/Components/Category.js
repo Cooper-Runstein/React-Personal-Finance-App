@@ -11,10 +11,14 @@ const Category = (props) =>{
                 {props.category.entries.map((e,i)=> {
                     return(
                     <Instance 
+                        yearIndex = {props.yearIndex}
+                        catName= {props.catName}
                         key={i}
+                        index={i}
                         instance={e}
-                        editEntry = {props.editEntry}
-                />)
+                        editInstance = {()=> props.editEntry(props.yearIndex, props.catName, i)}
+                />
+            )
                     })
                 }
             </td>
@@ -25,6 +29,6 @@ const Category = (props) =>{
 }
 
 Category.propTypes = {
-    debt: PropTypes.number.isRequired
+    editEntry: PropTypes.func.isRequired
 }
 export default Category;

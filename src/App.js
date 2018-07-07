@@ -11,6 +11,7 @@ import YearsContainer from './Components/YearsContainer';
 class App extends Component {
   constructor(props){
     super(props)
+    this.editEntry = this.editEntry.bind(this)
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -161,8 +162,6 @@ class App extends Component {
           ]
         })
       }
-      console.log(years[0])    
-    // years[0].savings[0].retirment_savings[0]['401k'] = this.state.startingValues.Savings;
     
     this.setState({
       years: years
@@ -170,9 +169,9 @@ class App extends Component {
     
   }
 
-  editEntry= (yearIndex, index) =>{
-
-    this.setState({})
+  editEntry= (yearIndex, category, index) =>{
+    console.log("editEntry");
+    console.log(this.state.years[yearIndex].year)
   }
 
   
