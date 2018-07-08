@@ -6,11 +6,14 @@ import Value from './Value';
 
 
 const Instance = (props) =>{
-
     return(
         <div id="instance">
-            <Title /> <Value />
-            <span>{props.instance.title}</span><span> Amount:{props.instance.value}</span>
+            <Title 
+                    title= {props.instance.title}
+            /> 
+            <Value 
+                value= {props.instance.value}
+            />
             <button 
                 className="editButton"
                 onClick={props.editInstance}

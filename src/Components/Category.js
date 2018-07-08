@@ -9,6 +9,7 @@ const Category = (props) =>{
             <td>
                 <h3>{props.category.title}</h3>
                 {props.category.entries.map((e,i)=> {
+                    console.log(e);
                     return(
                     <Instance 
                         yearIndex = {props.yearIndex}

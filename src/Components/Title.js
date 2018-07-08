@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Title = (props) =>{
-    return; 
+    return (<span>{props.title}</span>)
 }
 
 Title.propTypes = {

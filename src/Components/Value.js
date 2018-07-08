@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Value = (props) =>{
-    return; 
+    return <span> Amount:{props.value}</span>
 }
 
 Value.propTypes = {
