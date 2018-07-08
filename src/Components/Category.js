@@ -13,10 +13,11 @@ const Category = (props) =>{
                     <Instance 
                         yearIndex = {props.yearIndex}
                         catName= {props.catName}
+                        catKey= {props.catKey}
                         key={i}
                         index={i}
                         instance={e}
-                        editInstance = {()=> props.editEntry(props.yearIndex, props.catName, i)}
+                        editInstance = {()=> props.editEntry(props.yearIndex, props.catName, props.catKey, i)}
                 />
             )
                     })

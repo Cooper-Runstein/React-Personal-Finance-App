@@ -12,6 +12,7 @@ const Year =(props)=>{
                     return <Category
                         yearIndex={props.yearIndex}
                         catName= "income"
+                        catKey={i}
                         key={i}
                         category={e}
                         editEntry={props.editEntry}
@@ -21,6 +22,7 @@ const Year =(props)=>{
                     return <Category 
                     yearIndex={props.yearIndex}
                         key={i}
+                        catKey={i}
                         catName= "expenses"
                         category={e}
                         editEntry={props.editEntry}
@@ -29,6 +31,7 @@ const Year =(props)=>{
                 {props.year.debt.map((e,i)=>{
                     return <Category 
                         key={i}
+                        catKey={i}
                         yearIndex={props.yearIndex}
                         catName= "debt"
                         category={e}
@@ -38,6 +41,7 @@ const Year =(props)=>{
                 {props.year.savings.map((e,i)=>{
                     return <Category 
                         key={i}
+                        catKey={i}
                         yearIndex={props.yearIndex}
                         catName= "savings"
                         category={e}

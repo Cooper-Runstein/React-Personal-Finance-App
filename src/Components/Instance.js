@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Title from './Title';
+import Value from './Value';
+
+
 const Instance = (props) =>{
 
     return(
         <div id="instance">
+            <Title /> <Value />
             <span>{props.instance.title}</span><span> Amount:{props.instance.value}</span>
             <button 
                 className="editButton"

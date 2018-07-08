@@ -8,6 +8,7 @@ import Counter from './Components/Counter';
 import YearsContainer from './Components/YearsContainer';
 
 
+
 class App extends Component {
   constructor(props){
     super(props)
@@ -169,12 +170,61 @@ class App extends Component {
     
   }
 
-  editEntry= (yearIndex, category, index) =>{
-    console.log("editEntry");
-    console.log(this.state.years[yearIndex].year)
-  }
+  editEntry= (yearIndex, category, catKey, index) =>{
+    console.log("Called Edit")
+    let newYears = [];
 
-  
+    const editEntry = ()=>{
+      let newEntries = [];
+      this.state.years[yearIndex][category][catKey]['entries'].map((e,i)=>{
+        if (i === index){
+          newEntries.push({
+            ...e,
+            isEditing: !this.state.years[yearIndex][category][catKey]['entries'][index].isEditing
+          })
+        }else{
+          newEntries.push(e)
+        }
+      })
+      return newEntries;
+    }
+    
+    const editCategory = ()=>{
+      let newCat = []
+      this.state.years[yearIndex][category].map((e,i)=>{
+        if (i === catKey){
+          let newEntry = {
+            ...e,
+            entries: editEntry()
+          }
+          newCat.push(newEntry)
+        }
+        else{
+          newCat.push(e)
+
+        }
+      })
+      return newCat;
+    }
+
+    this.state.years.map((e,i)=>{
+      if(i === yearIndex){
+        let newYear = {
+          ...e,
+          [category]: editCategory()
+        } 
+        newYears.push(newYear)
+      }
+      else{
+        newYears.push(e)
+      }
+    })
+    console.log(newYears)
+    this.setState({
+      years: newYears
+    })
+    console.log(this.state.years[yearIndex][category][catKey]['entries'][index])
+  }
 
   render() {
     return (
