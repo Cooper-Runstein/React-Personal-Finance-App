@@ -42,6 +42,7 @@ class App extends Component {
   //====Years Table =========
   //==========================
   //==========================
+  
   getNumberOfRows = (retirmentYear) =>{
     console.log(retirmentYear)
     let currentYear = this.state.date;
@@ -70,7 +71,9 @@ class App extends Component {
                 {
                   title: 'job_title',
                   value: 2000,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 }
               ]
             }
@@ -82,12 +85,16 @@ class App extends Component {
                 {
                   title: 'rent',
                   value: 1000,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 },
                 {
                   title: 'storage_locker',
                   value: 50,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 }
               ]
             },
@@ -97,12 +104,16 @@ class App extends Component {
                 {
                   title: 'eating_out',
                   value: 150,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 },
                 {
                   title: 'groceries',
                   value: 200,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 }
               ]
 
@@ -113,12 +124,16 @@ class App extends Component {
                 {
                   title: 'state',
                   value: 300,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 },
                 {
                   title: 'federal',
                   value: 500,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 }
             ]
           }
@@ -130,12 +145,17 @@ class App extends Component {
                 {
                   title: 'student_loan',
                   value: 1000,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 },
                 {
                   title: 'auto_loan',
                   value: 500,
-                  isEditing: false}
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
+                }
               ]
             },
           ],
@@ -146,7 +166,9 @@ class App extends Component {
                 {
                   title: '401k',
                   value: 10000,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 }
               ]
             },
@@ -156,7 +178,9 @@ class App extends Component {
                 {
                   title: 'company_shares',
                   value: 1000,
-                  isEditing: false
+                  isEditing: false,
+                  pendingTitle: '',
+                  pendingValue: ''
                 }
               ]
             }
@@ -219,11 +243,10 @@ class App extends Component {
         newYears.push(e)
       }
     })
-    console.log(newYears)
     this.setState({
       years: newYears
     })
-    console.log(this.state.years[yearIndex][category][catKey]['entries'][index])
+    console.log('Years altered')
   }
 
   render() {

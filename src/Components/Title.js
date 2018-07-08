@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Title = (props) =>{
-    return (<span>{props.title}</span>)
-}
+const Title = (props) => {
+    return (props.isEditing ? 
+        <input 
+            placeholder={props.title}
+             /> 
+
+        : 
+
+        <span> {props.title} </span>
+    )}
+    
+
 
 Title.propTypes = {
     

@@ -9,10 +9,14 @@ const Instance = (props) =>{
     return(
         <div id="instance">
             <Title 
-                    title= {props.instance.title}
+                title= {props.instance.title}
+                isEditing = {props.instance.isEditing}
+                pendingTitle = {props.instance.pendingTitle}
             /> 
             <Value 
                 value= {props.instance.value}
+                isEditing = {props.instance.isEditing}
+                pendingValue = {props.instance.pendingValue}
             />
             <button 
                 className="editButton"

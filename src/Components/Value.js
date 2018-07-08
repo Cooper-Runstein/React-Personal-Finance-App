@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Value = (props) =>{
-    return <span> Amount:{props.value}</span>
+    return (
+        props.isEditing ? 
+        <input 
+            placeholder={props.value} /> 
+        
+        :
+
+        <span> Amount:{props.value}</span>
+    )
 }
 
 Value.propTypes = {
