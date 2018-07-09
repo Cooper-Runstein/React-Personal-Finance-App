@@ -17,6 +17,7 @@ const Category = (props) =>{
                         index={i}
                         instance={e}
                         editInstance = {()=> props.editEntry(props.yearIndex, props.catName, props.catKey, i)}
+                        removeEntry= {() => props.removeEntry(props.yearIndex, props.catName, props.catKey, i)}
                 />
             )
                     })

@@ -12,7 +12,8 @@ import YearsContainer from './Components/YearsContainer';
 class App extends Component {
   constructor(props){
     super(props)
-    this.editEntry = this.editEntry.bind(this)
+    this.editEntry = this.editEntry.bind(this);
+    this.removeEntry = this.removeEntry.bind(this);
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -42,6 +43,8 @@ class App extends Component {
   //====Years Table =========
   //==========================
   //==========================
+
+ 
   
   getNumberOfRows = (retirmentYear) =>{
     console.log(retirmentYear)
@@ -195,17 +198,83 @@ class App extends Component {
   }
 
   editEntry= (yearIndex, category, catKey, index) =>{
-    console.log("Called Edit")
+    console.log("Called Edit");
+    this.setState(
+      {
+        years: this.getYears(yearIndex, category, catKey, index)
+      }
+    );
+    console.log('Years altered');
+  }
+
+  getYears = (yearIndex, category, catKey, index)=>{
+    let years = [];
+    this.state.years.map((e,i)=>{
+    if(i === yearIndex){
+      let newYear = {
+        ...e,
+        [category]: this.getCategory(yearIndex, category, catKey, index)
+      } 
+      years.push(newYear)
+    }
+    else{
+      years.push(e)
+    }
+  })
+    return years;
+  }
+
+  getCategory = (yearIndex, category, catKey, index)=>{
+    let newCat = []
+    this.state.years[yearIndex][category].map((e,i)=>{
+      if (i === catKey){
+        let newEntry = {
+          ...e,
+          entries: this.getEntry(yearIndex, category, catKey, index)
+        }
+        newCat.push(newEntry)
+      }
+      else{
+        newCat.push(e)
+      }
+    }
+  )
+    return newCat;
+  }
+
+  getEntry = (yearIndex, category, catKey, index)=>{
+    let newEntries = [];
+    this.state.years[yearIndex][category][catKey]['entries'].map((e,i)=>{
+      if (i === index){
+        newEntries.push({
+          ...e,
+          isEditing: !this.state.years[yearIndex][category][catKey]['entries'][index].isEditing
+        })
+      }else{
+        newEntries.push(e)
+      }
+    }
+  )
+    return newEntries;
+  }
+
+
+
+
+  // getLocationFromState= (location) =>{
+
+  // }
+
+  removeEntry= (yearIndex, category, catKey, index)=>{
+
+    console.log("Called Remove")
     let newYears = [];
 
-    const editEntry = ()=>{
+    const getEntry = ()=>{
       let newEntries = [];
       this.state.years[yearIndex][category][catKey]['entries'].map((e,i)=>{
         if (i === index){
-          newEntries.push({
-            ...e,
-            isEditing: !this.state.years[yearIndex][category][catKey]['entries'][index].isEditing
-          })
+          return false;
         }else{
           newEntries.push(e)
         }
@@ -213,13 +282,13 @@ class App extends Component {
       return newEntries;
     }
     
-    const editCategory = ()=>{
+    const getCategory = ()=>{
       let newCat = []
       this.state.years[yearIndex][category].map((e,i)=>{
         if (i === catKey){
           let newEntry = {
             ...e,
-            entries: editEntry()
+            entries: getEntry()
           }
           newCat.push(newEntry)
         }
@@ -235,7 +304,7 @@ class App extends Component {
       if(i === yearIndex){
         let newYear = {
           ...e,
-          [category]: editCategory()
+          [category]: getCategory()
         } 
         newYears.push(newYear)
       }
@@ -247,6 +316,20 @@ class App extends Component {
       years: newYears
     })
     console.log('Years altered')
+  }
+
+  onChangeFor= (e, type, location) =>{
+    e.preventDefault();
+    // let instanceObj = this.getInstanceFromState(location);
+    // let newValue = this.state.startingValues["pending" + k];
+    // this.setState({
+    //   startingValues: {
+    //     ...this.state.startingValues,
+    //     [k]: newValue,
+    //     ["pending" + k]: 0,
+    //     startFormStatus: newStartingFormValue()
+    //   }
+    // })
   }
 
   render() {
@@ -264,6 +347,7 @@ class App extends Component {
           currentYear = {this.state.date}
           years = {this.state.years}
           editEntry = {this.editEntry}
+          removeEntry= {this.removeEntry}
         />
         <Counter 
           savings={this.state.startingValues.Savings}

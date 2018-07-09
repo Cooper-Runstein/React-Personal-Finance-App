@@ -5,7 +5,8 @@ const Value = (props) =>{
     return (
         props.isEditing ? 
         <input 
-            placeholder={props.value} /> 
+            placeholder={props.value}
+            value={props.pendingValue} /> 
         
         :
 
@@ -14,7 +15,8 @@ const Value = (props) =>{
 }
 
 Value.propTypes = {
-    
+    value: PropTypes.node,
+    pendingValue: PropTypes.node.isRequired
 }
 
 export default Value;

@@ -25,7 +25,8 @@ const Instance = (props) =>{
                 Edit
             </button>
             <button 
-                className="removeButton">
+                className="removeButton"
+                onClick={props.removeEntry}>
                 Remove
             </button>
         </div>
