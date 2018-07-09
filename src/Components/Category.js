@@ -16,8 +16,18 @@ const Category = (props) =>{
                         key={i}
                         index={i}
                         instance={e}
-                        editInstance = {()=> props.editEntry(props.yearIndex, props.catName, props.catKey, i)}
-                        removeEntry= {() => props.removeEntry(props.yearIndex, props.catName, props.catKey, i)}
+                        editInstance = {()=> props.editEntry({
+                                yearIndex: props.yearIndex,
+                                catName: props.catName, 
+                                catKey: props.catKey, 
+                                instanceIndex: i
+                            })}
+                        removeEntry= {() => props.removeEntry({
+                            yearIndex: props.yearIndex,
+                            catName: props.catName, 
+                            catKey: props.catKey, 
+                            instanceIndex: i
+                        })}
                 />
             )
                     })

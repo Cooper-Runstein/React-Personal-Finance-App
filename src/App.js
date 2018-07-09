@@ -12,7 +12,7 @@ import YearsContainer from './Components/YearsContainer';
 class App extends Component {
   constructor(props){
     super(props)
-    this.editEntry = this.editEntry.bind(this);
+    this.toggleEditEntry = this.toggleEditEntry.bind(this);
     this.removeEntry = this.removeEntry.bind(this);
     this.state = {
       startingValues: {
@@ -197,23 +197,37 @@ class App extends Component {
     
   }
 
-  editEntry= (yearIndex, category, catKey, index) =>{
+  toggleEditEntry= (location) =>{
     console.log("Called Edit");
+    const newState = (e, entry)=>{
+      return{
+          ...e,
+          isEditing: !entry.isEditing
+        }
+    }
+    const info = {
+      newState: newState,
+      func: ()=>{false}
+    }
     this.setState(
       {
-        years: this.getYears(yearIndex, category, catKey, index)
+        years: this.getYears(location, info)
       }
     );
     console.log('Years altered');
   }
 
-  getYears = (yearIndex, category, catKey, index)=>{
-    let years = [];
+  getYears = (location, info)=>{
+    const yearIndex = location.yearIndex;
+    const category = location.catName;
+    const years = [];
+    const currentCategory = this.state.years[yearIndex][category];
+    location.currentCategory = currentCategory;
     this.state.years.map((e,i)=>{
     if(i === yearIndex){
       let newYear = {
         ...e,
-        [category]: this.getCategory(yearIndex, category, catKey, index)
+        [category]: this.getCategory(location, info)
       } 
       years.push(newYear)
     }
@@ -224,13 +238,17 @@ class App extends Component {
     return years;
   }
 
-  getCategory = (yearIndex, category, catKey, index)=>{
-    let newCat = []
-    this.state.years[yearIndex][category].map((e,i)=>{
+  getCategory = (location, info)=>{
+    const currentCategory = location.currentCategory;
+    const catKey = location.catKey;
+    const currentEntries = currentCategory[catKey]['entries'];
+    location.currentEntries = currentEntries;
+    const newCat = []
+    currentCategory.map((e,i)=>{
       if (i === catKey){
         let newEntry = {
           ...e,
-          entries: this.getEntry(yearIndex, category, catKey, index)
+          entries: this.getEntry(location, info)
         }
         newCat.push(newEntry)
       }
@@ -242,78 +260,34 @@ class App extends Component {
     return newCat;
   }
 
-  getEntry = (yearIndex, category, catKey, index)=>{
-    let newEntries = [];
-    this.state.years[yearIndex][category][catKey]['entries'].map((e,i)=>{
+  getEntry = (location, info)=>{
+    const currentEntries = location.currentEntries;
+    const index = location.instanceIndex;
+    const entry = currentEntries[index];
+    const newEntries = [];
+    currentEntries.map((e,i)=>{
       if (i === index){
-        newEntries.push({
-          ...e,
-          isEditing: !this.state.years[yearIndex][category][catKey]['entries'][index].isEditing
-        })
+        newEntries.push(info.newState(e, entry))
       }else{
         newEntries.push(e)
       }
     }
   )
+    info.func(newEntries, index);
     return newEntries;
   }
 
-
-
-
-  // getLocationFromState= (location) =>{
-
-  // }
-
-  removeEntry= (yearIndex, category, catKey, index)=>{
-
+  removeEntry= (location)=>{
     console.log("Called Remove")
-    let newYears = [];
-
-    const getEntry = ()=>{
-      let newEntries = [];
-      this.state.years[yearIndex][category][catKey]['entries'].map((e,i)=>{
-        if (i === index){
-          return false;
-        }else{
-          newEntries.push(e)
-        }
-      })
-      return newEntries;
-    }
-    
-    const getCategory = ()=>{
-      let newCat = []
-      this.state.years[yearIndex][category].map((e,i)=>{
-        if (i === catKey){
-          let newEntry = {
-            ...e,
-            entries: getEntry()
-          }
-          newCat.push(newEntry)
-        }
-        else{
-          newCat.push(e)
-
-        }
-      })
-      return newCat;
-    }
-
-    this.state.years.map((e,i)=>{
-      if(i === yearIndex){
-        let newYear = {
-          ...e,
-          [category]: getCategory()
-        } 
-        newYears.push(newYear)
+    const info = {
+      newState: ()=>{return false},
+      func: (array, index)=>{
+        console.log(array, index)
+        array.splice(index, index + 1);
       }
-      else{
-        newYears.push(e)
-      }
-    })
+    }
     this.setState({
-      years: newYears
+      years: this.getYears(location, info)
     })
     console.log('Years altered')
   }
@@ -346,7 +320,7 @@ class App extends Component {
           startingSavings ={this.state.startingValues.Savings}
           currentYear = {this.state.date}
           years = {this.state.years}
-          editEntry = {this.editEntry}
+          editEntry = {this.toggleEditEntry}
           removeEntry= {this.removeEntry}
         />
         <Counter 
