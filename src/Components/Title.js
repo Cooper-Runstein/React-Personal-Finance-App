@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 const Title = (props) => {
     return (props.isEditing ? 
         <input 
-            placeholder={props.title}
+            placeholder= {props.title}
+            onChange= {props.onChange}
              /> 
 
         : 

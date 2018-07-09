@@ -16,6 +16,8 @@ const YearsContainer = (props) =>{
                                 year= {y}
                                 editEntry = {props.editEntry}
                                 removeEntry= {props.removeEntry}
+                                onChangeValue= {props.onChangeValue}
+                                onChangeTitle= {props.onChangeTitle}
                             />
                     })}
                 </tbody>

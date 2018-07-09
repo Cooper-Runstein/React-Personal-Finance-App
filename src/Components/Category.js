@@ -16,6 +16,12 @@ const Category = (props) =>{
                         key={i}
                         index={i}
                         instance={e}
+                        location={{
+                            yearIndex: props.yearIndex,
+                            catName: props.catName, 
+                            catKey: props.catKey, 
+                            instanceIndex: i
+                        }}
                         editInstance = {()=> props.editEntry({
                                 yearIndex: props.yearIndex,
                                 catName: props.catName, 
@@ -28,6 +34,8 @@ const Category = (props) =>{
                             catKey: props.catKey, 
                             instanceIndex: i
                         })}
+                        onChangeValue= {props.onChangeValue}
+                        onChangeTitle= {props.onChangeTitle}
                 />
             )
                     })

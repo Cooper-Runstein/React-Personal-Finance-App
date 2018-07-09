@@ -17,6 +17,8 @@ const Year =(props)=>{
                         category={e}
                         editEntry={props.editEntry}
                         removeEntry= {props.removeEntry}
+                        onChangeValue= {props.onChangeValue}
+                        onChangeTitle= {props.onChangeTitle}
                     />
                 })}
                 {props.year.expenses.map((e,i)=>{
@@ -28,6 +30,8 @@ const Year =(props)=>{
                         category={e}
                         editEntry={props.editEntry}
                         removeEntry= {props.removeEntry}
+                        onChangeValue= {props.onChangeValue}
+                        onChangeTitle= {props.onChangeTitle}
                     />
                 })}
                 {props.year.debt.map((e,i)=>{
@@ -39,6 +43,8 @@ const Year =(props)=>{
                         category={e}
                         editEntry={props.editEntry}
                         removeEntry= {props.removeEntry}
+                        onChangeValue= {props.onChangeValue}
+                        onChangeTitle= {props.onChangeTitle}
                     />
                 })}
                 {props.year.savings.map((e,i)=>{
@@ -50,6 +56,8 @@ const Year =(props)=>{
                         category={e}
                         editEntry={props.editEntry}
                         removeEntry= {props.removeEntry}
+                        onChangeValue= {props.onChangeValue}
+                        onChangeTitle= {props.onChangeTitle}
                     />
                 })}
                 

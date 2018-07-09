@@ -14,6 +14,8 @@ class App extends Component {
     super(props)
     this.toggleEditEntry = this.toggleEditEntry.bind(this);
     this.removeEntry = this.removeEntry.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+    this.onChangeTitle = this.onChangeValue.bind(this);
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -24,6 +26,8 @@ class App extends Component {
         pendingRetirment: '',
         Retirment: 2025,
       },
+      pendingValue: "",
+      pendingTitle: "",
       date: new Date().getFullYear(),
       years: [
         
@@ -292,18 +296,23 @@ class App extends Component {
     console.log('Years altered')
   }
 
-  onChangeFor= (e, type, location) =>{
+  onChangeFor= (e, type) =>{
     e.preventDefault();
-    // let instanceObj = this.getInstanceFromState(location);
-    // let newValue = this.state.startingValues["pending" + k];
-    // this.setState({
-    //   startingValues: {
-    //     ...this.state.startingValues,
-    //     [k]: newValue,
-    //     ["pending" + k]: 0,
-    //     startFormStatus: newStartingFormValue()
-    //   }
-    // })
+    console.log(type);
+    console.log(e);
+    this.setState({
+      ["pending" + type]: e.target.value
+    })
+  }
+
+  onChangeValue= (e)=> {
+    console.log("Value Change");
+    this.onChangeFor(e, 'Value');
+  }
+
+  onChangeTitle= (e)=>{
+    console.log("Title Change");
+    this.onChangeFor(e, 'Title');
   }
 
   render() {
@@ -322,6 +331,8 @@ class App extends Component {
           years = {this.state.years}
           editEntry = {this.toggleEditEntry}
           removeEntry= {this.removeEntry}
+          onChangeValue= {this.onChangeValue}
+          onChangeTitle= {this.onChangeTitle}
         />
         <Counter 
           savings={this.state.startingValues.Savings}

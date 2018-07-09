@@ -6,7 +6,7 @@ const Value = (props) =>{
         props.isEditing ? 
         <input 
             placeholder={props.value}
-            value={props.pendingValue} /> 
+            onChange={props.onChange} /> 
         
         :
 
