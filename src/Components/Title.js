@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Title = (props) => {
-    return (props.isEditing ? 
+    return (
+        props.isEditing ? 
         <input 
             placeholder= {props.title}
             onChange= {props.onChange}

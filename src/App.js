@@ -15,7 +15,7 @@ class App extends Component {
     this.toggleEditEntry = this.toggleEditEntry.bind(this);
     this.removeEntry = this.removeEntry.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
-    this.onChangeTitle = this.onChangeValue.bind(this);
+    this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.state = {
       startingValues: {
@@ -202,7 +202,7 @@ class App extends Component {
     
   }
 
-  toggleEditEntry= (location) =>{
+  toggleEditEntry = (location) =>{
     console.log("Called Edit");
     const newState = (e, entry)=>{
       return{
@@ -225,6 +225,10 @@ class App extends Component {
   }
 
   getYears = (location, info)=>{
+    //location is an object with instance's postion
+    //info is and object with two functions: 
+    //newState returns the new instance values in state
+    //func will run after state has been changed at given instance
     const yearIndex = location.yearIndex;
     const category = location.catName;
     const years = [];
@@ -284,7 +288,7 @@ class App extends Component {
     return newEntries;
   }
 
-  removeEntry= (location)=>{
+  removeEntry = (location)=>{
     console.log("Called Remove")
     const info = {
       newState: ()=>{return false},
@@ -301,7 +305,7 @@ class App extends Component {
     console.log('Years altered')
   }
 
-  onChangeFor= (e, type) =>{
+  onChangeFor = (e, type) =>{
     e.preventDefault();
     console.log(type);
     console.log(e);
@@ -310,18 +314,53 @@ class App extends Component {
     })
   }
 
-  onChangeValue= (e)=> {
+  onChangeValue = (e)=> {
     console.log("Value Change");
     this.onChangeFor(e, 'Value');
   }
 
-  onChangeTitle= (e)=>{
+  onChangeTitle = (e)=>{
     console.log("Title Change");
     this.onChangeFor(e, 'Title');
   }
 
-  onConfirm= ()=>{
+  onConfirm = (location)=>{
     console.log("Confirming Inputs")
+
+    const pendingValue = this.state.pendingValue;
+    const pendingTitle = this.state.pendingTitle;
+
+    const newState= (e, entry)=>{
+     
+      const oldState = {...e};
+      const alteredValues = {
+        isEditing: !e.isEditing,
+      }
+
+      if (pendingTitle !== ""){
+        alteredValues.title = pendingTitle;
+      }
+      if (pendingValue !== ""){
+        alteredValues.value = pendingValue;
+      }
+      
+      return Object.assign(oldState, alteredValues)
+         
+      }
+    const func= ()=> true;
+
+    const info= {
+      func: func,
+      newState: newState
+    }
+    
+    
+      this.setState({
+        ...this.state,
+        years: this.getYears(location, info),
+        pendingTitle: "",
+        pendingValue: ""
+      })
   }
 
   render() {

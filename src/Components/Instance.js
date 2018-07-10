@@ -4,27 +4,27 @@ import PropTypes from 'prop-types';
 
 import Title from './Title';
 import Value from './Value';
+import ConfirmButton from './ConfirmButton';
 
-const ConfirmButton = props => props.instance.isEditing ? <button onClick={props.onClick}>Confirm</button> : false;
 
 const Instance = (props) =>{
     return(
         <div>
             <Title 
-                title= {props.instance.title}
+                title = {props.instance.title}
                 isEditing = {props.instance.isEditing}
                 pendingTitle = {props.instance.pendingTitle}
-                onChange= {props.onChangeTitle}
+                onChange = {props.onChangeTitle}
             /> 
             <Value 
-                value= {props.instance.value}
+                value = {props.instance.value}
                 isEditing = {props.instance.isEditing}
                 pendingValue = {props.instance.pendingValue}
-                onChange= {props.onChangeValue}
+                onChange = {props.onChangeValue}
             />
             <ConfirmButton 
                 instance={props.instance}
-                onClick={props.onConfirm}
+                onClick={()=> props.onConfirm(props.location)}
             />
             <button 
                 className="editButton"

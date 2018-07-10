@@ -45,9 +45,6 @@ const Category = (props) =>{
                 }
             </td>
     );
-    
-    
-    
 }
 
 Category.propTypes = {
