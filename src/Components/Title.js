@@ -14,9 +14,9 @@ const Title = (props) => {
     )}
     
 
-
 Title.propTypes = {
-    
+    title: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
 }
 
 export default Title;

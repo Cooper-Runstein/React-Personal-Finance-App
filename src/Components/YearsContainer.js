@@ -18,6 +18,7 @@ const YearsContainer = (props) =>{
                                 removeEntry= {props.removeEntry}
                                 onChangeValue= {props.onChangeValue}
                                 onChangeTitle= {props.onChangeTitle}
+                                onConfirm= {props.onConfirm}
                             />
                     })}
                 </tbody>
@@ -27,9 +28,12 @@ const YearsContainer = (props) =>{
 }
 
 YearsContainer.propTypes = {
-    startingDebt: PropTypes.number.isRequired,
-    startingSavings: PropTypes.number.isRequired,
     years: PropTypes.array.isRequired,
-    editEntry: PropTypes.func.isRequired
+    editEntry: PropTypes.func.isRequired,
+    removeEntry: PropTypes.func.isRequired,
+    onChangeValue:  PropTypes.func.isRequired,
+    onChangeTitle: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func.isRequired,
 }
+
 export default YearsContainer;

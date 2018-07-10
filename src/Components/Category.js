@@ -8,19 +8,21 @@ const Category = (props) =>{
             <td>
                 <h3>{props.category.title}</h3>
                 {props.category.entries.map((e,i)=> {
+                    //'Category' object has array 'entries' containing 'instance' objects
+                    //Each instance has edit buttons and occupies a row within a category column for a given year
                     return(
                     <Instance 
                         yearIndex = {props.yearIndex}
-                        catName= {props.catName}
-                        catKey= {props.catKey}
-                        key={i}
-                        index={i}
-                        instance={e}
-                        location={{
+                        catName = {props.catName}
+                        catKey = {props.catKey}
+                        key = {i}
+                        index = {i}
+                        instance = {e}
+                        location = {{ //location array used to find instance
                             yearIndex: props.yearIndex,
                             catName: props.catName, 
                             catKey: props.catKey, 
-                            instanceIndex: i
+                            instanceIndex: i //location of instance in 'location' object
                         }}
                         editInstance = {()=> props.editEntry({
                                 yearIndex: props.yearIndex,
@@ -34,8 +36,9 @@ const Category = (props) =>{
                             catKey: props.catKey, 
                             instanceIndex: i
                         })}
-                        onChangeValue= {props.onChangeValue}
+                        onChangeValue = {props.onChangeValue}
                         onChangeTitle= {props.onChangeTitle}
+                        onConfirm= {props.onConfirm}
                 />
             )
                     })
@@ -48,6 +51,14 @@ const Category = (props) =>{
 }
 
 Category.propTypes = {
-    editEntry: PropTypes.func.isRequired
+    catKey: PropTypes.number.isRequired,
+    yearIndex: PropTypes.number.isRequired,
+    catName: PropTypes.string.isRequired,
+    category: PropTypes.object.isRequired,
+    editEntry: PropTypes.func.isRequired,
+    removeEntry: PropTypes.func.isRequired,
+    onChangeValue: PropTypes.func.isRequired,
+    onChangeTitle: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func.isRequired,
 }
 export default Category;

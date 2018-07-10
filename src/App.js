@@ -16,6 +16,7 @@ class App extends Component {
     this.removeEntry = this.removeEntry.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onChangeTitle = this.onChangeValue.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -215,6 +216,8 @@ class App extends Component {
     }
     this.setState(
       {
+        pendingTitle: "",
+        pendingValue: "",
         years: this.getYears(location, info)
       }
     );
@@ -291,6 +294,8 @@ class App extends Component {
       }
     }
     this.setState({
+      pendingTitle: "",
+      pendingValue: "",
       years: this.getYears(location, info)
     })
     console.log('Years altered')
@@ -315,6 +320,10 @@ class App extends Component {
     this.onChangeFor(e, 'Title');
   }
 
+  onConfirm= ()=>{
+    console.log("Confirming Inputs")
+  }
+
   render() {
     return (
       <div className="App">
@@ -322,20 +331,21 @@ class App extends Component {
         {/* <StartingForm
           getInitialInputs = {this.getInitialInputs.bind(this)}
           /> */}
-          <button onClick={this.generateYears}>Generate</button>
+          <button onClick = {this.generateYears}>Generate</button>
         <YearsContainer 
           retirmentYear = {this.state.startingValues.Retirment}
           startingDebt = {this.state.startingValues.Debt}
-          startingSavings ={this.state.startingValues.Savings}
+          startingSavings = {this.state.startingValues.Savings}
           currentYear = {this.state.date}
           years = {this.state.years}
           editEntry = {this.toggleEditEntry}
-          removeEntry= {this.removeEntry}
-          onChangeValue= {this.onChangeValue}
-          onChangeTitle= {this.onChangeTitle}
+          removeEntry = {this.removeEntry}
+          onChangeValue = {this.onChangeValue}
+          onChangeTitle = {this.onChangeTitle}
+          onConfirm = {this.onConfirm}
         />
         <Counter 
-          savings={this.state.startingValues.Savings}
+          savings = {this.state.startingValues.Savings}
           debt = {this.state.startingValues.Debt}
           retirment = {this.state.startingValues.Retirment}
           />
