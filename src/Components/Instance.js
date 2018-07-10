@@ -26,6 +26,7 @@ const Instance = (props) =>{
                 instance={props.instance}
                 onClick={()=> props.onConfirm(props.location)}
             />
+            
             <button 
                 className="editButton"
                 onClick={props.editInstance}

@@ -1,12 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Instance from './Instance'
+import Instance from './Instance';
+import AddInstanceButton from './AddInstanceButton';
 
 
 const Category = (props) =>{
     return(
             <td>
                 <h3>{props.category.title}</h3>
+                <AddInstanceButton 
+                    onClick = {()=>props.addInstance({
+                        yearIndex: props.yearIndex,
+                        catName: props.catName, 
+                        catKey: props.catKey, 
+                        instanceIndex: 0 
+                    })}
+                />
                 {props.category.entries.map((e,i)=> {
                     //'Category' object has array 'entries' containing 'instance' objects
                     //Each instance has edit buttons and occupies a row within a category column for a given year
@@ -57,5 +66,6 @@ Category.propTypes = {
     onChangeValue: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
+    addInstance: PropTypes.func.isRequired
 }
 export default Category;

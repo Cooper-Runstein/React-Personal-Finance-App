@@ -20,6 +20,7 @@ const Year =(props)=>{
                         onChangeValue = {props.onChangeValue}
                         onChangeTitle = {props.onChangeTitle}
                         onConfirm = {props.onConfirm}
+                        addInstance = {props.addInstance}
                     />
                 })}
                 {props.year.expenses.map((e,i)=>{
@@ -34,6 +35,7 @@ const Year =(props)=>{
                         onChangeValue = {props.onChangeValue}
                         onChangeTitle = {props.onChangeTitle}
                         onConfirm = {props.onConfirm}
+                        addInstance = {props.addInstance}
                     />
                 })}
                 {props.year.debt.map((e,i)=>{
@@ -48,6 +50,7 @@ const Year =(props)=>{
                         onChangeValue = {props.onChangeValue}
                         onChangeTitle = {props.onChangeTitle}
                         onConfirm = {props.onConfirm}
+                        addInstance = {props.addInstance}
                     />
                 })}
                 {props.year.savings.map((e,i)=>{
@@ -62,6 +65,7 @@ const Year =(props)=>{
                         onChangeValue = {props.onChangeValue}
                         onChangeTitle = {props.onChangeTitle}
                         onConfirm = {props.onConfirm}
+                        addInstance = {props.addInstance}
                     />
                 })}
                 
@@ -78,5 +82,6 @@ Year.propTypes = {
     onChangeValue: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
+    addInstance: PropTypes.func.isRequired
 }
 export default Year;

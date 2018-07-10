@@ -17,6 +17,7 @@ class App extends Component {
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
+    this.addInstance = this.addInstance.bind(this);
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -224,6 +225,23 @@ class App extends Component {
     console.log('Years altered');
   }
 
+  addInstance = (location)=>{
+    const info = {
+        func: (array)=>{
+          array.push({
+            title: 'set',
+            value: 'set',
+            isEditing: true,
+          })
+        },
+        newState: (e)=> e
+    }
+    this.setState({
+      ...this.state,
+      years: this.getYears(location, info)
+    })
+  }
+
   getYears = (location, info)=>{
     //location is an object with instance's postion
     //info is and object with two functions: 
@@ -382,6 +400,7 @@ class App extends Component {
           onChangeValue = {this.onChangeValue}
           onChangeTitle = {this.onChangeTitle}
           onConfirm = {this.onConfirm}
+          addInstance = {this.addInstance}
         />
         <Counter 
           savings = {this.state.startingValues.Savings}

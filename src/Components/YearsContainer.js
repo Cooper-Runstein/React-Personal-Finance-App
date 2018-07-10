@@ -11,14 +11,15 @@ const YearsContainer = (props) =>{
                 <tbody>
                     {props.years.map((y, i)=>{
                         return <Year 
-                                key={i}
-                                yearIndex={i}
-                                year= {y}
+                                key = {i}
+                                yearIndex = {i}
+                                year = {y}
                                 editEntry = {props.editEntry}
-                                removeEntry= {props.removeEntry}
-                                onChangeValue= {props.onChangeValue}
-                                onChangeTitle= {props.onChangeTitle}
-                                onConfirm= {props.onConfirm}
+                                removeEntry = {props.removeEntry}
+                                onChangeValue = {props.onChangeValue}
+                                onChangeTitle = {props.onChangeTitle}
+                                onConfirm = {props.onConfirm}
+                                addInstance = {props.addInstance}
                             />
                     })}
                 </tbody>
@@ -34,6 +35,7 @@ YearsContainer.propTypes = {
     onChangeValue:  PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
+    addInstance: PropTypes.func.isRequired
 }
 
 export default YearsContainer;
