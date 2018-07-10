@@ -5,9 +5,10 @@ import AddInstanceButton from './AddInstanceButton';
 
 
 const Category = (props) =>{
+    const totalValue = ()=>props.category.entries.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)
     return(
             <td>
-                <h3>{props.category.title}</h3>
+                <h3>{props.category.title + totalValue()}</h3>
                 <AddInstanceButton 
                     onClick = {()=>props.addInstance({
                         yearIndex: props.yearIndex,

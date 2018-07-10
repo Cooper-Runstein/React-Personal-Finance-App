@@ -18,6 +18,7 @@ class App extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.addInstance = this.addInstance.bind(this);
+    this.getIncomev = this.getIncome.bind(this);
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -65,7 +66,7 @@ class App extends Component {
   }
 
   generateYears = (e) =>{
-    e.preventDefault()
+    e.preventDefault();
     const years = [];
     let numYears = this.getNumberOfRows(this.state.startingValues.Retirment)
     for (let i = 0; i < numYears; i++){
@@ -84,8 +85,13 @@ class App extends Component {
                   pendingTitle: '',
                   pendingValue: ''
                 }
-              ]
-            }
+              ],
+              get totals() {
+                return this.entries.reduce((sum, entry)=>{
+                  return sum + entry.value
+                }, 0)
+              }
+            }  
           ],
           expenses: [
             {
@@ -105,7 +111,12 @@ class App extends Component {
                   pendingTitle: '',
                   pendingValue: ''
                 }
-              ]
+              ],
+              get totals() {
+                return this.entries.reduce((sum, entry)=>{
+                  return sum + entry.value
+                }, 0)
+              }
             },
             {
               title: 'food',
@@ -124,8 +135,12 @@ class App extends Component {
                   pendingTitle: '',
                   pendingValue: ''
                 }
-              ]
-
+              ],
+              get totals() {
+                return this.entries.reduce((sum, entry)=>{
+                  return sum + entry.value
+                }, 0)
+              }
             },
             {
               title: 'taxes',
@@ -144,7 +159,12 @@ class App extends Component {
                   pendingTitle: '',
                   pendingValue: ''
                 }
-            ]
+            ],
+            get totals() {
+              return this.entries.reduce((sum, entry)=>{
+                return sum + entry.value
+              }, 0)
+            }
           }
           ],
           debt: [
@@ -165,7 +185,12 @@ class App extends Component {
                   pendingTitle: '',
                   pendingValue: ''
                 }
-              ]
+              ],
+              get totals() {
+                return this.entries.reduce((sum, entry)=>{
+                  return sum + entry.value
+                }, 0)
+              }
             },
           ],
           savings:[
@@ -179,7 +204,12 @@ class App extends Component {
                   pendingTitle: '',
                   pendingValue: ''
                 }
-              ]
+              ],
+              get totals() {
+                return this.entries.reduce((sum, entry)=>{
+                  return sum + entry.value
+                }, 0)
+              }
             },
             {
               title: 'stocks',
@@ -191,7 +221,12 @@ class App extends Component {
                   pendingTitle: '',
                   pendingValue: ''
                 }
-              ]
+              ],
+              get totals() {
+                return this.entries.reduce((sum, entry)=>{
+                  return sum + entry.value
+                }, 0)
+              }
             }
           ]
         })
@@ -201,6 +236,16 @@ class App extends Component {
       years: years
     })
     
+  }
+
+  getIncome = ()=> {
+    console.log("Get income called")
+    let totalEarnings = 0;
+    this.state.years.map((year)=>{
+      totalEarnings += year.income.reduce((sum, category)=> {return sum + category.totals}, 0)
+      console.log(totalEarnings)
+    })
+    return totalEarnings;
   }
 
   toggleEditEntry = (location) =>{
@@ -403,6 +448,7 @@ class App extends Component {
           addInstance = {this.addInstance}
         />
         <Counter 
+          income = {this.getIncome()}
           savings = {this.state.startingValues.Savings}
           debt = {this.state.startingValues.Debt}
           retirment = {this.state.startingValues.Retirment}
