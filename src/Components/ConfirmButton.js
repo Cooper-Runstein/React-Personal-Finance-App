@@ -6,7 +6,8 @@ const ConfirmButton = (props) => props.instance.isEditing ? <button onClick={pro
     
 
 ConfirmButton.propTypes = {
-   
+    instance: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
 }
 
 export default ConfirmButton;

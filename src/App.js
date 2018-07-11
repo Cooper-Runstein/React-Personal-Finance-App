@@ -18,7 +18,8 @@ class App extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.addInstance = this.addInstance.bind(this);
-    this.getIncomev = this.getIncome.bind(this);
+    this.getIncome = this.getIncome.bind(this);
+    this.getExpenses = this.getExpenses.bind(this);
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -82,8 +83,6 @@ class App extends Component {
                   title: 'job_title',
                   value: 2000,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 }
               ],
               get totals() {
@@ -101,15 +100,11 @@ class App extends Component {
                   title: 'rent',
                   value: 1000,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 },
                 {
                   title: 'storage_locker',
                   value: 50,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 }
               ],
               get totals() {
@@ -125,15 +120,11 @@ class App extends Component {
                   title: 'eating_out',
                   value: 150,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 },
                 {
                   title: 'groceries',
                   value: 200,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 }
               ],
               get totals() {
@@ -149,15 +140,11 @@ class App extends Component {
                   title: 'state',
                   value: 300,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 },
                 {
                   title: 'federal',
                   value: 500,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 }
             ],
             get totals() {
@@ -175,15 +162,11 @@ class App extends Component {
                   title: 'student_loan',
                   value: 1000,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 },
                 {
                   title: 'auto_loan',
                   value: 500,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 }
               ],
               get totals() {
@@ -201,8 +184,6 @@ class App extends Component {
                   title: '401k',
                   value: 10000,
                   isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
                 }
               ],
               get totals() {
@@ -228,7 +209,8 @@ class App extends Component {
                 }, 0)
               }
             }
-          ]
+          ],
+          
         })
       }
     
@@ -238,14 +220,27 @@ class App extends Component {
     
   }
 
+  getColumnTotals = (type)=>{
+    console.log("Getting Column Totals")
+    let totalValue = 0;
+    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> {return sum + category.totals}, 0))
+    return totalValue;
+  }
+
   getIncome = ()=> {
-    console.log("Get income called")
-    let totalEarnings = 0;
-    this.state.years.map((year)=>{
-      totalEarnings += year.income.reduce((sum, category)=> {return sum + category.totals}, 0)
-      console.log(totalEarnings)
-    })
-    return totalEarnings;
+    return this.getColumnTotals('income');
+  }
+
+  getExpenses = ()=>{
+    return this.getColumnTotals('expenses');
+  }
+
+  getDebt = ()=>{
+    return this.getColumnTotals('debt');
+  }
+
+  getSavings = ()=>{
+    return this.getColumnTotals('savings');
   }
 
   toggleEditEntry = (location) =>{
@@ -308,6 +303,7 @@ class App extends Component {
     else{
       years.push(e)
     }
+    return true;
   })
     return years;
   }
@@ -449,8 +445,10 @@ class App extends Component {
         />
         <Counter 
           income = {this.getIncome()}
+          expense = {this.getExpenses()}
           savings = {this.state.startingValues.Savings}
-          debt = {this.state.startingValues.Debt}
+          debt = {this.getDebt()}
+          savings = {this.getSavings()}
           retirment = {this.state.startingValues.Retirment}
           />
         <Footer />

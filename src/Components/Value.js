@@ -15,8 +15,7 @@ const Value = (props) =>{
 }
 
 Value.propTypes = {
-    value: PropTypes.node,
-    pendingValue: PropTypes.node.isRequired
+    value: PropTypes.node
 }
 
 export default Value;

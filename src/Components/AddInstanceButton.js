@@ -6,7 +6,7 @@ const AddInstanceButton = (props) => <button onClick = {props.onClick}>Add</butt
     
 
 AddInstanceButton.propTypes = {
-   
+   onClick: PropTypes.func.isRequired
 }
 
 export default AddInstanceButton;

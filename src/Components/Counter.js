@@ -32,11 +32,14 @@ const Counter = (props) =>{
             <span style={netWorthColor(props)}>Net Worth: ${props.savings - props.debt}</span>
             <span>{getYearsToRetirment(props)}</span>
             <span> income: {props.income} </span>
+            <span>expense: {props.expense}</span>
         </div>
     )
 }
 
 Counter.propTypes = {
-    debt: PropTypes.number.isRequired
+    debt: PropTypes.number.isRequired,
+    // getIncome: PropTypes.number,
+    // getExpenses: PropTypes.number,
 }
 export default Counter;
