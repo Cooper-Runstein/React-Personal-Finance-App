@@ -4,7 +4,7 @@ import './css/display.css';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Counter from './Components/Counter';
-// import StartingForm from './Components/StartingForm';
+import Start from './Components/Start';
 import YearsContainer from './Components/YearsContainer';
 
 
@@ -74,7 +74,6 @@ class App extends Component {
       years.push(
         {
           year: this.state.date + i,
-          pendingValues: {},
           income: [
             {
               title: 'jobs',
@@ -426,9 +425,9 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        {/* <StartingForm
-          getInitialInputs = {this.getInitialInputs.bind(this)}
-          /> */}
+        <Start
+          
+          />
           <button onClick = {this.generateYears}>Generate</button>
         <YearsContainer 
           retirmentYear = {this.state.startingValues.Retirment}

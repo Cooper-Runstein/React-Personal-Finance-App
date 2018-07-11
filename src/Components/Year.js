@@ -68,7 +68,6 @@ const Year =(props)=>{
                         addInstance = {props.addInstance}
                     />
                 })}
-                
             </tr>
            )
     } 
