@@ -10,7 +10,7 @@ const SubCategoryForm = (props)=> {
                 
                 ?
                 
-                <div>
+                <div key={i}>
                     <input placeholder = {e.title}/>
                     <input placeholder = {e.value}/>
                     <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button><button>Remove</button>
@@ -18,14 +18,14 @@ const SubCategoryForm = (props)=> {
 
                 :
 
-                <div>
+                <div key={i}>
                     <span>{e.title}</span>
                     <span>{e.value}</span>
                     <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button><button>Remove</button>
                 </div>
                 )
             })}
-        <button>Add</button>
+        <button onClick={ props.addInstance }>Add</button>
         </div>
     )
 }

@@ -6,6 +6,7 @@ class Start extends React.Component {
     constructor(props){
         super(props);
         this.onEditAt = this.onEditAt.bind(this);
+        this.addInstance = this.addInstance.bind(this);
         this.state={
             income: [
                 {
@@ -102,6 +103,40 @@ class Start extends React.Component {
         })
     }
 
+    addInstance = (type, catIndex)=>{
+        console.log("Adding instance")
+        const newCategory = [];
+        const alterInstance = (entries)=>{
+            let oldEntries = entries.slice();
+            console.log(oldEntries);
+            oldEntries.push({
+                title: 'set',
+                value: 'set',
+                isEditing: true,
+            })
+            console.log(oldEntries);
+            return oldEntries;
+        }
+
+        this.state[type].map((e,i)=>{
+            if (i === catIndex){
+                let subCategory = {
+                    ...e,
+                    entries: alterInstance(e.entries)
+                }
+                newCategory.push(subCategory);
+            }
+            else{
+                newCategory.push(e);
+            }
+        })
+
+        this.setState({
+            ...this.state,
+            [type]: newCategory
+        })
+    }
+
     render(){
     return (
         <div>
@@ -112,6 +147,7 @@ class Start extends React.Component {
                     type = {'income'}
                     subCat = {e}
                     onEditAt = {this.onEditAt}
+                    addInstance = {()=> this.addInstance('income', i)}
                 />
             })}
             {this.state.expenses.map((e,i)=>{
@@ -121,6 +157,7 @@ class Start extends React.Component {
                     type = {'expenses'}
                     subCat = {e}
                     onEditAt = {this.onEditAt}
+                    addInstance = {()=> this.addInstance('expenses', i)}
                 />
             })}
         </div>
