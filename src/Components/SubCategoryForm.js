@@ -13,7 +13,8 @@ const SubCategoryForm = (props)=> {
                 <div key={i}>
                     <input placeholder = {e.title}/>
                     <input placeholder = {e.value}/>
-                    <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button><button>Remove</button>
+                    <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Confirm </button>
+                    <button onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
                 </div>
 
                 :
@@ -21,7 +22,8 @@ const SubCategoryForm = (props)=> {
                 <div key={i}>
                     <span>{e.title}</span>
                     <span>{e.value}</span>
-                    <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button><button>Remove</button>
+                    <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button>
+                    <button onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
                 </div>
                 )
             })}

@@ -137,6 +137,40 @@ class Start extends React.Component {
         })
     }
 
+    removeInstanceAt = (type, catIndex, instanceIndex)=>{
+        const newCategory = [];
+        const alterInstance = (entries, instanceIndex)=>{
+            const newEntries = [];
+            entries.map((e,i)=>{
+                if (i === instanceIndex){
+                   return false;
+                }
+                else{
+                    newEntries.push(e)
+                }
+            })
+            return newEntries;
+        }
+
+        this.state[type].map((e,i)=>{
+            if (i === catIndex){
+                let subCategory = {
+                    ...e,
+                    entries: alterInstance(e.entries, instanceIndex)
+                }
+                newCategory.push(subCategory);
+            }
+            else{
+                newCategory.push(e);
+            }
+        })
+
+        this.setState({
+            ...this.state,
+            [type]: newCategory
+        })
+    }
+
     render(){
     return (
         <div>
@@ -147,6 +181,7 @@ class Start extends React.Component {
                     type = {'income'}
                     subCat = {e}
                     onEditAt = {this.onEditAt}
+                    removeInstanceAt = {this.removeInstanceAt}
                     addInstance = {()=> this.addInstance('income', i)}
                 />
             })}
@@ -157,6 +192,7 @@ class Start extends React.Component {
                     type = {'expenses'}
                     subCat = {e}
                     onEditAt = {this.onEditAt}
+                    removeInstanceAt = {this.removeInstanceAt}
                     addInstance = {()=> this.addInstance('expenses', i)}
                 />
             })}
