@@ -11,9 +11,19 @@ const SubCategoryForm = (props)=> {
                 ?
                 
                 <div key={i}>
-                    <input placeholder = {e.title}/>
-                    <input placeholder = {e.value}/>
-                    <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Confirm </button>
+                    <input 
+                        placeholder = {e.title} 
+                        value = {e.pendingTitle}
+                        id={`title-${props.type}-${props.catIndex}-${i}`}
+                        onChange={()=> props.onChange(props.type, props.catIndex, i)}
+                    />
+                    <input 
+                        placeholder = {e.value} 
+                        value = {e.pendingValue}
+                        id={`value-${props.type}-${props.catIndex}-${i}`}
+                        onChange={()=> props.onChange(props.type, props.catIndex, i)}
+                    />
+                    <button onClick={()=> props.onConfirm(props.type, props.catIndex, i)}> Confirm </button>
                     <button onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
                 </div>
 

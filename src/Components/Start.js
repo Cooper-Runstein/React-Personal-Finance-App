@@ -7,6 +7,8 @@ class Start extends React.Component {
         super(props);
         this.onEditAt = this.onEditAt.bind(this);
         this.addInstance = this.addInstance.bind(this);
+        this.onChangeAt = this.onChangeAt.bind(this);
+        this.onConfirmAt = this.onConfirmAt.bind(this);
         this.state={
             income: [
                 {
@@ -16,6 +18,8 @@ class Start extends React.Component {
                       title: 'set job title',
                       value: "set",
                       isEditing: true,
+                      pendingTitle: '',
+                      pendingValue: ''
                     }
                   ],
                   get totals() {
@@ -33,11 +37,15 @@ class Start extends React.Component {
                       title: 'rent',
                       value: 1000,
                       isEditing: true,
+                      pendingTitle: '',
+                      pendingValue: ''
                     },
                     {
                       title: 'storage_locker',
                       value: 50,
                       isEditing: true,
+                      pendingTitle: '',
+                      pendingValue: ''
                     }
                   ],
                   get totals() {
@@ -53,11 +61,15 @@ class Start extends React.Component {
                       title: 'eating_out',
                       value: 150,
                       isEditing: true,
+                      pendingTitle: '',
+                      pendingValue: ''
                     },
                     {
                       title: 'groceries',
                       value: 200,
                       isEditing: true,
+                      pendingTitle: '',
+                      pendingValue: ''
                     }
                   ],
                 }
@@ -66,21 +78,26 @@ class Start extends React.Component {
     }
 
     onEditAt = (type, catIndex, instanceIndex)=> {
+        console.log("Edit Called");
         const newCategory = [];
         const alterInstance = (entries, instanceIndex)=>{
             const newEntries = [];
             entries.map((e,i)=>{
                 if (i === instanceIndex){
+                    console.log(e)
                     let newInstance = {
                         ...e,
                         isEditing: !e.isEditing
                     }
                     newEntries.push(newInstance)
+                    
                 }
                 else{
                     newEntries.push(e)
                 }
-            })
+                return null;
+            }
+        )
             return newEntries;
         }
 
@@ -95,7 +112,9 @@ class Start extends React.Component {
             else{
                 newCategory.push(e);
             }
-        })
+            return null;
+        }
+    )
 
         this.setState({
             ...this.state,
@@ -104,17 +123,16 @@ class Start extends React.Component {
     }
 
     addInstance = (type, catIndex)=>{
-        console.log("Adding instance")
         const newCategory = [];
         const alterInstance = (entries)=>{
             let oldEntries = entries.slice();
-            console.log(oldEntries);
             oldEntries.push({
                 title: 'set',
                 value: 'set',
                 isEditing: true,
+                pendingTitle: '',
+                pendingValue: ''
             })
-            console.log(oldEntries);
             return oldEntries;
         }
 
@@ -129,7 +147,9 @@ class Start extends React.Component {
             else{
                 newCategory.push(e);
             }
-        })
+            return null;
+        }
+    )
 
         this.setState({
             ...this.state,
@@ -148,7 +168,9 @@ class Start extends React.Component {
                 else{
                     newEntries.push(e)
                 }
-            })
+                return null;
+            }
+        )
             return newEntries;
         }
 
@@ -163,12 +185,123 @@ class Start extends React.Component {
             else{
                 newCategory.push(e);
             }
-        })
+            return null;
+        }
+    )
 
         this.setState({
             ...this.state,
             [type]: newCategory
         })
+    }
+
+    onChangeAt = (type, catIndex, instanceIndex)=> {
+        const newCategory = [];
+        const alterInstance = (entries, instanceIndex)=>{
+            const newEntries = [];
+            entries.map((e,i)=>{
+                if (i === instanceIndex){
+                    const valueValue = document.getElementById(`value-${type}-${catIndex}-${i}`).value;
+                    const titleValue = document.getElementById(`title-${type}-${catIndex}-${i}`).value;
+                    
+                    let newInstance = {
+                        ...e,
+                        pendingValue: valueValue,
+                        pendingTitle: titleValue,
+
+                    }
+                    newEntries.push(newInstance);
+                }
+                else{
+                    newEntries.push(e)
+                }
+
+                return null;
+
+                }
+            )
+            return newEntries;
+        }
+
+        this.state[type].map((e,i)=>{
+            if (i === catIndex){
+                let subCategory = {
+                    ...e,
+                    entries: alterInstance(e.entries, instanceIndex)
+                }
+                newCategory.push(subCategory);
+            }
+            else{
+                newCategory.push(e);
+            }
+            return null;
+            }
+        )
+
+        this.setState(
+            {
+            ...this.state,
+            [type]: newCategory
+            }
+        )   
+    }
+
+    onConfirmAt = (type, catIndex, instanceIndex)=> {
+        console.log("Confirm Called");
+        const newCategory = [];
+        const alterInstance = (entries, instanceIndex)=>{
+            const newEntries = [];
+            entries.map((e,i)=>{
+                if (i === instanceIndex){
+                    let newValue;
+                    if (parseFloat(e.pendingValue)){
+                        newValue = parseFloat(e.pendingValue);
+                    }
+                    else{
+                        newValue = "Invalid Entry, Try Again";
+                    }
+                    let newInstance = {
+                        ...e,
+                        title: e.pendingTitle,
+                        value: newValue,
+                        isEditing: false,
+                    }
+                    console.log(newInstance);
+                    newEntries.push(newInstance);
+                }
+                else{
+                    newEntries.push(e)
+                }
+
+                return null;
+
+                }
+            )
+            console.log(newEntries === entries)
+            return newEntries;
+        }
+
+        this.state[type].map((e,i)=>{
+            if (i === catIndex){
+                let subCategory = {
+                    ...e,
+                    entries: alterInstance(e.entries, instanceIndex)
+                }
+                newCategory.push(subCategory);
+            }
+            else{
+                newCategory.push(e);
+            }
+            return null;
+            }
+        )
+
+        this.setState(
+            {
+            ...this.state,
+            [type]: newCategory
+            }
+        )   
     }
 
     render(){
@@ -183,6 +316,8 @@ class Start extends React.Component {
                     onEditAt = {this.onEditAt}
                     removeInstanceAt = {this.removeInstanceAt}
                     addInstance = {()=> this.addInstance('income', i)}
+                    onChange = {this.onChangeAt}
+                    onConfirm = {this.onConfirmAt}
                 />
             })}
             {this.state.expenses.map((e,i)=>{
@@ -194,6 +329,8 @@ class Start extends React.Component {
                     onEditAt = {this.onEditAt}
                     removeInstanceAt = {this.removeInstanceAt}
                     addInstance = {()=> this.addInstance('expenses', i)}
+                    onChange = {this.onChangeAt}
+                    onConfirm = {this.onConfirmAt}
                 />
             })}
         </div>
@@ -203,8 +340,7 @@ class Start extends React.Component {
 }
 
 Start.propTypes = {
-    title: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    
 }
 
 export default Start;
