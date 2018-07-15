@@ -11,6 +11,8 @@ class Start extends React.Component {
         this.onConfirmAt = this.onConfirmAt.bind(this);
         this.alterCategory = this.alterCategory.bind(this);
         this.state={
+            pendingRetirment: '',
+            retirmentYear: '',
             income: [
                 {
                   title: 'Jobs',
@@ -130,8 +132,6 @@ class Start extends React.Component {
             ...this.state,
             [type]: this.alterCategory(type, catIndex, instanceIndex, newState)
         })
-        // console.log(type)
-        // console.log(this.state.income)
     }
 
     addInstance = (type, catIndex)=>{
@@ -374,6 +374,26 @@ class Start extends React.Component {
                         onConfirm = {this.onConfirmAt}
                     />
                 })}
+                
+                <input 
+                    placeholder='Enter Retirment Year'
+                    id="retirment-input"
+                    value={this.state.pendingRetirment}
+                    onChange={(e)=>{
+                        this.setState({
+                            ...this.state,
+                            pendingRetirment: e.target.value
+                        })
+                    }}
+                        />
+                <button
+                    onClick={()=>{
+                        this.setState({
+                            ...this.state,
+                            retirmentYear: this.state.pendingRetirment
+                        })
+                    }}>Confirm Retirment</button>
+                
                 <button onClick={()=>this.packageData()}>Package Data</button>
 
             </div>
