@@ -9,6 +9,7 @@ class Start extends React.Component {
         this.addInstance = this.addInstance.bind(this);
         this.onChangeAt = this.onChangeAt.bind(this);
         this.onConfirmAt = this.onConfirmAt.bind(this);
+        this.alterCategory = this.alterCategory.bind(this);
         this.state={
             income: [
                 {
@@ -77,20 +78,16 @@ class Start extends React.Component {
         }
     }
 
-    onEditAt = (type, catIndex, instanceIndex)=> {
-        console.log("Edit Called");
-        const newCategory = [];
-        const alterInstance = (entries, instanceIndex)=>{
+    changeInstanceObject = ()=>{
+
+    }
+
+    //*****Button and Input Change/Click functions********//
+    alterInstance = (entries, instanceIndex, newState)=>{
             const newEntries = [];
             entries.map((e,i)=>{
                 if (i === instanceIndex){
-                    console.log(e)
-                    let newInstance = {
-                        ...e,
-                        isEditing: !e.isEditing
-                    }
-                    newEntries.push(newInstance)
-                    
+                    newEntries.push(newState(e));
                 }
                 else{
                     newEntries.push(e)
@@ -99,27 +96,42 @@ class Start extends React.Component {
             }
         )
             return newEntries;
-        }
+    }
 
+    alterCategory = (type, catIndex, instanceIndex, newState)=>{
+        console.log("AlterCat called");
+        let newCategory = [];
         this.state[type].map((e,i)=>{
             if (i === catIndex){
                 let subCategory = {
                     ...e,
-                    entries: alterInstance(e.entries, instanceIndex)
+                    entries: this.alterInstance(e.entries, instanceIndex, newState)
                 }
                 newCategory.push(subCategory);
             }
             else{
                 newCategory.push(e);
             }
-            return null;
-        }
-    )
+            
+        })
+        console.log(newCategory);
+            return newCategory;
+    }
 
+    onEditAt = (type, catIndex, instanceIndex)=> {
+        console.log("Edit Called");
+        const newState = (e)=> {
+            return {
+                ...e,
+                isEditing: !e.isEditing
+            }
+        }
         this.setState({
             ...this.state,
-            [type]: newCategory
+            [type]: this.alterCategory(type, catIndex, instanceIndex, newState)
         })
+        // console.log(type)
+        // console.log(this.state.income)
     }
 
     addInstance = (type, catIndex)=>{
@@ -248,6 +260,7 @@ class Start extends React.Component {
 
     onConfirmAt = (type, catIndex, instanceIndex)=> {
         console.log("Confirm Called");
+        console.log(this.state.income);
         const newCategory = [];
         const alterInstance = (entries, instanceIndex)=>{
             const newEntries = [];
