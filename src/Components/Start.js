@@ -319,41 +319,54 @@ class Start extends React.Component {
         )   
     }
 
-    render(){
-    return (
-        <div>
-            {this.state.income.map((e,i)=>{
-                return <SubCategoryForm 
-                    key = {i}
-                    catIndex = {i}
-                    type = {'income'}
-                    title = {e.title}
-                    subCat = {e}
-                    onEditAt = {this.onEditAt}
-                    removeInstanceAt = {this.removeInstanceAt}
-                    addInstance = {()=> this.addInstance('income', i)}
-                    onChange = {this.onChangeAt}
-                    onConfirm = {this.onConfirmAt}
-                />
-            })}
-            {this.state.expenses.map((e,i)=>{
-                return <SubCategoryForm 
-                    key = {i}
-                    catIndex = {i}
-                    type = {'expenses'}
-                    subCat = {e}
-                    title = {e.title}
-                    onEditAt = {this.onEditAt}
-                    removeInstanceAt = {this.removeInstanceAt}
-                    addInstance = {()=> this.addInstance('expenses', i)}
-                    onChange = {this.onChangeAt}
-                    onConfirm = {this.onConfirmAt}
-                />
-            })}
-        </div>
-    )
+    packageData = ()=>{
+        this.props.getStartingFormData({
+            income: this.state.income,
+            expenses: this.state.expenses
+        })
+    }
 
-}
+
+    render(){
+
+        return (
+            <div>
+
+                {this.state.income.map((e,i)=>{
+                    return <SubCategoryForm 
+                        key = {i}
+                        catIndex = {i}
+                        type = {'income'}
+                        title = {e.title}
+                        subCat = {e}
+                        onEditAt = {this.onEditAt}
+                        removeInstanceAt = {this.removeInstanceAt}
+                        addInstance = {()=> this.addInstance('income', i)}
+                        onChange = {this.onChangeAt}
+                        onConfirm = {this.onConfirmAt}
+                    />
+                })}
+
+                {this.state.expenses.map((e,i)=>{
+                    return <SubCategoryForm 
+                        key = {i}
+                        catIndex = {i}
+                        type = {'expenses'}
+                        subCat = {e}
+                        title = {e.title}
+                        onEditAt = {this.onEditAt}
+                        removeInstanceAt = {this.removeInstanceAt}
+                        addInstance = {()=> this.addInstance('expenses', i)}
+                        onChange = {this.onChangeAt}
+                        onConfirm = {this.onConfirmAt}
+                    />
+                })}
+                <button onClick={()=>this.packageData()}>Package Data</button>
+
+            </div>
+        )
+
+    }
 }
 
 Start.propTypes = {

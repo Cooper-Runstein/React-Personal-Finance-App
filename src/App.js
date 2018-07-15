@@ -20,6 +20,7 @@ class App extends Component {
     this.addInstance = this.addInstance.bind(this);
     this.getIncome = this.getIncome.bind(this);
     this.getExpenses = this.getExpenses.bind(this);
+    this.getStartingFormData = this.getStartingFormData.bind(this);
     this.state = {
       startingValues: {
         startFormStatus: 0,
@@ -421,12 +422,19 @@ class App extends Component {
       })
   }
 
+  getStartingFormData = (packagedData)=>{
+    this.setState({
+      ...this.state,
+      packagedData: packagedData,
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Header />
         <Start
-          
+          getStartingFormData = {this.getStartingFormData}
           />
           <button onClick = {this.generateYears}>Generate</button>
         <YearsContainer 
