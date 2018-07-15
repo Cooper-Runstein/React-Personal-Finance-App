@@ -12,14 +12,14 @@ class Start extends React.Component {
         this.state={
             income: [
                 {
-                  title: 'jobs',
+                  title: 'Jobs',
                   entries: [
                     {
-                      title: 'set job title',
+                      title: 'Set Job title',
                       value: "set",
                       isEditing: true,
-                      pendingTitle: '',
-                      pendingValue: ''
+                      pendingTitle: 'Set Job Title',
+                      pendingValue: '0'
                     }
                   ],
                   get totals() {
@@ -31,18 +31,18 @@ class Start extends React.Component {
               ],
             expenses: [
                 {
-                  title: 'housing',
+                  title: 'Housing',
                   entries: [
                     {
-                      title: 'rent',
-                      value: 1000,
+                      title: 'Rent',
+                      value: 0,
                       isEditing: true,
-                      pendingTitle: '',
-                      pendingValue: ''
+                      pendingTitle: 'Rent',
+                      pendingValue: '0'
                     },
                     {
-                      title: 'storage_locker',
-                      value: 50,
+                      title: '',
+                      value: 0,
                       isEditing: true,
                       pendingTitle: '',
                       pendingValue: ''
@@ -58,11 +58,11 @@ class Start extends React.Component {
                   title: 'food',
                   entries: [
                     {
-                      title: 'eating_out',
-                      value: 150,
+                      title: 'Eating Out',
+                      value: 0,
                       isEditing: true,
-                      pendingTitle: '',
-                      pendingValue: ''
+                      pendingTitle: 'Eating Out',
+                      pendingValue: '0',
                     },
                     {
                       title: 'groceries',
@@ -253,17 +253,33 @@ class Start extends React.Component {
             const newEntries = [];
             entries.map((e,i)=>{
                 if (i === instanceIndex){
-                    let newValue;
-                    if (parseFloat(e.pendingValue)){
-                        newValue = parseFloat(e.pendingValue);
+                    
+                    const validateValue = (e)=>{
+                        const falseChars = [',', '.', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
+                        const strippedValue = (pendingString)=>{
+                            falseChars.map((char)=>{
+                                pendingString = pendingString.replace(char, '');
+                            })
+                            return pendingString
+                        }
+
+                        let newValue;
+                        if (!Number.isNaN(parseFloat(strippedValue(e.pendingValue)))){
+                            newValue = parseFloat(strippedValue(e.pendingValue));
+                        }
+                        else{
+                            console.log('value failed:' + strippedValue(e.pendingValue));
+                            newValue = "Invalid Entry, Try Again";
+                        }
+                        return newValue
                     }
-                    else{
-                        newValue = "Invalid Entry, Try Again";
-                    }
+
+                    let validatedValue = validateValue(e);
+
                     let newInstance = {
                         ...e,
                         title: e.pendingTitle,
-                        value: newValue,
+                        value: validatedValue,
                         isEditing: false,
                     }
                     console.log(newInstance);
@@ -277,7 +293,6 @@ class Start extends React.Component {
 
                 }
             )
-            console.log(newEntries === entries)
             return newEntries;
         }
 
@@ -312,6 +327,7 @@ class Start extends React.Component {
                     key = {i}
                     catIndex = {i}
                     type = {'income'}
+                    title = {e.title}
                     subCat = {e}
                     onEditAt = {this.onEditAt}
                     removeInstanceAt = {this.removeInstanceAt}
@@ -326,6 +342,7 @@ class Start extends React.Component {
                     catIndex = {i}
                     type = {'expenses'}
                     subCat = {e}
+                    title = {e.title}
                     onEditAt = {this.onEditAt}
                     removeInstanceAt = {this.removeInstanceAt}
                     addInstance = {()=> this.addInstance('expenses', i)}

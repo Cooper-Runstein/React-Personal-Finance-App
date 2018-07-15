@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const SubCategoryForm = (props)=> {
     return (
         <div>
+            <h3>{props.title}</h3>
             {props.subCat.entries.map((e,i)=>{
                 return (
                 e.isEditing 
@@ -23,8 +24,10 @@ const SubCategoryForm = (props)=> {
                         id={`value-${props.type}-${props.catIndex}-${i}`}
                         onChange={()=> props.onChange(props.type, props.catIndex, i)}
                     />
-                    <button onClick={()=> props.onConfirm(props.type, props.catIndex, i)}> Confirm </button>
-                    <button onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
+                    <button 
+                        onClick={()=> props.onConfirm(props.type, props.catIndex, i)}> Confirm </button>
+                    <button 
+                        onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
                 </div>
 
                 :
@@ -32,8 +35,10 @@ const SubCategoryForm = (props)=> {
                 <div key={i}>
                     <span>{e.title}</span>
                     <span>{e.value}</span>
-                    <button onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button>
-                    <button onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
+                    <button 
+                        onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button>
+                    <button 
+                        onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
                 </div>
                 )
             })}
