@@ -333,10 +333,17 @@ class Start extends React.Component {
     }
 
     packageData = ()=>{
-        this.props.getStartingFormData({
-            income: this.state.income,
-            expenses: this.state.expenses
-        })
+        if((typeof parseFloat(this.state.retirmentYear) === "number") && Math.floor(parseFloat(this.state.retirmentYear)) === parseFloat(this.state.retirmentYear) && parseFloat(this.state.retirmentYear) > this.props.year){
+            this.props.getStartingFormData({
+                retirmentYear: this.state.retirmentYear,
+                income: this.state.income,
+                expenses: this.state.expenses
+            })
+            console.log("Succesful pacakge submission");
+        }
+        else{
+            console.log("Form not ready for submission");
+        }
     }
 
 

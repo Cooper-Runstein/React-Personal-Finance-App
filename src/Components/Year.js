@@ -38,7 +38,7 @@ const Year =(props)=>{
                         addInstance = {props.addInstance}
                     />
                 })}
-                {props.year.debt.map((e,i)=>{
+                {/* {props.year.debt.map((e,i)=>{
                     return <Category 
                         key = {i}
                         catKey = {i}
@@ -67,7 +67,7 @@ const Year =(props)=>{
                         onConfirm = {props.onConfirm}
                         addInstance = {props.addInstance}
                     />
-                })}
+                })} */}
             </tr>
            )
     } 

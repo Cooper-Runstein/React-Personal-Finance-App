@@ -70,150 +70,17 @@ class App extends Component {
   generateYears = (e) =>{
     e.preventDefault();
     const years = [];
-    let numYears = this.getNumberOfRows(this.state.startingValues.Retirment)
+    let numYears = this.getNumberOfRows(this.state.packagedData.retirmentYear)
     for (let i = 0; i < numYears; i++){
       years.push(
         {
           year: this.state.date + i,
-          income: [
-            {
-              title: 'jobs',
-              entries: [
-                {
-                  title: 'job_title',
-                  value: 2000,
-                  isEditing: false,
-                }
-              ],
-              get totals() {
-                return this.entries.reduce((sum, entry)=>{
-                  return sum + entry.value
-                }, 0)
-              }
-            }  
-          ],
-          expenses: [
-            {
-              title: 'housing',
-              entries: [
-                {
-                  title: 'rent',
-                  value: 1000,
-                  isEditing: false,
-                },
-                {
-                  title: 'storage_locker',
-                  value: 50,
-                  isEditing: false,
-                }
-              ],
-              get totals() {
-                return this.entries.reduce((sum, entry)=>{
-                  return sum + entry.value
-                }, 0)
-              }
-            },
-            {
-              title: 'food',
-              entries: [
-                {
-                  title: 'eating_out',
-                  value: 150,
-                  isEditing: false,
-                },
-                {
-                  title: 'groceries',
-                  value: 200,
-                  isEditing: false,
-                }
-              ],
-              get totals() {
-                return this.entries.reduce((sum, entry)=>{
-                  return sum + entry.value
-                }, 0)
-              }
-            },
-            {
-              title: 'taxes',
-              entries: [
-                {
-                  title: 'state',
-                  value: 300,
-                  isEditing: false,
-                },
-                {
-                  title: 'federal',
-                  value: 500,
-                  isEditing: false,
-                }
-            ],
-            get totals() {
-              return this.entries.reduce((sum, entry)=>{
-                return sum + entry.value
-              }, 0)
-            }
-          }
-          ],
-          debt: [
-            {
-              title: 'loans',
-              entries: [
-                {
-                  title: 'student_loan',
-                  value: 1000,
-                  isEditing: false,
-                },
-                {
-                  title: 'auto_loan',
-                  value: 500,
-                  isEditing: false,
-                }
-              ],
-              get totals() {
-                return this.entries.reduce((sum, entry)=>{
-                  return sum + entry.value
-                }, 0)
-              }
-            },
-          ],
-          savings:[
-            {
-              title: 'retirment savings',
-              entries: [
-                {
-                  title: '401k',
-                  value: 10000,
-                  isEditing: false,
-                }
-              ],
-              get totals() {
-                return this.entries.reduce((sum, entry)=>{
-                  return sum + entry.value
-                }, 0)
-              }
-            },
-            {
-              title: 'stocks',
-              entries: [
-                {
-                  title: 'company_shares',
-                  value: 1000,
-                  isEditing: false,
-                  pendingTitle: '',
-                  pendingValue: ''
-                }
-              ],
-              get totals() {
-                return this.entries.reduce((sum, entry)=>{
-                  return sum + entry.value
-                }, 0)
-              }
-            }
-          ],
-          
-        })
-      }
-    
+          income: this.state.packagedData.income,
+          expenses: this.state.packagedData.expenses
+        }
+      );
+    }
+    console.log(years);
     this.setState({
       years: years
     })
@@ -435,6 +302,7 @@ class App extends Component {
         <Header />
         <Start
           getStartingFormData = {this.getStartingFormData}
+          year = {this.state.date}
           />
           <button onClick = {this.generateYears}>Generate</button>
         <YearsContainer 
@@ -450,14 +318,14 @@ class App extends Component {
           onConfirm = {this.onConfirm}
           addInstance = {this.addInstance}
         />
-        <Counter 
+        {/* <Counter 
           income = {this.getIncome()}
           expense = {this.getExpenses()}
           savings = {this.state.startingValues.Savings}
           debt = {this.getDebt()}
           savings = {this.getSavings()}
           retirment = {this.state.startingValues.Retirment}
-          />
+          /> */}
         <Footer />
       </div>
     );
