@@ -5,7 +5,7 @@ const SubCategoryForm = (props)=> {
     return (
         <div>
             <h3>{props.title}</h3>
-            {props.subCat.entries.map((e,i)=>{
+            {props.subCat.instances.map((e,i)=>{
                 return (
                 e.isEditing 
                 
