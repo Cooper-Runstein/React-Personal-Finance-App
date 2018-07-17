@@ -19,10 +19,14 @@ class Start extends React.Component {
                   instances: [
                     {
                       title: 'Set Job title',
-                      value: "set",
+                      value: 5000,
                       isEditing: true,
                       pendingTitle: 'Set Job Title',
-                      pendingValue: '5000'
+                      pendingValue: '5000',
+                      interest: {
+                        value: 1
+                        
+                      }
                     }
                   ],
                   get totals() {
@@ -38,10 +42,13 @@ class Start extends React.Component {
                   instances: [
                     {
                       title: 'Rent',
-                      value: 0,
+                      value: 1000,
                       isEditing: true,
                       pendingTitle: 'Rent',
-                      pendingValue: '1000'
+                      pendingValue: '1000',
+                      interest: {
+                        value: 1
+                      }
                     },
                   ],
                   get totals() {
@@ -55,17 +62,23 @@ class Start extends React.Component {
                   instances: [
                     {
                       title: 'Eating Out',
-                      value: 0,
+                      value: 60,
                       isEditing: true,
                       pendingTitle: 'Eating Out',
                       pendingValue: '60',
+                      interest: {
+                        value: 1.1
+                      }
                     },
                     {
                       title: 'Groceries',
-                      value: 200,
+                      value: 50,
                       isEditing: true,
                       pendingTitle: 'Groceries',
-                      pendingValue: '50'
+                      pendingValue: '50',
+                      interest: {
+                        value: 1
+                      }
                     }
                   ],
                 }
@@ -136,7 +149,10 @@ class Start extends React.Component {
                 value: 'set',
                 isEditing: true,
                 pendingTitle: '',
-                pendingValue: ''
+                pendingValue: '',
+                interest: {
+                    value: 1
+                  }
             })
             return oldinstances;
         }

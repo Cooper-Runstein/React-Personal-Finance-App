@@ -178,14 +178,14 @@ class App extends Component {
   getCategory = (location, info)=>{
     const currentCategory = location.currentCategory;
     const catKey = location.catKey;
-    const currentEntries = currentCategory[catKey]['entries'];
-    location.currentEntries = currentEntries;
+    const currentinstances = currentCategory[catKey]['instances'];
+    location.currentinstances = currentinstances;
     const newCat = []
     currentCategory.map((e,i)=>{
       if (i === catKey){
         let newEntry = {
           ...e,
-          entries: this.getEntry(location, info)
+          instances: this.getEntry(location, info)
         }
         newCat.push(newEntry)
       }
@@ -198,20 +198,20 @@ class App extends Component {
   }
 
   getEntry = (location, info)=>{
-    const currentEntries = location.currentEntries;
+    const currentinstances = location.currentinstances;
     const index = location.instanceIndex;
-    const entry = currentEntries[index];
-    const newEntries = [];
-    currentEntries.map((e,i)=>{
+    const entry = currentinstances[index];
+    const newinstances = [];
+    currentinstances.map((e,i)=>{
       if (i === index){
-        newEntries.push(info.newState(e, entry))
+        newinstances.push(info.newState(e, entry))
       }else{
-        newEntries.push(e)
+        newinstances.push(e)
       }
     }
   )
-    info.func(newEntries, index);
-    return newEntries;
+    info.func(newinstances, index);
+    return newinstances;
   }
 
   removeEntry = (location)=>{

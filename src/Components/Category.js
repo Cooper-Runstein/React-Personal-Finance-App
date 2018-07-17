@@ -5,7 +5,7 @@ import AddInstanceButton from './AddInstanceButton';
 
 
 const Category = (props) =>{
-    const totalValue = ()=>props.category.entries.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)
+    const totalValue = ()=>props.category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)
     return(
             <td>
                 <h3>{props.category.title + totalValue()}</h3>
@@ -17,8 +17,8 @@ const Category = (props) =>{
                         instanceIndex: 0 
                     })}
                 />
-                {props.category.entries.map((e,i)=> {
-                    //'Category' object has array 'entries' containing 'instance' objects
+                {props.category.instances.map((e,i)=> {
+                    //'Category' object has array 'instances' containing 'instance' objects
                     //Each instance has edit buttons and occupies a row within a category column for a given year
                     return(
                     <Instance 

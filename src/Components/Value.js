@@ -8,9 +8,10 @@ const Value = (props) =>{
             placeholder={props.value}
             onChange={props.onChange} /> 
         
+
         :
 
-        <span> Amount:{props.value}</span>
+        <span> Amount:{props.value * (props.interest ** props.yearIndex)}</span>
     )
 }
 
