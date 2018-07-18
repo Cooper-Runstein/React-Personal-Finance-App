@@ -22,7 +22,10 @@ const Instance = (props) =>{
                 value = {props.instance.value}
                 isEditing = {props.instance.isEditing}
                 pendingValue = {props.instance.pendingValue}
-                onChange = {props.onChangeValue}
+                onChangeVal = {props.onChangeValue}
+                onChangeInt = {props.onChangeInterest}
+                location = {props.location}
+    
             />
             <ConfirmButton 
                 instance={props.instance}

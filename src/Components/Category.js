@@ -48,6 +48,7 @@ const Category = (props) =>{
                         })}
                         onChangeValue = {props.onChangeValue}
                         onChangeTitle= {props.onChangeTitle}
+                        onChangeInterest = {props.onChangeInterest}
                         onConfirm= {props.onConfirm}
                 />
             )

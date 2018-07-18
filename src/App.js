@@ -22,17 +22,9 @@ class App extends Component {
     this.getExpenses = this.getExpenses.bind(this);
     this.getStartingFormData = this.getStartingFormData.bind(this);
     this.state = {
-      startingValues: {
-        startFormStatus: 0,
-        Savings: 0,
-        pendingSavings: '',
-        Debt: 0,
-        pendingDebt: '',
-        pendingRetirment: '',
-        Retirment: 2025,
-      },
       pendingValue: "",
       pendingTitle: "",
+      pendingInterest: "",
       date: new Date().getFullYear(),
       years: [
         
@@ -126,7 +118,7 @@ class App extends Component {
       {
         pendingTitle: "",
         pendingValue: "",
-        years: this.getYears(location, info)
+        years: this.alterYearsAt(location, info)
       }
     );
     console.log('Years altered');
@@ -139,17 +131,23 @@ class App extends Component {
             title: 'set',
             value: 'set',
             isEditing: true,
+            pendingInterest: '1',
+            pendingTitle: 'set',
+            pendingValue: 'set',
+            interest: {
+              value: 1
+            }
           })
         },
         newState: (e)=> e
     }
     this.setState({
       ...this.state,
-      years: this.getYears(location, info)
+      years: this.alterYearsAt(location, info)
     })
   }
 
-  getYears = (location, info)=>{
+  alterYearsAt = (location, info)=>{
     //location is an object with instance's postion
     //info is and object with two functions: 
     //newState returns the new instance values in state
@@ -185,7 +183,7 @@ class App extends Component {
       if (i === catKey){
         let newEntry = {
           ...e,
-          instances: this.getEntry(location, info)
+          instances: this.getInstance(location, info)
         }
         newCat.push(newEntry)
       }
@@ -197,7 +195,7 @@ class App extends Component {
     return newCat;
   }
 
-  getEntry = (location, info)=>{
+  getInstance = (location, info)=>{
     const currentinstances = location.currentinstances;
     const index = location.instanceIndex;
     const entry = currentinstances[index];
@@ -226,67 +224,51 @@ class App extends Component {
     this.setState({
       pendingTitle: "",
       pendingValue: "",
-      years: this.getYears(location, info)
+      years: this.alterYearsAt(location, info)
     })
     console.log('Years altered')
   }
 
-  onChangeFor = (e, type) =>{
-    e.preventDefault();
-    console.log(type);
-    console.log(e);
+  onChangeFor = (e, location, type) =>{
+    console.log('Change Called at: ' + location);
+    console.log(e.target.value);
+    const newVal = e.target.value;
+    const newState = (e)=>{
+      return{
+      ...e,
+      ['pending' + type]: newVal
+    }
+  };
+    const func = ()=>{null};
+    const info = {
+      newState,
+      func
+    }
+
     this.setState({
-      ["pending" + type]: e.target.value
+      ...this.state,
+      years: this.alterYearsAt(location, info)
     })
+
   }
 
-  onChangeValue = (e)=> {
+  onChangeValue = (e, location)=> {
     console.log("Value Change");
-    this.onChangeFor(e, 'Value');
+    this.onChangeFor(e, location, 'Value');
   }
 
-  onChangeTitle = (e)=>{
+  onChangeInterest = (e, location)=>{
+    console.log("Interest Change");
+    this.onChangeFor(e, location, 'Interest');
+  }
+
+  onChangeTitle = (e, location)=>{
     console.log("Title Change");
-    this.onChangeFor(e, 'Title');
+    this.onChangeFor(e, location, 'Title');
   }
 
   onConfirm = (location)=>{
-    console.log("Confirming Inputs")
-
-    const pendingValue = this.state.pendingValue;
-    const pendingTitle = this.state.pendingTitle;
-
-    const newState= (e, entry)=>{
-     
-      const oldState = {...e};
-      const alteredValues = {
-        isEditing: !e.isEditing,
-      }
-
-      if (pendingTitle !== ""){
-        alteredValues.title = pendingTitle;
-      }
-      if (pendingValue !== ""){
-        alteredValues.value = pendingValue;
-      }
-      
-      return Object.assign(oldState, alteredValues)
-         
-      }
-    const func= ()=> true;
-
-    const info= {
-      func: func,
-      newState: newState
-    }
-    
-    
-      this.setState({
-        ...this.state,
-        years: this.getYears(location, info),
-        pendingTitle: "",
-        pendingValue: ""
-      })
+    console.log('Confirming at: ' + location)
   }
 
   getStartingFormData = (packagedData)=>{
@@ -294,6 +276,15 @@ class App extends Component {
       ...this.state,
       packagedData: packagedData,
     })
+  }
+
+  getRetirmentYear = ()=>{
+    if (this.state.packagedData){
+      return this.state.packagedData.retirmentYear;
+    }
+    else{
+      return this.state.date;
+    }
   }
 
   render() {
@@ -305,16 +296,15 @@ class App extends Component {
           year = {this.state.date}
           />
           <button onClick = {this.generateYears}>Generate</button>
-        <YearsContainer 
-          retirmentYear = {this.state.startingValues.Retirment}
-          startingDebt = {this.state.startingValues.Debt}
-          startingSavings = {this.state.startingValues.Savings}
+        <YearsContainer
+          retirmentYear = {this.getRetirmentYear}
           currentYear = {this.state.date}
           years = {this.state.years}
           editEntry = {this.toggleEditEntry}
           removeEntry = {this.removeEntry}
           onChangeValue = {this.onChangeValue}
           onChangeTitle = {this.onChangeTitle}
+          onChangeInterest = {this.onChangeInterest}
           onConfirm = {this.onConfirm}
           addInstance = {this.addInstance}
         />

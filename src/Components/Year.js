@@ -34,6 +34,7 @@ const Year =(props)=>{
                         removeEntry = {props.removeEntry}
                         onChangeValue = {props.onChangeValue}
                         onChangeTitle = {props.onChangeTitle}
+                        onChangeInterest = {props.onChangeInterest}
                         onConfirm = {props.onConfirm}
                         addInstance = {props.addInstance}
                     />
