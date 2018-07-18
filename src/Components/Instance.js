@@ -15,6 +15,7 @@ const Instance = (props) =>{
                 isEditing = {props.instance.isEditing}
                 pendingTitle = {props.instance.pendingTitle}
                 onChange = {props.onChangeTitle}
+                location = {props.location}
             /> 
             <Value 
                 interest = {props.instance.interest.value}

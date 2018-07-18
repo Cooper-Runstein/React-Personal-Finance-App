@@ -269,6 +269,27 @@ class App extends Component {
 
   onConfirm = (location)=>{
     console.log('Confirming at: ' + location)
+    const func = ()=>{false};
+    const newState = (e)=>{
+      return {
+        ...e,
+        isEditing: false,
+        value: e.pendingValue,
+        title: e.pendingTitle,
+        interest:{
+          ...e.interest,
+          value: e.pendingInterest
+        }
+      }
+    }
+    const info ={
+      func,
+      newState
+    }
+    this.setState({
+      ...this.state,
+      years: this.alterYearsAt(location, info)
+    })
   }
 
   getStartingFormData = (packagedData)=>{
