@@ -88,7 +88,7 @@ class Start extends React.Component {
                     isEditing: true,
                     pendingTitle: 'Mortgage',
                     pendingValue: '1000',
-                    pendingInterest: '1.34',
+                    pendingInterest: '1',
                     interest: 1
                   },
                 ],
@@ -109,7 +109,7 @@ class Start extends React.Component {
                         value: 500,
                         pendingTitle: '401K',
                         pendingValue: '500',
-                        pendingInterest: '1.34',
+                        pendingInterest: '1',
                         interest: 1
                       },
                     ],
@@ -513,6 +513,7 @@ class Start extends React.Component {
                         onConfirm = {this.onConfirmAt}
                     />
                 })}
+                <hr />
                 <button
                     onClick={()=>this.confirmAll()}>Confirm All</button>
                 <div id="retirment-form">
