@@ -65,7 +65,9 @@ class App extends Component {
         {
           year: this.state.date + i,
           income: this.state.packagedData.income,
-          expenses: this.state.packagedData.expenses
+          expenses: this.state.packagedData.expenses,
+          debt: this.state.packagedData.debt,
+          savings: this.state.packagedData.savings
         }
       );
     }

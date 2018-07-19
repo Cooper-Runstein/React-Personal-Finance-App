@@ -437,7 +437,9 @@ class Start extends React.Component {
             this.props.getStartingFormData({
                 retirmentYear: this.state.retirmentYear,
                 income: this.state.income,
-                expenses: this.state.expenses
+                expenses: this.state.expenses,
+                debt: this.state.debt,
+                savings: this.state.savings
             })
             console.log("Succesful pacakge submission");
         }
