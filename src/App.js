@@ -66,11 +66,18 @@ class App extends Component {
     // e.preventDefault();
     const years = [];
     let numYears = this.getNumberOfRows(this.state.packagedData.retirmentYear)
+    let initialYear = {
+      year: this.state.date,
+      income: this.state.packagedData.income,
+      expenses: this.state.packagedData.expenses,
+      debt: this.state.packagedData.debt,
+      savings: this.state.packagedData.savings
+    }
     for (let i = 0; i < numYears; i++){
       years.push(
         {
           year: this.state.date + i,
-          income: this.state.packagedData.income,
+          income: this.applyInitialInterest(this.state.packagedData.income, initialYear, i),
           expenses: this.state.packagedData.expenses,
           debt: this.state.packagedData.debt,
           savings: this.state.packagedData.savings
@@ -82,6 +89,17 @@ class App extends Component {
       years: years
     })
     
+  }
+
+  applyInitialInterest = (category, initialYear, yearIndex)=>{
+    let alteredCategory = category.map((subCat)=>{
+      return subCat
+    });
+    
+    const applyAtInstance = (instance, initialInstance)=>{
+
+    }
+    return alteredCategory
   }
 
   getColumnTotals = (type)=>{

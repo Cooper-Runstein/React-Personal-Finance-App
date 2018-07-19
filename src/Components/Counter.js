@@ -31,6 +31,7 @@ export default class Counter extends React.Component {
             return "Years To Retirment:" + yearsToRetirement;
         }
     }
+    
     render(){
     return(
         <div id="counter">

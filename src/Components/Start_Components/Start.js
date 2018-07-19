@@ -188,10 +188,10 @@ class Start extends React.Component {
                 isEditing: true,
                 pendingTitle: '',
                 pendingValue: '',
-                interest: {
-                    value: 1
-                  }
+                pendingInterest: '1',
+                interest: 1
             })
+            
             return oldinstances;
         }
 
