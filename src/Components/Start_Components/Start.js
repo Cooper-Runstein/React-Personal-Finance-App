@@ -431,6 +431,7 @@ class Start extends React.Component {
                     title: instance.pendingTitle,
                     value: instance.pendingValue,
                     interest: instance.pendingInterest,
+                    length: instance.pendingLength,
                     isEditing: false
                 }
                 console.log('instance: ' + newInstance)

@@ -98,13 +98,27 @@ class App extends Component {
         let initialInterest = initialInstance.interest;
         let initialLength = initialInstance.length;
 
-        if (initialInstance !== 1){
+        if (initialInterest !== 1){
           if (initialLength === 'auto'){
             return {
               ...instance,
               value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex)
             }
           }
+          if (initialLength !== 'auto' && parseFloat(initialLength) > yearIndex){
+            console.log("Actively Applying interest At" + yearIndex + initialLength)
+            return {
+              ...instance,
+              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex)
+            }
+          }
+          if (initialLength !== 'auto' && parseFloat(initialLength) <= yearIndex){
+            console.log("Maintaining Applying interest at yearIndex and length: " + yearIndex + initialLength)
+            return {
+              ...instance,
+              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** initialLength)
+          }
+        }
         }
 
         return initialInstance;
