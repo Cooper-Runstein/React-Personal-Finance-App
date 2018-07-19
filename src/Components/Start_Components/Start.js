@@ -24,7 +24,9 @@ class Start extends React.Component {
                       pendingTitle: 'Set Job Title',
                       pendingValue: '5000',
                       pendingInterest: '1',
-                      interest: 1
+                      interest: 1,
+                      length: 'auto',
+                      pendingLength: 'auto'
                     }
                   ],
                   get totals() {
@@ -45,7 +47,9 @@ class Start extends React.Component {
                       pendingTitle: 'Rent',
                       pendingValue: '1000',
                       pendingInterest: '1',
-                      interest: 1
+                      interest: 1,
+                      length: 'auto',
+                      pendingLength: 'auto'
                     },
                   ],
                   get totals() {
@@ -64,7 +68,9 @@ class Start extends React.Component {
                       pendingTitle: 'Eating Out',
                       pendingValue: '60',
                       pendingInterest: '1',
-                      interest: 1.4
+                      interest: 1.4,
+                      length: 'auto',
+                      pendingLength: 'auto'
                     },
                     {
                       title: 'Groceries',
@@ -73,7 +79,9 @@ class Start extends React.Component {
                       pendingTitle: 'Groceries',
                       pendingValue: '50',
                       pendingInterest: '1',
-                      interest: 1
+                      interest: 1,
+                      length: 'auto',
+                      pendingLength: 'auto'
                     }
                   ],
                 }
@@ -89,7 +97,9 @@ class Start extends React.Component {
                     pendingTitle: 'Mortgage',
                     pendingValue: '1000',
                     pendingInterest: '1',
-                    interest: 1
+                    interest: 1,
+                    length: 'auto',
+                    pendingLength: 'auto'
                   },
                 ],
                 get totals() {
@@ -107,10 +117,13 @@ class Start extends React.Component {
                         title: '401K',
                         isEditing: true,
                         value: 500,
+                        interest: 1,
+                        length: 'auto',
                         pendingTitle: '401K',
                         pendingValue: '500',
                         pendingInterest: '1',
-                        interest: 1
+                        pendingLength: 'auto'
+                       
                       },
                     ],
                     get totals() {
@@ -191,7 +204,7 @@ class Start extends React.Component {
                 pendingInterest: '1',
                 interest: 1
             })
-            
+
             return oldinstances;
         }
 
@@ -263,6 +276,7 @@ class Start extends React.Component {
                     const valueValue = document.getElementById(`value-${type}-${catIndex}-${i}`).value;
                     const titleValue = document.getElementById(`title-${type}-${catIndex}-${i}`).value;
                     const interestValue = document.getElementById(`interest-${type}-${catIndex}-${i}`).value;
+                    const lengthValue = document.getElementById(`length-${type}-${catIndex}-${i}`).value;
 
                     console.log(interestValue);
                     
@@ -270,9 +284,10 @@ class Start extends React.Component {
                         ...e,
                         pendingValue: valueValue,
                         pendingTitle: titleValue,
-                        pendingInterest: interestValue
-
+                        pendingInterest: interestValue,
+                        pendingLength: lengthValue
                     }
+
                     newinstances.push(newInstance);
                 }
                 else{
@@ -346,6 +361,7 @@ class Start extends React.Component {
                         title: e.pendingTitle,
                         value: validatedValue,
                         interest: validatedInterest,
+                        length: e.pendingLength,
                         isEditing: false,
                     }
                     console.log(newInstance);

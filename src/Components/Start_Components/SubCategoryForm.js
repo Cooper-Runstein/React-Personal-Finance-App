@@ -30,6 +30,12 @@ const SubCategoryForm = (props)=> {
                         id={`interest-${props.type}-${props.catIndex}-${i}`}
                         onChange={()=> props.onChange(props.type, props.catIndex, i)}
                     />
+                    <input 
+                        placeholder = {e.length} 
+                        value = {e.pendingLength}
+                        id={`length-${props.type}-${props.catIndex}-${i}`}
+                        onChange={()=> props.onChange(props.type, props.catIndex, i)}
+                    />
                     <button 
                         onClick={()=> props.onConfirm(props.type, props.catIndex, i)}> Confirm </button>
                     <button 

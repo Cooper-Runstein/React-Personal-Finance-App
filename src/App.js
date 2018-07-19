@@ -91,9 +91,28 @@ class App extends Component {
     
   }
 
-  applyInitialInterest = (category, initialYear, yearIndex)=>{
-    let alteredCategory = category.map((subCat)=>{
-      return subCat
+  applyInitialInterest = (category, initialYearCat, yearIndex)=>{
+    let alteredCategory = category.map((subCat, subCatIndex)=>{
+      let newSubcat = subCat.instances.map((instance, instanceIndex)=>{
+        let initialInstance = category[subCatIndex]['instances'][instanceIndex];
+        let initialInterest = initialInstance.interest;
+        let initialLength = initialInstance.length;
+
+        if (initialInstance !== 1){
+          if (initialLength === 'auto'){
+            return {
+              ...instance,
+              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex)
+            }
+          }
+        }
+
+        return initialInstance;
+      });
+      return {
+        ...subCat,
+        instances: newSubcat
+      }
     });
     
     const applyAtInstance = (instance, initialInstance)=>{
