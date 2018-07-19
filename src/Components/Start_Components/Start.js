@@ -381,7 +381,7 @@ class Start extends React.Component {
 
     confirmAll = ()=>{
         const getNewTypes = ()=>{
-            const types = ['income', 'expenses'];
+            const types = ['income', 'expenses', 'debt', 'savings'];
             const newTypes = {};
             for (let i = 0; i < types.length; i++){
                 let newType = [];
@@ -416,11 +416,16 @@ class Start extends React.Component {
 
         let newIncome = getNewTypes()['income'];
         let newExpenses = getNewTypes()['expenses'];
+        let newDebt = getNewTypes()['debt'];
+        let newSavings = getNewTypes()['savings'];
 
         this.setState({
             ...this.state,
             income: newIncome,
-            expenses: newExpenses
+            expenses: newExpenses,
+            debt: newDebt,
+            savings: newSavings
+
         })
         
     }
