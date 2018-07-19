@@ -22,9 +22,6 @@ class App extends Component {
     this.getExpenses = this.getExpenses.bind(this);
     this.getStartingFormData = this.getStartingFormData.bind(this);
     this.state = {
-      pendingValue: "",
-      pendingTitle: "",
-      pendingInterest: "",
       date: new Date().getFullYear(),
       years: [
         
@@ -134,9 +131,7 @@ class App extends Component {
             pendingInterest: '1',
             pendingTitle: 'set',
             pendingValue: 'set',
-            interest: {
-              value: 1
-            }
+            interest: 1
           })
         },
         newState: (e)=> e
@@ -276,10 +271,7 @@ class App extends Component {
         isEditing: false,
         value: e.pendingValue,
         title: e.pendingTitle,
-        interest:{
-          ...e.interest,
-          value: e.pendingInterest
-        }
+        interest: e.pendingInterest
       }
     }
     const info ={

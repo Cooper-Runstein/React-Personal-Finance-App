@@ -23,10 +23,8 @@ class Start extends React.Component {
                       isEditing: true,
                       pendingTitle: 'Set Job Title',
                       pendingValue: '5000',
-                      interest: {
-                        value: 1
-                        
-                      }
+                      pendingInterest: '1',
+                      interest: 1
                     }
                   ],
                   get totals() {
@@ -46,9 +44,8 @@ class Start extends React.Component {
                       isEditing: true,
                       pendingTitle: 'Rent',
                       pendingValue: '1000',
-                      interest: {
-                        value: 1
-                      }
+                      pendingInterest: '1',
+                      interest: 1
                     },
                   ],
                   get totals() {
@@ -66,9 +63,8 @@ class Start extends React.Component {
                       isEditing: true,
                       pendingTitle: 'Eating Out',
                       pendingValue: '60',
-                      interest: {
-                        value: 1.1
-                      }
+                      pendingInterest: '1',
+                      interest: 1.4
                     },
                     {
                       title: 'Groceries',
@@ -76,9 +72,8 @@ class Start extends React.Component {
                       isEditing: true,
                       pendingTitle: 'Groceries',
                       pendingValue: '50',
-                      interest: {
-                        value: 1
-                      }
+                      pendingInterest: '1',
+                      interest: 1
                     }
                   ],
                 }

@@ -18,7 +18,7 @@ const Instance = (props) =>{
                 location = {props.location}
             /> 
             <Value 
-                interest = {props.instance.interest.value}
+                interest = {props.instance.interest}
                 yearIndex = {props.yearIndex}
                 value = {props.instance.value}
                 isEditing = {props.instance.isEditing}

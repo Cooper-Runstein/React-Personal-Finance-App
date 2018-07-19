@@ -10,8 +10,8 @@ const Value = (props) =>{
                 onChange={(e)=> {props.onChangeVal(e, props.location)}}
             />
             <input 
-                placeholder={props.interest}
-                onChange = {props.onChangeInt}
+                placeholder={parseFloat(props.interest)}
+                onChange = {(e)=> {props.onChangeInt(e, props.location)}}
             />
         </div>
         
