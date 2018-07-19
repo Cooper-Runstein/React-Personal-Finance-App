@@ -26,6 +26,12 @@ class App extends Component {
       years: [
         
       ],
+      displays: {
+        displayCounter: false,
+        displayStartForm: true,
+        displayYears: false
+      }
+      
 
     }
   }
@@ -57,7 +63,7 @@ class App extends Component {
   }
 
   generateYears = (e) =>{
-    e.preventDefault();
+    // e.preventDefault();
     const years = [];
     let numYears = this.getNumberOfRows(this.state.packagedData.retirmentYear)
     for (let i = 0; i < numYears; i++){
@@ -290,7 +296,14 @@ class App extends Component {
     this.setState({
       ...this.state,
       packagedData: packagedData,
-    })
+      displays: {
+        ...this.state.displays,
+        displayStartForm: false,
+        displayYears: true
+      }
+    })  
+    setTimeout(this.generateYears, 1)
+    
   }
 
   getRetirmentYear = ()=>{
@@ -306,12 +319,20 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Start
+        {
+          this.state.displays.displayStartForm ?
+          <Start
           getStartingFormData = {this.getStartingFormData}
           year = {this.state.date}
-          />
-          <button onClick = {this.generateYears}>Generate</button>
-        <YearsContainer
+        />
+        :
+        false
+        }
+        
+        
+        {
+          this.state.displays.displayYears ?
+          <YearsContainer
           retirmentYear = {this.getRetirmentYear}
           currentYear = {this.state.date}
           years = {this.state.years}
@@ -323,13 +344,25 @@ class App extends Component {
           onConfirm = {this.onConfirm}
           addInstance = {this.addInstance}
         />
-        <Counter 
-          income = {this.getIncome()}
-          // expense = {this.getExpenses()}
-          // debt = {this.getDebt()}
-          // savings = {this.getSavings()}
-          retirment = {this.getRetirmentYear()}
+
+        :
+        false
+
+        }
+        
+        {
+          this.state.displays.displayCounter ?
+          <Counter 
+            income = {this.getIncome()}
+            // expense = {this.getExpenses()}
+            // debt = {this.getDebt()}
+            // savings = {this.getSavings()}
+            retirment = {this.getRetirmentYear()}
           />
+          :
+          false
+        }
+        
         <Footer />
       </div>
     );
