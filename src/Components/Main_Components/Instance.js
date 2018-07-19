@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Title from './Title';
 import Value from './Value';
 import ConfirmButton from './ConfirmButton';
+import EditButton from './EditButton';
 
 
 const Instance = (props) =>{
@@ -32,16 +33,14 @@ const Instance = (props) =>{
                 instance={props.instance}
                 onClick={()=> props.onConfirm(props.location)}
             />
-            
-            <button 
-                className="editButton"
-                onClick={props.editInstance}
-            >
-                Edit
-            </button>
+            <EditButton
+                editInstance = {props.editInstance}
+                isEditing = {props.instance.isEditing}
+            />
             <button 
                 className="removeButton"
-                onClick={props.removeEntry}>
+                onClick={props.removeEntry}
+            >
                 Remove
             </button>
         </div>

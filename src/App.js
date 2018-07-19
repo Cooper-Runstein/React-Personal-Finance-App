@@ -4,8 +4,8 @@ import './css/display.css';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Counter from './Components/Counter';
-import Start from './Components/Start';
-import YearsContainer from './Components/YearsContainer';
+import Start from './Components/Start_Components/Start';
+import YearsContainer from './Components/Main_Components/YearsContainer';
 
 
 
