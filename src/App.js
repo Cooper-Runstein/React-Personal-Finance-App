@@ -299,7 +299,8 @@ class App extends Component {
       displays: {
         ...this.state.displays,
         displayStartForm: false,
-        displayYears: true
+        displayYears: true,
+        displayCounter: true
       }
     })  
     setTimeout(this.generateYears, 1)

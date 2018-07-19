@@ -262,11 +262,15 @@ class Start extends React.Component {
                 if (i === instanceIndex){
                     const valueValue = document.getElementById(`value-${type}-${catIndex}-${i}`).value;
                     const titleValue = document.getElementById(`title-${type}-${catIndex}-${i}`).value;
+                    const interestValue = document.getElementById(`interest-${type}-${catIndex}-${i}`).value;
+
+                    console.log(interestValue);
                     
                     let newInstance = {
                         ...e,
                         pendingValue: valueValue,
                         pendingTitle: titleValue,
+                        pendingInterest: interestValue
 
                     }
                     newinstances.push(newInstance);
