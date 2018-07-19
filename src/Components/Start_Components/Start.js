@@ -318,8 +318,8 @@ class Start extends React.Component {
             instances.map((e,i)=>{
                 if (i === instanceIndex){
                     
-                    const validateValue = (e)=>{
-                        const falseChars = [',', '.', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
+                    const validateValue = (e, type)=>{
+                        const falseChars = [',', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
                         const strippedValue = (pendingString)=>{
                             falseChars.map((char)=>{
                                 pendingString = pendingString.replace(char, '');
@@ -328,22 +328,24 @@ class Start extends React.Component {
                         }
 
                         let newValue;
-                        if (!Number.isNaN(parseFloat(strippedValue(e.pendingValue)))){
-                            newValue = parseFloat(strippedValue(e.pendingValue));
+                        if (!Number.isNaN(parseFloat(strippedValue(e['pending' + type])))){
+                            newValue = parseFloat(strippedValue(e['pending' + type]));
                         }
                         else{
-                            console.log('value failed:' + strippedValue(e.pendingValue));
+                            console.log('value failed:' + strippedValue(e[type]));
                             newValue = "Invalid Entry, Try Again";
                         }
                         return newValue
                     }
 
-                    let validatedValue = validateValue(e);
+                    let validatedValue = validateValue(e, 'Value');
+                    let validatedInterest = validateValue(e, 'Interest');
 
                     let newInstance = {
                         ...e,
                         title: e.pendingTitle,
                         value: validatedValue,
+                        interest: validatedInterest,
                         isEditing: false,
                     }
                     console.log(newInstance);
@@ -412,6 +414,7 @@ class Start extends React.Component {
                     ...instance,
                     title: instance.pendingTitle,
                     value: instance.pendingValue,
+                    interest: instance.pendingInterest,
                     isEditing: false
                 }
                 console.log('instance: ' + newInstance)
