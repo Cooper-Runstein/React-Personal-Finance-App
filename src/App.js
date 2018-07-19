@@ -321,14 +321,13 @@ class App extends Component {
           onConfirm = {this.onConfirm}
           addInstance = {this.addInstance}
         />
-        {/* <Counter 
+        <Counter 
           income = {this.getIncome()}
-          expense = {this.getExpenses()}
-          savings = {this.state.startingValues.Savings}
-          debt = {this.getDebt()}
-          savings = {this.getSavings()}
-          retirment = {this.state.startingValues.Retirment}
-          /> */}
+          // expense = {this.getExpenses()}
+          // debt = {this.getDebt()}
+          // savings = {this.getSavings()}
+          retirment = {this.getRetirmentYear()}
+          />
         <Footer />
       </div>
     );
