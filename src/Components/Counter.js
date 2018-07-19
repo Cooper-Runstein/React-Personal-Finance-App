@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Counter = (props) =>{
-   
-    let netWorthColor = (props)=>{
+export default class Counter extends React.Component {
+    constructor(props){
+    super(props)
+    this.state = {
+
+    }
+    }
+    netWorthColor = (props)=>{
         let color;
         if (props.savings > props.debt){
             color = "green"
@@ -17,24 +22,25 @@ const Counter = (props) =>{
         return {color: color}
     }
 
-    let getYearsToRetirment = (props) =>{
+    getYearsToRetirment = (props) =>{
         let currentYear = parseFloat(new Date().getFullYear());
         let yearsToRetirement = props.retirment - currentYear;
         if (yearsToRetirement > 0){
             return "Years To Retirment:" + yearsToRetirement;
         }
     }
-    
+    render(){
     return(
         <div id="counter">
-            <span>Savings: ${props.savings}</span>
-            <span>Debt: ${props.debt}</span>
-            <span style={netWorthColor(props)}>Net Worth: ${props.savings - props.debt}</span>
-            <span>{getYearsToRetirment(props)}</span>
-            <span> income: {props.income} </span>
-            <span> expense: {props.expense} </span>
+            <span>Savings: ${this.props.savings}</span>
+            <span>Debt: ${this.props.debt}</span>
+            <span style={this.netWorthColor(this.props)}>Net Worth: ${this.props.savings - this.props.debt}</span>
+            <span>{this.getYearsToRetirment(this.props)}</span>
+            <span> income: {this.props.income} </span>
+            <span> expense: {this.props.expense} </span>
         </div>
     )
+}
 }
 
 Counter.propTypes = {
@@ -42,4 +48,3 @@ Counter.propTypes = {
     // getIncome: PropTypes.number,
     // getExpenses: PropTypes.number,
 }
-export default Counter;
