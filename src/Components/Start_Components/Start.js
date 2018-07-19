@@ -406,6 +406,8 @@ class Start extends React.Component {
             instances.map((instance)=>{
                 let newInstance = {
                     ...instance,
+                    title: instance.pendingTitle,
+                    value: instance.pendingValue,
                     isEditing: false
                 }
                 console.log('instance: ' + newInstance)
