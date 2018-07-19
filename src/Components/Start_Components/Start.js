@@ -77,7 +77,50 @@ class Start extends React.Component {
                     }
                   ],
                 }
-            ]
+            ],
+        debt:[
+            {
+                title: 'Loans',
+                instances: [
+                  {
+                    title: 'Mortgage',
+                    value: 1000,
+                    isEditing: true,
+                    pendingTitle: 'Mortgage',
+                    pendingValue: '1000',
+                    pendingInterest: '1.34',
+                    interest: 1
+                  },
+                ],
+                get totals() {
+                  return this.instances.reduce((sum, entry)=>{
+                    return sum + entry.value
+                  }, 0)
+                }
+              },
+            ],
+            savings:[
+                {
+                    title: 'Retirment Savings',
+                    instances: [
+                      {
+                        title: '401K',
+                        isEditing: true,
+                        value: 500,
+                        pendingTitle: '401K',
+                        pendingValue: '500',
+                        pendingInterest: '1.34',
+                        interest: 1
+                      },
+                    ],
+                    get totals() {
+                      return this.instances.reduce((sum, entry)=>{
+                        return sum + entry.value
+                      }, 0)
+                    }
+                  },
+                ]
+        
         }
     }
 
@@ -427,6 +470,36 @@ class Start extends React.Component {
                         onEditAt = {this.onEditAt}
                         removeInstanceAt = {this.removeInstanceAt}
                         addInstance = {()=> this.addInstance('expenses', i)}
+                        onChange = {this.onChangeAt}
+                        onConfirm = {this.onConfirmAt}
+                    />
+                })}
+
+                {this.state.debt.map((e,i)=>{
+                    return <SubCategoryForm 
+                        key = {i}
+                        catIndex = {i}
+                        type = {'debt'}
+                        subCat = {e}
+                        title = {e.title}
+                        onEditAt = {this.onEditAt}
+                        removeInstanceAt = {this.removeInstanceAt}
+                        addInstance = {()=> this.addInstance('debt', i)}
+                        onChange = {this.onChangeAt}
+                        onConfirm = {this.onConfirmAt}
+                    />
+                })}
+
+                {this.state.savings.map((e,i)=>{
+                    return <SubCategoryForm 
+                        key = {i}
+                        catIndex = {i}
+                        type = {'savings'}
+                        subCat = {e}
+                        title = {e.title}
+                        onEditAt = {this.onEditAt}
+                        removeInstanceAt = {this.removeInstanceAt}
+                        addInstance = {()=> this.addInstance('savings', i)}
                         onChange = {this.onChangeAt}
                         onConfirm = {this.onConfirmAt}
                     />
