@@ -7,7 +7,7 @@ const Value = (props) =>{
         props.isEditing ? 
         <div>
             <input 
-                placeholder={Number.isNaN(parseFloat(props.value)) ? props.value : props.value * (parseFloat(props.interest) ** props.yearIndex)}
+                placeholder={props.value}
                 onChange={(e)=> {props.onChangeVal(e, props.location)}}
             />
             <Interest 

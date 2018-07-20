@@ -78,9 +78,9 @@ class App extends Component {
         {
           year: this.state.date + i,
           income: this.applyInitialInterest(this.state.packagedData.income, initialYear, i),
-          expenses: this.state.packagedData.expenses,
-          debt: this.state.packagedData.debt,
-          savings: this.state.packagedData.savings
+          expenses: this.applyInitialInterest(this.state.packagedData.expenses, initialYear, i),
+          debt: this.applyInitialInterest(this.state.packagedData.debt, initialYear, i),
+          savings: this.applyInitialInterest(this.state.packagedData.savings, initialYear, i),
         }
       );
     }
@@ -100,23 +100,31 @@ class App extends Component {
 
         if (initialInterest !== 1){
           if (initialLength === 'auto'){
+            console.log("Auto Applying Interest");
+            console.log(initialInterest);
             return {
               ...instance,
-              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex)
+              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
+              interest: 1,
+              pendingValue: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex)
             }
           }
           if (initialLength !== 'auto' && parseFloat(initialLength) > yearIndex){
-            console.log("Actively Applying interest At" + yearIndex + initialLength)
+            console.log("Actively Applying interest At" + yearIndex + initialLength);
             return {
               ...instance,
-              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex)
+              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
+              pendingValue: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
+              interest: 1
             }
           }
           if (initialLength !== 'auto' && parseFloat(initialLength) <= yearIndex){
             console.log("Maintaining Applying interest at yearIndex and length: " + yearIndex + initialLength)
             return {
               ...instance,
-              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** initialLength)
+              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** initialLength),
+              pendingValue: parseFloat(instance.value) * (parseFloat(initialInterest) ** initialLength),
+              interest: 1
           }
         }
         }
