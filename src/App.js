@@ -419,6 +419,8 @@ class App extends Component {
             debt = {this.getDebt()}
             savings = {this.getSavings()}
             retirment = {this.getRetirmentYear()}
+            netWorth = {this.getSavings() - this.getDebt()}
+            
           />
           :
           false
