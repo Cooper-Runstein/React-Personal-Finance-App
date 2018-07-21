@@ -84,6 +84,11 @@ class Start extends React.Component {
                       pendingLength: 'auto'
                     }
                   ],
+                  get totals() {
+                    return this.instances.reduce((sum, entry)=>{
+                      return sum + entry.value
+                    }, 0)
+                  }
                 }
             ],
         debt:[

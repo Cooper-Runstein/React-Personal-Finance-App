@@ -77,10 +77,10 @@ class App extends Component {
       years.push(
         {
           year: this.state.date + i,
-          income: this.applyInitialInterest(this.state.packagedData.income, initialYear, i),
-          expenses: this.applyInitialInterest(this.state.packagedData.expenses, initialYear, i),
-          debt: this.applyInitialInterest(this.state.packagedData.debt, initialYear, i),
-          savings: this.applyInitialInterest(this.state.packagedData.savings, initialYear, i),
+          income: this.applyInitialInterest(this.state.packagedData.income, i),
+          expenses: this.applyInitialInterest(this.state.packagedData.expenses, i),
+          debt: this.applyInitialInterest(this.state.packagedData.debt, i),
+          savings: this.applyInitialInterest(this.state.packagedData.savings, i),
         }
       );
     }
@@ -91,7 +91,7 @@ class App extends Component {
     
   }
 
-  applyInitialInterest = (category, initialYearCat, yearIndex)=>{
+  applyInitialInterest = (category, yearIndex)=>{
     let alteredCategory = category.map((subCat, subCatIndex)=>{
       let newSubcat = subCat.instances.map((instance, instanceIndex)=>{
         let initialInstance = category[subCatIndex]['instances'][instanceIndex];
@@ -146,7 +146,8 @@ class App extends Component {
   getColumnTotals = (type)=>{
     console.log("Getting Column Totals")
     let totalValue = 0;
-    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> {return sum + category.totals}, 0))
+    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> { console.log(category.totals); return sum + category.totals}, 0))
+    console.log(type + totalValue);
     return totalValue;
   }
 
@@ -414,9 +415,9 @@ class App extends Component {
           this.state.displays.displayCounter ?
           <Counter 
             income = {this.getIncome()}
-            // expense = {this.getExpenses()}
-            // debt = {this.getDebt()}
-            // savings = {this.getSavings()}
+            expense = {this.getExpenses()}
+            debt = {this.getDebt()}
+            savings = {this.getSavings()}
             retirment = {this.getRetirmentYear()}
           />
           :
