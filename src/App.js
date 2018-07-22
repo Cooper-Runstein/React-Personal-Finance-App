@@ -146,7 +146,7 @@ class App extends Component {
   getColumnTotals = (type)=>{
     console.log("Getting Column Totals")
     let totalValue = 0;
-    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> { console.log(category.totals); return sum + category.totals}, 0))
+    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> { console.log(category.totals); return category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)}, 0))
     console.log(type + totalValue);
     return totalValue;
   }

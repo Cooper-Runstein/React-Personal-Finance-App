@@ -53,6 +53,9 @@ class Start extends React.Component {
                     },
                   ],
                   get totals() {
+                      console.log("Calculating Housing totals: " + this.instances.reduce((sum, entry)=>{
+                        return sum + entry.value
+                      }, 0))
                     return this.instances.reduce((sum, entry)=>{
                       return sum + entry.value
                     }, 0)
