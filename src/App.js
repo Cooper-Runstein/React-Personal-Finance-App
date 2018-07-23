@@ -88,20 +88,19 @@ class App extends Component {
     return newCategory;
   }
 
-  applyInitialDuration = (category, yearIndex)=>{
-    let alteredCategory = category.map((subCat, subCatIndex)=>{
-      let newSubcat = subCat.instances.filter((instance, instanceIndex)=> {
-        return instance.duration === 'retirement' || parseFloat(instance.duration) >= yearIndex - 1
-
-      });
-
+  applyInitialDuration = (category, yearIndex)=>
+    category.map((subCat, subCatIndex)=>{
       return {
         ...subCat,
-        instances: newSubcat
+        instances: subCat.instances.filter((instance, instanceIndex)=> {
+          return instance.duration === 'retirement' || parseFloat(instance.duration) >= yearIndex + 1
+
+        })
       }
-    });
-    return alteredCategory
-  }
+    })
+
+
+
 
 
   applyInitialInterest = (category, yearIndex)=>{

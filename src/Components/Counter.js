@@ -31,10 +31,10 @@ export default class Counter extends React.Component {
             return "Years To Retirment:" + yearsToRetirement;
         }
     }
-    
+
     render(){
     return(
-        <div id="counter">
+        <div id="counter" className="counter-container">
             <span>Savings: ${this.props.savings}</span>
             <span>Debt: ${this.props.debt}</span>
             <span style={this.netWorthColor()}>Net Worth: ${this.props.netWorth}</span>
