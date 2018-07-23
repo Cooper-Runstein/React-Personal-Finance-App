@@ -25,8 +25,8 @@ class Start extends React.Component {
           interest: 1,
           length: 'auto',
           pendingLength: 'auto',
-          duration: "retirment",
-          pendingDuration: "retirment"
+          duration: "retirement",
+          pendingDuration: "retirement"
         }],
         get totals() {
           return this.instances.reduce((sum, entry) => {
@@ -46,8 +46,8 @@ class Start extends React.Component {
             interest: 1,
             length: 'auto',
             pendingLength: 'auto',
-            duration: "retirment",
-            pendingDuration: "retirment"
+            duration: "retirement",
+            pendingDuration: "retirement"
           }, ],
           get totals() {
             console.log("Calculating Housing totals: " + this.instances.reduce((sum, entry) => {
@@ -70,8 +70,8 @@ class Start extends React.Component {
               interest: 1.4,
               length: 'auto',
               pendingLength: 'auto',
-              duration: "retirment",
-              pendingDuration: "retirment"
+              duration: "retirement",
+              pendingDuration: "retirement"
             },
             {
               title: 'Groceries',
@@ -83,8 +83,8 @@ class Start extends React.Component {
               interest: 1,
               length: 'auto',
               pendingLength: 'auto',
-              duration: "retirment",
-              pendingDuration: "retirment"
+              duration: "retirement",
+              pendingDuration: "retirement"
             }
           ],
           get totals() {
@@ -106,8 +106,8 @@ class Start extends React.Component {
           interest: 1,
           length: 'auto',
           pendingLength: 'auto',
-          duration: "retirment",
-          pendingDuration: "retirment"
+          duration: "retirement",
+          pendingDuration: "retirement"
         }, ],
         get totals() {
           return this.instances.reduce((sum, entry) => {
@@ -127,8 +127,8 @@ class Start extends React.Component {
           pendingValue: '500',
           pendingInterest: '1',
           pendingLength: 'auto',
-          duration: "retirment",
-          pendingDuration: "retirment"
+          duration: "retirement",
+          pendingDuration: "retirement"
 
         }, ],
         get totals() {
@@ -203,7 +203,9 @@ class Start extends React.Component {
         pendingTitle: '',
         pendingValue: '',
         pendingInterest: '1',
-        interest: 1
+        interest: 1,
+        duration: 'retirement',
+        pendingDuration: 'retirement'
       })
 
       return oldinstances;

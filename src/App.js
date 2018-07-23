@@ -38,18 +38,7 @@ class App extends Component {
   }
 
 
-  getInitialInputs = (values)=>{
-    return values;
-  }
-
-
-  //==========================
-  //==========================
-  //====Years Table =========
-  //==========================
-  //==========================
-
-
+  //MAIN TABLE CREATION FUNCTIONS
 
   getNumberOfRows = (retirmentYear) =>{
     console.log(retirmentYear)
@@ -78,10 +67,10 @@ class App extends Component {
       years.push(
         {
           year: this.state.date + i,
-          income: this.applyInitialInterest(this.state.packagedData.income, i),
-          expenses: this.applyInitialInterest(this.state.packagedData.expenses, i),
-          debt: this.applyInitialInterest(this.state.packagedData.debt, i),
-          savings: this.applyInitialInterest(this.state.packagedData.savings, i),
+          income: this.extendInstances(this.state.packagedData.income, i),
+          expenses: this.extendInstances(this.state.packagedData.expenses, i),
+          debt: this.extendInstances(this.state.packagedData.debt, i),
+          savings: this.extendInstances(this.state.packagedData.savings, i),
         }
       );
     }
@@ -90,6 +79,28 @@ class App extends Component {
       years: years
     })
 
+  }
+
+  extendInstances = (category, yearIndex) =>{
+    let newCategory
+    newCategory = this.applyInitialInterest(category, yearIndex);
+    newCategory = this.applyInitialDuration(newCategory, yearIndex);
+    return newCategory;
+  }
+
+  applyInitialDuration = (category, yearIndex)=>{
+    let alteredCategory = category.map((subCat, subCatIndex)=>{
+      let newSubcat = subCat.instances.filter((instance, instanceIndex)=> {
+        return instance.duration === 'retirement' || parseFloat(instance.duration) >= yearIndex - 1
+
+      });
+
+      return {
+        ...subCat,
+        instances: newSubcat
+      }
+    });
+    return alteredCategory
   }
 
 
@@ -101,8 +112,6 @@ class App extends Component {
         let initialLength = initialInstance.length;
         const applyInterest = ()=>{
           if (initialLength === 'auto'){
-            console.log("Auto Applying Interest");
-            console.log(initialInterest);
             return {
               ...instance,
               value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
@@ -111,7 +120,6 @@ class App extends Component {
             }
           }
           if (initialLength !== 'auto' && parseFloat(initialLength) > yearIndex){
-            console.log("Actively Applying interest At" + yearIndex + initialLength);
             return {
               ...instance,
               value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
@@ -120,7 +128,6 @@ class App extends Component {
             }
           }
           if (initialLength !== 'auto' && parseFloat(initialLength) <= yearIndex){
-            console.log("Maintaining Applying interest at yearIndex and length: " + yearIndex + initialLength)
             return {
               ...instance,
               value: parseFloat(instance.value) * (parseFloat(initialInterest) ** initialLength),
@@ -130,27 +137,23 @@ class App extends Component {
         }
         }
         if (initialInterest !== 1){
-          applyInterest();
+          return applyInterest();
         }
-        return initialInstance;
+        else{
+          return initialInstance;
+        }
       });
       return {
         ...subCat,
         instances: newSubcat
       }
     });
-
-    const applyAtInstance = (instance, initialInstance)=>{
-
-    }
     return alteredCategory
   }
 
   getColumnTotals = (type)=>{
-    console.log("Getting Column Totals")
     let totalValue = 0;
-    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> { console.log(category.totals); return category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)}, 0))
-    console.log(type + totalValue);
+    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> {return category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)}, 0))
     return totalValue;
   }
 
@@ -170,6 +173,13 @@ class App extends Component {
     return this.getColumnTotals('savings');
   }
 
+
+
+
+
+
+
+  //ALTER MAIN TABLE
   toggleEditEntry = (location) =>{
     console.log("Called Edit");
     const newState = (e, entry)=>{

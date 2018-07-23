@@ -1,4 +1,4 @@
-*{
+/* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -7,7 +7,7 @@ html{
     font-size: 10px;
 }
 
-/*HEADER*/
+
 
 .header{
     margin-bottom: 2rem;
@@ -18,12 +18,12 @@ html{
     color: red;
 }
 
-/*Start Form */
+
 
 .start-sub-category-title{
     font-size: 2rem;
     color: blueviolet;
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;
 }
 .start-instances-container{
     display: flex;
@@ -45,7 +45,7 @@ html{
 .start-instance-buttons{
 }
 .start-instance-buttons button{
-    border: .2rem solid blueviolet; 
+    border: .2rem solid blueviolet;
     padding: .4rem;
     margin: 1rem;
     border-radius: 15%;
@@ -60,7 +60,7 @@ html{
 }
 
 .start-add-button-container button{
-    border: .2rem solid blue; 
+    border: .2rem solid blue;
     padding: .4rem;
     border-radius: 15%;
-}
+} */
