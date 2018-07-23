@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './css/main.css';
 import './css/display.css';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
@@ -24,19 +25,19 @@ class App extends Component {
     this.state = {
       date: new Date().getFullYear(),
       years: [
-        
+
       ],
       displays: {
         displayCounter: false,
         displayStartForm: true,
         displayYears: false
       }
-      
+
 
     }
   }
 
- 
+
   getInitialInputs = (values)=>{
     return values;
   }
@@ -48,8 +49,8 @@ class App extends Component {
   //==========================
   //==========================
 
- 
-  
+
+
   getNumberOfRows = (retirmentYear) =>{
     console.log(retirmentYear)
     let currentYear = this.state.date;
@@ -88,8 +89,9 @@ class App extends Component {
     this.setState({
       years: years
     })
-    
+
   }
+
 
   applyInitialInterest = (category, yearIndex)=>{
     let alteredCategory = category.map((subCat, subCatIndex)=>{
@@ -97,8 +99,7 @@ class App extends Component {
         let initialInstance = category[subCatIndex]['instances'][instanceIndex];
         let initialInterest = initialInstance.interest;
         let initialLength = initialInstance.length;
-
-        if (initialInterest !== 1){
+        const applyInterest = ()=>{
           if (initialLength === 'auto'){
             console.log("Auto Applying Interest");
             console.log(initialInterest);
@@ -128,7 +129,9 @@ class App extends Component {
           }
         }
         }
-
+        if (initialInterest !== 1){
+          applyInterest();
+        }
         return initialInstance;
       });
       return {
@@ -136,7 +139,7 @@ class App extends Component {
         instances: newSubcat
       }
     });
-    
+
     const applyAtInstance = (instance, initialInstance)=>{
 
     }
@@ -212,7 +215,7 @@ class App extends Component {
 
   alterYearsAt = (location, info)=>{
     //location is an object with instance's postion
-    //info is and object with two functions: 
+    //info is and object with two functions:
     //newState returns the new instance values in state
     //func will run after state has been changed at given instance
     const yearIndex = location.yearIndex;
@@ -225,7 +228,7 @@ class App extends Component {
       let newYear = {
         ...e,
         [category]: this.getCategory(location, info)
-      } 
+      }
       years.push(newYear)
     }
     else{
@@ -362,9 +365,9 @@ class App extends Component {
         displayYears: true,
         displayCounter: true
       }
-    })  
+    })
     setTimeout(this.generateYears, 1)
-    
+
   }
 
   getRetirmentYear = ()=>{
@@ -389,8 +392,8 @@ class App extends Component {
         :
         false
         }
-        
-        
+
+
         {
           this.state.displays.displayYears ?
           <YearsContainer
@@ -410,22 +413,22 @@ class App extends Component {
         false
 
         }
-        
+
         {
           this.state.displays.displayCounter ?
-          <Counter 
+          <Counter
             income = {this.getIncome()}
             expense = {this.getExpenses()}
             debt = {this.getDebt()}
             savings = {this.getSavings()}
             retirment = {this.getRetirmentYear()}
             netWorth = {this.getSavings() - this.getDebt()}
-            
+
           />
           :
           false
         }
-        
+
         <Footer />
       </div>
     );

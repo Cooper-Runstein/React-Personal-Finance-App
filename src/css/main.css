@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 10px;
+}
+
+/*HEADER*/
+
+.header{
+    margin-bottom: 2rem;
+}
+
+.header h1{
+    font-size: 3rem;
+    color: red;
+}
+
+/*Start Form */
+
+.start-sub-category-title{
+    font-size: 2rem;
+    color: blueviolet;
+    margin-bottom: 1rem; 
+}
+.start-instances-container{
+    display: flex;
+}
+
+
+.start-sub-category-instances{
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.start-instance{
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.start-instance-buttons{
+}
+.start-instance-buttons button{
+    border: .2rem solid blueviolet; 
+    padding: .4rem;
+    margin: 1rem;
+    border-radius: 15%;
+}
+
+.start-instance-buttons button:hover, .start-add-button-container button:hover{
+    cursor: pointer;
+}
+
+.start-input-container{
+    margin-bottom: .5rem;
+}
+
+.start-add-button-container button{
+    border: .2rem solid blue; 
+    padding: .4rem;
+    border-radius: 15%;
+}
