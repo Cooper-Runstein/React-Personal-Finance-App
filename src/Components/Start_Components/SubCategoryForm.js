@@ -78,6 +78,7 @@ const SubCategoryForm = (props)=> {
     return (
         <div className="start-sub-category-form">
             <h3 className="start-sub-category-title">{props.title}</h3>
+            <h4 className="start-sub-category-desc">{props.description}</h4>
 
             {props.subCat.instances.map((e,i)=> e.isEditing ? editingForm(e, i, props.type) : staticForm(e,i, props.type))}
 

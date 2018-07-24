@@ -480,6 +480,9 @@ class Start extends React.Component {
           title = {
             e.title
           }
+          description = {
+            "Record Your sources of temporary sourses of income, jobs, gigs, etc. "
+          }
           subCat = {
             e
           }
@@ -520,6 +523,9 @@ class Start extends React.Component {
           title = {
             e.title
           }
+          description = {
+            "Record Your Expenses, food, housing, transportation, etc.. "
+          }
           onEditAt = {
             this.onEditAt
           }
@@ -557,6 +563,9 @@ class Start extends React.Component {
           title = {
             e.title
           }
+          description = {
+            "Record Your Debts, student loans, credit card debt, mortgage, etc."
+          }
           onEditAt = {
             this.onEditAt
           }
@@ -593,6 +602,9 @@ class Start extends React.Component {
           }
           title = {
             e.title
+          }
+          description = {
+            "Record Your Current Savings, 401K, stocks, important property, etc."
           }
           onEditAt = {
             this.onEditAt
