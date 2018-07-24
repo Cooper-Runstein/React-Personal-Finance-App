@@ -4,7 +4,7 @@ import Category from './Category';
 
 
 const Year =(props)=>{
-           
+
            return (
             <tr className="year">
                 <td>{props.year.year}</td>
@@ -25,7 +25,7 @@ const Year =(props)=>{
                     />
                 })}
                 {props.year.expenses.map((e,i)=>{
-                    return <Category 
+                    return <Category
                     yearIndex= {props.yearIndex}
                         key = {i}
                         catKey = {i}
@@ -40,8 +40,8 @@ const Year =(props)=>{
                         addInstance = {props.addInstance}
                     />
                 })}
-                {props.year.debt.map((e,i)=>{
-                    return <Category 
+                {/* {props.year.debt.map((e,i)=>{
+                    return <Category
                         key = {i}
                         catKey = {i}
                         yearIndex = {props.yearIndex}
@@ -57,7 +57,7 @@ const Year =(props)=>{
                     />
                 })}
                 {props.year.savings.map((e,i)=>{
-                    return <Category 
+                    return <Category
                         key = {i}
                         catKey = {i}
                         yearIndex = {props.yearIndex}
@@ -70,11 +70,11 @@ const Year =(props)=>{
                         onChangeInterest = {props.onChangeInterest}
                         onConfirm = {props.onConfirm}
                         addInstance = {props.addInstance}
-                    />
-                })}
+                    /> */}
+                {/* })} */}
             </tr>
            )
-    } 
+    }
 
 
 Year.propTypes = {

@@ -462,10 +462,10 @@ class Start extends React.Component {
 
   render() {
 
-    return ( <
-      div className = "start-main-container" >
-      <
-      div className = "start-instances-container" > {
+    return (
+      <div className = "start-main-container" >
+      <div className = "start-instances-container" >
+      {
         this.state.income.map((e, i) => {
           return <SubCategoryForm
           key = {
@@ -611,44 +611,43 @@ class Start extends React.Component {
           }
           />
         })
-      } <
-      /div> <
-      hr / >
-      <
-      button onClick = {
-        () => this.confirmAll()
-      } > Confirm All < /button> <
-      div id = "retirment-form" >
-      <
-      input placeholder = 'Enter Retirment Year'
-      id = "retirment-input"
-      value = {
-        this.state.pendingRetirment
       }
-      onChange = {
-        (e) => {
-          this.setState({
-            ...this.state,
-            pendingRetirment: e.target.value
-          })
+      </div>
+      <hr/>
+      <button
+        onClick = {() => this.confirmAll()}> Confirm All </button>
+      <div id = "retirment-form" >
+      <input
+        placeholder = 'Enter Retirment Year'
+        id = "retirment-input"
+        value = {
+          this.state.pendingRetirment
         }
-      }
-      /> <
-      button onClick = {
+        onChange = {
+          (e) => {
+            this.setState({
+              ...this.state,
+              pendingRetirment: e.target.value
+            })
+          }
+        }
+      />
+      <button onClick = {
         () => {
           this.setState({
             ...this.state,
             retirmentYear: this.state.pendingRetirment
           })
         }
-      } > Confirm Retirment < /button> < /
-      div > <
-      button onClick = {
-        () => this.packageData()
-      } > Package Data < /button>
+      } > Confirm Retirment </button>
+      </div>
+      <button
+        onClick = {
+          () => this.packageData()
+        } > Package Data
+      </button>
 
-      <
-      /div>
+    </div>
     )
 
   }
