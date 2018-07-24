@@ -3,7 +3,21 @@ import PropTypes from 'prop-types';
 
 const SubCategoryForm = (props)=> {
 
-    const editingForm = (e,i)=>{
+    const editingForm = (e,i, type)=>{
+      let longTerm;
+      (type === "savings" || type === "debt") ? longTerm = true : longTerm = false;
+      const durationInput = ()=>{
+        return (
+        <div
+          className="start-input-container"> duration: <input
+          placeholder = {e.duration}
+          value = {e.pendingDuration}
+          id={`duration-${props.type}-${props.catIndex}-${i}`}
+          onChange={()=> props.onChange(props.type, props.catIndex, i)}
+          />
+      </div>
+        )
+      }
       return (
         <div className="start-sub-category-instances">
         <div key={i} className="start-instance">
@@ -21,13 +35,7 @@ const SubCategoryForm = (props)=> {
                 onChange={()=> props.onChange(props.type, props.catIndex, i)}
             />
             </div>
-            <div className="start-input-container"> duration: <input
-                placeholder = {e.duration}
-                value = {e.pendingDuration}
-                id={`duration-${props.type}-${props.catIndex}-${i}`}
-                onChange={()=> props.onChange(props.type, props.catIndex, i)}
-            />
-            </div>
+            {!longTerm ? durationInput() : false}
             <div className="start-input-container"> interest/growth: <input
                 placeholder = {e.interest}
                 value = {e.pendingInterest}
@@ -54,16 +62,16 @@ const SubCategoryForm = (props)=> {
       )
     }
 
-    const staticForm = (e,i)=>{
+    const staticForm = (e,i,)=>{
       return (
         <div key={i}>
-                    <span>{e.title}</span>
-                    <span>{e.value}</span>
-                    <button
-                        onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button>
-                    <button
-                        onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
-                </div>
+          <span>{e.title}</span>
+          <span>{e.value}</span>
+          <button
+              onClick={()=> props.onEditAt(props.type, props.catIndex, i)}> Edit </button>
+          <button
+              onClick={()=> props.removeInstanceAt(props.type, props.catIndex, i)}>Remove</button>
+        </div>
       )
     }
 
@@ -71,7 +79,7 @@ const SubCategoryForm = (props)=> {
         <div className="start-sub-category-form">
             <h3 className="start-sub-category-title">{props.title}</h3>
 
-            {props.subCat.instances.map((e,i)=> e.isEditing ? editingForm(e,i) : staticForm(e,i))}
+            {props.subCat.instances.map((e,i)=> e.isEditing ? editingForm(e, i, props.type) : staticForm(e,i, props.type))}
 
             <div className="start-add-button-container">
                 <button onClick={ props.addInstance }>Add</button>
