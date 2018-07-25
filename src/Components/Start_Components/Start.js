@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SubCategoryForm from './SubCategoryForm.js';
 import StartCategoryForm from './StartCategoryForm.js';
 
 class Start extends React.Component {
@@ -10,7 +9,7 @@ class Start extends React.Component {
     this.addInstance = this.addInstance.bind(this);
     this.onChangeAt = this.onChangeAt.bind(this);
     this.onConfirmAt = this.onConfirmAt.bind(this);
-    this.alterCategory = this.alterCategory.bind(this);
+    this.alterInstances = this.alterInstances.bind(this);
     this.state = {
       pendingRetirment: '',
       retirmentYear: '',
@@ -20,7 +19,7 @@ class Start extends React.Component {
           {
           title: 'Set Job title',
           value: 5000,
-          isEditing: true,
+          isEditing: false,
           pendingTitle: 'Set Job Title',
           pendingValue: '5000',
           pendingInterest: '1',
@@ -120,39 +119,18 @@ class Start extends React.Component {
   }
 
   //*****Button and Input Change/Click functions********//
-  alterInstance = (instances, instanceIndex, newState) => {
-    const newinstances = [];
-    instances.map((e, i) => {
-      if (i === instanceIndex) {
-        newinstances.push(newState(e));
+
+  alterInstances = (type, instanceIndex, newState) => {
+    return this.state[type].instances.map((e, i) => {
+      if (i === instanceIndex){
+        return newState(e)
       } else {
-        newinstances.push(e)
+        return e;
       }
-      return null;
     })
-    return newinstances;
   }
 
-  alterCategory = (type, catIndex, instanceIndex, newState) => {
-    console.log("AlterCat called");
-    let newCategory = [];
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: this.alterInstance(e.instances, instanceIndex, newState)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-
-    })
-    console.log(newCategory);
-    return newCategory;
-  }
-
-  onEditAt = (type, catIndex, instanceIndex) => {
+  onEditAt = (type, instanceIndex) => {
     console.log("Edit Called");
     const newState = (e) => {
       return {
@@ -162,7 +140,9 @@ class Start extends React.Component {
     }
     this.setState({
       ...this.state,
-      [type]: this.alterCategory(type, catIndex, instanceIndex, newState)
+      [type]: {
+        ...this.state[type],
+        instances: this.alterInstances(type, instanceIndex, newState)}
     })
   }
 
@@ -438,6 +418,7 @@ class Start extends React.Component {
         <StartCategoryForm
           title = {"income"}
           instances = {this.state.income.instances}
+          onEditAt = {this.onEditAt}
         />
         <StartCategoryForm
           title = {"expenses"}
