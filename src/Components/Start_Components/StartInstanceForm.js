@@ -14,7 +14,7 @@ const StartInstanceForm = (props)=> {
           id={`duration-${props.type}-${props.instanceIndex}`}
           onChange={()=> props.onChange(props.type, props.catIndex, i)}
           />
-      </div>
+        </div>
         )
       }
       return (

@@ -19,7 +19,7 @@ class Start extends React.Component {
           {
           title: 'Set Job title',
           value: 5000,
-          isEditing: false,
+          isEditing: true,
           pendingTitle: 'Set Job Title',
           pendingValue: '5000',
           pendingInterest: '1',
@@ -137,6 +137,25 @@ class Start extends React.Component {
     })
   }
 
+  validateValue = (e, type) => {
+    const falseChars = [',', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
+    const strippedValue = (pendingString) => {
+      falseChars.map((char) => {
+        pendingString = pendingString.replace(char, '');
+      })
+      return pendingString
+    }
+
+    let newValue;
+    if (!Number.isNaN(parseFloat(strippedValue(e['pending' + type])))) {
+      newValue = parseFloat(strippedValue(e['pending' + type]));
+    } else {
+      console.log('value failed:' + strippedValue(e[type]));
+      newValue = "Invalid Entry, Try Again";
+    }
+    return newValue
+  }
+
   //Event Handlers
   onEditAt = (type, instanceIndex) => {
     console.log("Edit Called at " + type + ' ' + instanceIndex);
@@ -200,29 +219,10 @@ class Start extends React.Component {
   }
 
   onConfirmAt = (type, instanceIndex) => {
-
-    const validateValue = (e, type) => {
-      const falseChars = [',', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
-      const strippedValue = (pendingString) => {
-        falseChars.map((char) => {
-          pendingString = pendingString.replace(char, '');
-        })
-        return pendingString
-      }
-
-      let newValue;
-      if (!Number.isNaN(parseFloat(strippedValue(e['pending' + type])))) {
-        newValue = parseFloat(strippedValue(e['pending' + type]));
-      } else {
-        console.log('value failed:' + strippedValue(e[type]));
-        newValue = "Invalid Entry, Try Again";
-      }
-      return newValue
-    }
-
+    console.log("Confirming Inputs at " + type + " " + instanceIndex);
     let newInstance = (e, i)=>{
-      let validatedValue = validateValue(e, 'Value');
-      let validatedInterest = validateValue(e, 'Interest');
+      let validatedValue = this.validateValue(e, 'Value');
+      let validatedInterest = this.validateValue(e, 'Interest');
       return {
         ...e,
         title: e.pendingTitle,
@@ -238,59 +238,50 @@ class Start extends React.Component {
   }
 
   confirmAll = () => {
-    const getNewTypes = () => {
-      const types = ['income', 'expenses', 'debt', 'savings'];
-      const newTypes = {};
-      for (let i = 0; i < types.length; i++) {
-        let newType = [];
-        let typeName = types[i];
-        this.state[typeName].map((subCat) => {
-          newType.push(getNewSubCat(subCat));
-        })
-        newTypes[typeName] = newType;
-      }
-      return newTypes;
-    }
+    const types = ['income', 'expenses', 'debt', 'savings'];
+    let newInstancesObjs = {};
 
-    const getNewSubCat = (subCat) => {
-      return {
-        ...subCat,
-        instances: getNewInstances(subCat.instances)
-      };
-    }
+    let typeInstances = types.map((type, i)=>{
 
-    const getNewInstances = (instances) => {
-      const arr = [];
-      instances.map((instance) => {
-        let newInstance = {
-          ...instance,
-          title: instance.pendingTitle,
-          value: instance.pendingValue,
-          interest: instance.pendingInterest,
-          length: instance.pendingLength,
-          duration: instance.pendingDuration,
-          isEditing: false
+      newInstancesObjs[type] = this.state[type].instances.map((e,i)=>{
+        let validatedValue = this.validateValue(e, 'Value');
+        let validatedInterest = this.validateValue(e, 'Interest');
+
+        return {
+          ...e,
+          title: e.pendingTitle,
+          value: validatedValue,
+          interest: validatedInterest,
+          length: e.pendingLength,
+          duration: e.pendingDuration,
+          isEditing: false,
+
         }
-        console.log('instance: ' + newInstance)
-        arr.push(newInstance);
+
       })
-      return arr;
     }
+  )
 
-    let newIncome = getNewTypes()['income'];
-    let newExpenses = getNewTypes()['expenses'];
-    let newDebt = getNewTypes()['debt'];
-    let newSavings = getNewTypes()['savings'];
-
-    this.setState({
-      ...this.state,
-      income: newIncome,
-      expenses: newExpenses,
-      debt: newDebt,
-      savings: newSavings
-
-    })
-
+  console.log(newInstancesObjs);
+  this.setState({
+    ...this.state,
+    income: {
+      ...this.state.income,
+      instances: newInstancesObjs.income
+    },
+    expenses: {
+      ...this.state.expenses,
+      instances: newInstancesObjs.expenses
+    },
+    debt: {
+      ...this.state.debt,
+      instances: newInstancesObjs.debt
+    },
+    savings: {
+      ...this.state.savings,
+      instances: newInstancesObjs.savings
+    },
+  })
   }
 
   packageData = () => {
@@ -348,6 +339,7 @@ class Start extends React.Component {
           onChangeAt = {this.onChangeAt}
           onConfirmAt = {this.onConfirmAt}
         />
+        <button onClick={()=> this.confirmAll()}>Confirm All</button>
       </div>
          )
   }
