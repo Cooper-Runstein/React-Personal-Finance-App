@@ -116,10 +116,11 @@ class Start extends React.Component {
 
   //*****Button and Input Change/Click functions********//
 
-  alterInstances = (type, instanceIndex, newState) => {
+  //Common Function
+  alterInstances = (type, instanceIndex, newInstance) => {
     return this.state[type].instances.map((e, i) => {
       if (i === instanceIndex){
-        return newState(e)
+        return newInstance(e,i)
       } else {
         return e;
       }
@@ -136,19 +137,20 @@ class Start extends React.Component {
     })
   }
 
+  //Event Handlers
   onEditAt = (type, instanceIndex) => {
-    console.log("Edit Called");
+    console.log("Edit Called at " + type + ' ' + instanceIndex);
     const newState = (e) => {
       return {
         ...e,
         isEditing: !e.isEditing
       }
     }
-
     this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newState))
   }
 
   addInstance = (type) => {
+    console.log("Adding Instance to: " + type);
     let newInstance = {
       title: 'set',
       value: 'set',
@@ -162,96 +164,39 @@ class Start extends React.Component {
     }
 
     let currentInstances = this.state[type].instances.slice();
-    currentInstances.push(newInstance)
+    currentInstances.push(newInstance);
 
-    this.changeStateInstancesAt(type, currentInstances)
+    this.changeStateInstancesAt(type, currentInstances);
   }
 
-  removeInstanceAt = (type, catIndex, instanceIndex) => {
-    const newCategory = [];
-    const alterInstance = (instances, instanceIndex) => {
-      const newinstances = [];
-      instances.map((e, i) => {
-        if (i === instanceIndex) {
-          return false;
-        } else {
-          newinstances.push(e)
-        }
-        return null;
-      })
-      return newinstances;
-    }
-
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances, instanceIndex)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-      return null;
-    })
-
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+  removeInstanceAt = (type, instanceIndex) => {
+    console.log("Remove Instance at " + type + " " + instanceIndex);
+    let newInstances = this.state[type].instances.filter((e, i) => {
+      return i !== instanceIndex;
+    });
+    this.changeStateInstancesAt(type, newInstances);
   }
 
-  onChangeAt = (type, catIndex, instanceIndex) => {
-    const newCategory = [];
-    const alterInstance = (instances, instanceIndex) => {
-      const newinstances = [];
-      instances.map((e, i) => {
-        if (i === instanceIndex) {
-          const valueValue = document.getElementById(`value-${type}-${catIndex}-${i}`).value;
-          const titleValue = document.getElementById(`title-${type}-${catIndex}-${i}`).value;
-          const interestValue = document.getElementById(`interest-${type}-${catIndex}-${i}`).value;
-          const lengthValue = document.getElementById(`length-${type}-${catIndex}-${i}`).value;
-          const durationValue = document.getElementById(`duration-${type}-${catIndex}-${i}`).value;
+  onChangeAt = (type, instanceIndex) => {
+    console.log("Change Called at " + type + " " + instanceIndex)
+    const newInstance = (e,i)=> {
+      const valueValue = document.getElementById(`value-${type}-${i}`).value;
+      const titleValue = document.getElementById(`title-${type}-${i}`).value;
+      const interestValue = document.getElementById(`interest-${type}-${i}`).value;
+      const lengthValue = document.getElementById(`length-${type}-${i}`).value;
+      //const durationValue = document.getElementById(`duration-${type}-${i}`).value;
 
-          console.log(interestValue);
-
-          let newInstance = {
-            ...e,
-            pendingValue: valueValue,
-            pendingTitle: titleValue,
-            pendingInterest: interestValue,
-            pendingLength: lengthValue,
-            pendingDuration: durationValue
-          }
-
-          newinstances.push(newInstance);
-        } else {
-          newinstances.push(e)
-        }
-
-        return null;
-
-      })
-      return newinstances;
+      return {
+        ...e,
+        pendingValue: valueValue,
+        pendingTitle: titleValue,
+        pendingInterest: interestValue,
+        pendingLength: lengthValue,
+        //pendingDuration: durationValue
+      }
     }
 
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances, instanceIndex)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-      return null;
-    })
-
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
   }
 
   onConfirmAt = (type, catIndex, instanceIndex) => {
@@ -403,18 +348,32 @@ class Start extends React.Component {
           instances = {this.state.income.instances}
           onEditAt = {this.onEditAt}
           addInstance = {()=>this.addInstance('income')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
         />
         <StartCategoryForm
           title = {"expenses"}
           instances = {this.state.expenses.instances}
+          onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('expenses')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
           />
         <StartCategoryForm
           title = {"debt"}
           instances = {this.state.debt.instances}
+          onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('debt')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
         />
         <StartCategoryForm
-          title = {"expenses"}
+          title = {"savings"}
           instances = {this.state.savings.instances}
+          onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('savings')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
         />
       </div>
          )

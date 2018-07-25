@@ -44,18 +44,15 @@ const  StartCategoryForm = (props)=> {
           pendingDuration = {
             e.pendingDuration
           }
-          onEditAt = {
+          onEdit = {
             ()=> props.onEditAt(props.title, i)
           }
-          // removeInstanceAt = {
-          //   this.removeInstanceAt
-          // }
-          // addInstance = {
-          //   () => this.addInstance('debt', i)
-          // }
-          // onChange = {
-          //   this.onChangeAt
-          // }
+          onRemove = {
+            ()=> props.removeInstanceAt(props.title, i)
+          }
+          onChange = {
+            ()=> props.onChangeAt(props.title, i)
+          }
           // onConfirm = {
           //   this.onConfirmAt
           // }
