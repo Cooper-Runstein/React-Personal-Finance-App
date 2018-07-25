@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SubCategoryForm from './SubCategoryForm.js';
+import StartCategoryForm from './StartCategoryForm.js';
 
 class Start extends React.Component {
   constructor(props) {
@@ -13,9 +14,10 @@ class Start extends React.Component {
     this.state = {
       pendingRetirment: '',
       retirmentYear: '',
-      income: [{
-        title: 'Jobs',
-        instances: [{
+      income: {
+        title: 'Income',
+        instances: [
+          {
           title: 'Set Job title',
           value: 5000,
           isEditing: true,
@@ -28,14 +30,10 @@ class Start extends React.Component {
           duration: "retirement",
           pendingDuration: "retirement"
         }],
-        get totals() {
-          return this.instances.reduce((sum, entry) => {
-            return sum + entry.value
-          }, 0)
-        }
-      }],
-      expenses: [{
-          title: 'Housing',
+
+        },
+      expenses: {
+          title: 'Expenses',
           instances: [{
             title: 'Rent',
             value: 1000,
@@ -48,53 +46,37 @@ class Start extends React.Component {
             pendingLength: 'auto',
             duration: "retirement",
             pendingDuration: "retirement"
-          }, ],
-          get totals() {
-            console.log("Calculating Housing totals: " + this.instances.reduce((sum, entry) => {
-              return sum + entry.value
-            }, 0))
-            return this.instances.reduce((sum, entry) => {
-              return sum + entry.value
-            }, 0)
+          },
+          {
+            title: 'Eating Out',
+            value: 60,
+            isEditing: true,
+            pendingTitle: 'Eating Out',
+            pendingValue: '60',
+            pendingInterest: '1',
+            interest: 1.4,
+            length: 'auto',
+            pendingLength: 'auto',
+            duration: "retirement",
+            pendingDuration: "retirement"
+          },
+          {
+            title: 'Groceries',
+            value: 50,
+            isEditing: true,
+            pendingTitle: 'Groceries',
+            pendingValue: '50',
+            pendingInterest: '1',
+            interest: 1,
+            length: 'auto',
+            pendingLength: 'auto',
+            duration: "retirement",
+            pendingDuration: "retirement"
           }
-        },
-        {
-          title: 'food',
-          instances: [{
-              title: 'Eating Out',
-              value: 60,
-              isEditing: true,
-              pendingTitle: 'Eating Out',
-              pendingValue: '60',
-              pendingInterest: '1',
-              interest: 1.4,
-              length: 'auto',
-              pendingLength: 'auto',
-              duration: "retirement",
-              pendingDuration: "retirement"
-            },
-            {
-              title: 'Groceries',
-              value: 50,
-              isEditing: true,
-              pendingTitle: 'Groceries',
-              pendingValue: '50',
-              pendingInterest: '1',
-              interest: 1,
-              length: 'auto',
-              pendingLength: 'auto',
-              duration: "retirement",
-              pendingDuration: "retirement"
-            }
-          ],
-          get totals() {
-            return this.instances.reduce((sum, entry) => {
-              return sum + entry.value
-            }, 0)
-          }
-        }
-      ],
-      debt: [{
+        ],
+
+      },
+      debt: {
         title: 'Loans',
         instances: [{
           title: 'Mortgage',
@@ -108,14 +90,11 @@ class Start extends React.Component {
           pendingLength: 'auto',
           duration: "retirement",
           pendingDuration: "retirement"
-        }, ],
-        get totals() {
-          return this.instances.reduce((sum, entry) => {
-            return sum + entry.value
-          }, 0)
-        }
-      }, ],
-      savings: [{
+          },
+
+        ],
+      },
+      savings: {
         title: 'Retirment Savings',
         instances: [{
           title: '401K',
@@ -130,14 +109,9 @@ class Start extends React.Component {
           duration: "retirement",
           pendingDuration: "retirement"
 
-        }, ],
-        get totals() {
-          return this.instances.reduce((sum, entry) => {
-            return sum + entry.value
-          }, 0)
-        }
-      }, ]
-
+        },
+      ],
+      }
     }
   }
 
@@ -318,8 +292,6 @@ class Start extends React.Component {
   }
 
   onConfirmAt = (type, catIndex, instanceIndex) => {
-    console.log("Confirm Called");
-    console.log(this.state.income);
     const newCategory = [];
     const alterInstance = (instances, instanceIndex) => {
       const newinstances = [];
@@ -461,207 +433,26 @@ class Start extends React.Component {
 
 
   render() {
-
     return (
       <div className = "start-main-container" >
-      <div className = "start-instances-container" >
-      {
-        this.state.income.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'income'
-          }
-          title = {
-            e.title
-          }
-          description = {
-            "Record Your sources of temporary sourses of income, jobs, gigs, etc. "
-          }
-          subCat = {
-            e
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('income', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
+        <StartCategoryForm
+          title = {"income"}
+          instances = {this.state.income.instances}
+        />
+        <StartCategoryForm
+          title = {"expenses"}
+          instances = {this.state.expenses.instances}
           />
-        })
-      }
-
-      {
-        this.state.expenses.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'expenses'
-          }
-          subCat = {
-            e
-          }
-          title = {
-            e.title
-          }
-          description = {
-            "Record Your Expenses, food, housing, transportation, etc.. "
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('expenses', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
-          />
-        })
-      }
-
-      {
-        this.state.debt.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'debt'
-          }
-          subCat = {
-            e
-          }
-          title = {
-            e.title
-          }
-          description = {
-            "Record Your Debts, student loans, credit card debt, mortgage, etc."
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('debt', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
-          />
-        })
-      }
-
-      {
-        this.state.savings.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'savings'
-          }
-          subCat = {
-            e
-          }
-          title = {
-            e.title
-          }
-          description = {
-            "Record Your Current Savings, 401K, stocks, important property, etc."
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('savings', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
-          />
-        })
-      }
+        <StartCategoryForm
+          title = {"debt"}
+          instances = {this.state.debt.instances}
+        />
+        <StartCategoryForm
+          title = {"expenses"}
+          instances = {this.state.savings.instances}
+        />
       </div>
-      <hr/>
-      <button
-        onClick = {() => this.confirmAll()}> Confirm All </button>
-      <div id = "retirment-form" >
-      <input
-        placeholder = 'Enter Retirment Year'
-        id = "retirment-input"
-        value = {
-          this.state.pendingRetirment
-        }
-        onChange = {
-          (e) => {
-            this.setState({
-              ...this.state,
-              pendingRetirment: e.target.value
-            })
-          }
-        }
-      />
-      <button onClick = {
-        () => {
-          this.setState({
-            ...this.state,
-            retirmentYear: this.state.pendingRetirment
-          })
-        }
-      } > Confirm Retirment </button>
-      </div>
-      <button
-        onClick = {
-          () => this.packageData()
-        } > Package Data
-      </button>
-
-    </div>
-    )
-
+         )
   }
 }
 
