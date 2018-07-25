@@ -114,10 +114,6 @@ class Start extends React.Component {
     }
   }
 
-  changeInstanceObject = () => {
-
-  }
-
   //*****Button and Input Change/Click functions********//
 
   alterInstances = (type, instanceIndex, newState) => {
@@ -130,6 +126,16 @@ class Start extends React.Component {
     })
   }
 
+  changeStateInstancesAt = (type, newInstances)=> {
+    this.setState({
+      ...this.state,
+      [type]: {
+        ...this.state[type],
+        instances: newInstances
+      }
+    })
+  }
+
   onEditAt = (type, instanceIndex) => {
     console.log("Edit Called");
     const newState = (e) => {
@@ -138,50 +144,27 @@ class Start extends React.Component {
         isEditing: !e.isEditing
       }
     }
-    this.setState({
-      ...this.state,
-      [type]: {
-        ...this.state[type],
-        instances: this.alterInstances(type, instanceIndex, newState)}
-    })
+
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newState))
   }
 
-  addInstance = (type, catIndex) => {
-    const newCategory = [];
-    const alterInstance = (instances) => {
-      let oldinstances = instances.slice();
-      oldinstances.push({
-        title: 'set',
-        value: 'set',
-        isEditing: true,
-        pendingTitle: '',
-        pendingValue: '',
-        pendingInterest: '1',
-        interest: 1,
-        duration: 'retirement',
-        pendingDuration: 'retirement'
-      })
-
-      return oldinstances;
+  addInstance = (type) => {
+    let newInstance = {
+      title: 'set',
+      value: 'set',
+      isEditing: true,
+      pendingTitle: '',
+      pendingValue: '',
+      pendingInterest: '1',
+      interest: 1,
+      duration: 'retirement',
+      pendingDuration: 'retirement'
     }
 
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-      return null;
-    })
+    let currentInstances = this.state[type].instances.slice();
+    currentInstances.push(newInstance)
 
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+    this.changeStateInstancesAt(type, currentInstances)
   }
 
   removeInstanceAt = (type, catIndex, instanceIndex) => {
@@ -419,6 +402,7 @@ class Start extends React.Component {
           title = {"income"}
           instances = {this.state.income.instances}
           onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('income')}
         />
         <StartCategoryForm
           title = {"expenses"}

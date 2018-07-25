@@ -85,11 +85,6 @@ const StartInstanceForm = (props)=> {
 
             {props.isEditing ? <div /> : staticForm()}
 
-            <div className="start-add-button-container">
-                <button
-                  //onClick={ props.addInstance }
-                  >Add</button>
-            </div>
         </div>
     )
 }
