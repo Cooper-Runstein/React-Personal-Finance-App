@@ -52,7 +52,7 @@ const StartInstanceForm = (props)=> {
             </div>
             <div className="start-instance-buttons">
             <button
-                onClick={props.onEdit}
+                onClick={props.onConfirm}
                 > Confirm </button>
             <button
                 onClick={props.onRemove}

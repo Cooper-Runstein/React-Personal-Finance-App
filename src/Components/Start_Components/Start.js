@@ -199,73 +199,42 @@ class Start extends React.Component {
     this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
   }
 
-  onConfirmAt = (type, catIndex, instanceIndex) => {
-    const newCategory = [];
-    const alterInstance = (instances, instanceIndex) => {
-      const newinstances = [];
-      instances.map((e, i) => {
-        if (i === instanceIndex) {
+  onConfirmAt = (type, instanceIndex) => {
 
-          const validateValue = (e, type) => {
-            const falseChars = [',', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
-            const strippedValue = (pendingString) => {
-              falseChars.map((char) => {
-                pendingString = pendingString.replace(char, '');
-              })
-              return pendingString
-            }
+    const validateValue = (e, type) => {
+      const falseChars = [',', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
+      const strippedValue = (pendingString) => {
+        falseChars.map((char) => {
+          pendingString = pendingString.replace(char, '');
+        })
+        return pendingString
+      }
 
-            let newValue;
-            if (!Number.isNaN(parseFloat(strippedValue(e['pending' + type])))) {
-              newValue = parseFloat(strippedValue(e['pending' + type]));
-            } else {
-              console.log('value failed:' + strippedValue(e[type]));
-              newValue = "Invalid Entry, Try Again";
-            }
-            return newValue
-          }
-
-          let validatedValue = validateValue(e, 'Value');
-          let validatedInterest = validateValue(e, 'Interest');
-
-          let newInstance = {
-            ...e,
-            title: e.pendingTitle,
-            value: validatedValue,
-            interest: validatedInterest,
-            length: e.pendingLength,
-            duration: e.pendingDuration,
-            isEditing: false,
-          }
-          console.log(newInstance);
-          newinstances.push(newInstance);
-        } else {
-          newinstances.push(e)
-        }
-
-        return null;
-
-      })
-      return newinstances;
+      let newValue;
+      if (!Number.isNaN(parseFloat(strippedValue(e['pending' + type])))) {
+        newValue = parseFloat(strippedValue(e['pending' + type]));
+      } else {
+        console.log('value failed:' + strippedValue(e[type]));
+        newValue = "Invalid Entry, Try Again";
+      }
+      return newValue
     }
 
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances, instanceIndex)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
+    let newInstance = (e, i)=>{
+      let validatedValue = validateValue(e, 'Value');
+      let validatedInterest = validateValue(e, 'Interest');
+      return {
+        ...e,
+        title: e.pendingTitle,
+        value: validatedValue,
+        interest: validatedInterest,
+        length: e.pendingLength,
+        duration: e.pendingDuration,
+        isEditing: false,
       }
-      return null;
-    })
+    }
 
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
   }
 
   confirmAll = () => {
@@ -350,6 +319,7 @@ class Start extends React.Component {
           addInstance = {()=>this.addInstance('income')}
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
         />
         <StartCategoryForm
           title = {"expenses"}
@@ -358,6 +328,7 @@ class Start extends React.Component {
           addInstance = {()=>this.addInstance('expenses')}
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
           />
         <StartCategoryForm
           title = {"debt"}
@@ -366,6 +337,7 @@ class Start extends React.Component {
           addInstance = {()=>this.addInstance('debt')}
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
         />
         <StartCategoryForm
           title = {"savings"}
@@ -374,6 +346,7 @@ class Start extends React.Component {
           addInstance = {()=>this.addInstance('savings')}
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
         />
       </div>
          )

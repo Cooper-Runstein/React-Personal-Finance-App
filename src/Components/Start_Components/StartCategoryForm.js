@@ -53,9 +53,9 @@ const  StartCategoryForm = (props)=> {
           onChange = {
             ()=> props.onChangeAt(props.title, i)
           }
-          // onConfirm = {
-          //   this.onConfirmAt
-          // }
+          onConfirm = {
+            ()=> props.onConfirmAt(props.title, i)
+          }
           />
 
           })
