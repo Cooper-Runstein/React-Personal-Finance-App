@@ -10,6 +10,7 @@ class Start extends React.Component {
     this.onChangeAt = this.onChangeAt.bind(this);
     this.onConfirmAt = this.onConfirmAt.bind(this);
     this.alterInstances = this.alterInstances.bind(this);
+    this.packageData = this.packageData.bind(this);
     this.state = {
       pendingRetirment: '',
       retirmentYear: '',
@@ -262,7 +263,6 @@ class Start extends React.Component {
     }
   )
 
-  console.log(newInstancesObjs);
   this.setState({
     ...this.state,
     income: {
@@ -285,7 +285,9 @@ class Start extends React.Component {
   }
 
   packageData = () => {
+    console.log("Attempting Data Packaging")
     if ((typeof parseFloat(this.state.retirmentYear) === "number") && Math.floor(parseFloat(this.state.retirmentYear)) === parseFloat(this.state.retirmentYear) && parseFloat(this.state.retirmentYear) > this.props.year) {
+      console.log("retirment year is valid, packaging data")
       this.props.getStartingFormData({
         retirmentYear: this.state.retirmentYear,
         income: this.state.income,
@@ -340,6 +342,29 @@ class Start extends React.Component {
           onConfirmAt = {this.onConfirmAt}
         />
         <button onClick={()=> this.confirmAll()}>Confirm All</button>
+        <hr/>
+        <input
+          placeholder="Enter your target retirement age"
+          onChange={(event)=>{this.setState({
+            ...this.state,
+            pendingRetirment: event.target.value
+          })}}
+        />
+        <button
+          onClick={()=>{
+            this.setState({
+              ...this.state,
+              retirmentYear: parseInt(this.state.pendingRetirment)
+            })
+          }}>Confirm retirement year</button>
+          <button
+            onClick={()=>{
+
+                console.log("Creating Chart Attempted")
+                this.packageData();
+
+            }}
+          >Create my Chart</button>
       </div>
          )
   }
