@@ -67,10 +67,10 @@ class App extends Component {
       years.push(
         {
           year: this.state.date + i,
-          income: this.extendInstances(this.state.packagedData.income, i),
-          expenses: this.extendInstances(this.state.packagedData.expenses, i),
-          debt: this.extendInstances(this.state.packagedData.debt, i),
-          savings: this.extendInstances(this.state.packagedData.savings, i),
+          income: this.state.packagedData.income,
+          expenses: this.state.packagedData.expenses,
+          debt: this.state.packagedData.debt,
+          savings: this.state.packagedData.savings,
         }
       );
     }
@@ -409,13 +409,13 @@ class App extends Component {
           retirmentYear = {this.getRetirmentYear}
           currentYear = {this.state.date}
           years = {this.state.years}
-          editEntry = {this.toggleEditEntry}
-          removeEntry = {this.removeEntry}
-          onChangeValue = {this.onChangeValue}
-          onChangeTitle = {this.onChangeTitle}
-          onChangeInterest = {this.onChangeInterest}
-          onConfirm = {this.onConfirm}
-          addInstance = {this.addInstance}
+          // editEntry = {this.toggleEditEntry}
+          // removeEntry = {this.removeEntry}
+          // onChangeValue = {this.onChangeValue}
+          // onChangeTitle = {this.onChangeTitle}
+          // onChangeInterest = {this.onChangeInterest}
+          // onConfirm = {this.onConfirm}
+          // addInstance = {this.addInstance}
         />
 
         :
@@ -423,7 +423,7 @@ class App extends Component {
 
         }
 
-        {
+        {/* {
           this.state.displays.displayCounter ?
           <Counter
             income = {this.getIncome()}
@@ -436,7 +436,7 @@ class App extends Component {
           />
           :
           false
-        }
+        } */}
 
         <Footer />
       </div>

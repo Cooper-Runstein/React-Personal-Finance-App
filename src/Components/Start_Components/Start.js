@@ -143,6 +143,7 @@ class Start extends React.Component {
     const strippedValue = (pendingString) => {
       falseChars.map((char) => {
         pendingString = pendingString.replace(char, '');
+        return null;
       })
       return pendingString
     }
@@ -242,12 +243,11 @@ class Start extends React.Component {
     const types = ['income', 'expenses', 'debt', 'savings'];
     let newInstancesObjs = {};
 
-    let typeInstances = types.map((type, i)=>{
+    types.map((type, i)=>{
 
       newInstancesObjs[type] = this.state[type].instances.map((e,i)=>{
         let validatedValue = this.validateValue(e, 'Value');
         let validatedInterest = this.validateValue(e, 'Interest');
-
         return {
           ...e,
           title: e.pendingTitle,
@@ -260,6 +260,7 @@ class Start extends React.Component {
         }
 
       })
+      return null;
     }
   )
 
@@ -354,16 +355,11 @@ class Start extends React.Component {
           onClick={()=>{
             this.setState({
               ...this.state,
-              retirmentYear: parseInt(this.state.pendingRetirment)
+              retirmentYear: parseInt(this.state.pendingRetirment, 10)
             })
           }}>Confirm retirement year</button>
           <button
-            onClick={()=>{
-
-                console.log("Creating Chart Attempted")
-                this.packageData();
-
-            }}
+            onClick={()=> this.packageData()}
           >Create my Chart</button>
       </div>
          )
@@ -371,7 +367,8 @@ class Start extends React.Component {
 }
 
 Start.propTypes = {
-
+  getStartingFormData: PropTypes.func.isRequired,
+  year: PropTypes.number.isRequired
 }
 
 export default Start;

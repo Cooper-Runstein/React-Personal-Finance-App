@@ -8,36 +8,37 @@ const Year =(props)=>{
            return (
             <tr className="year">
                 <td>{props.year.year}</td>
-                {props.year.income.map((e,i)=>{
+                {props.year.income.instances.map((e,i)=>{
                     return <Category
                         yearIndex = {props.yearIndex}
                         catName = "income"
-                        catKey = {i}
+                        instanceIndex = {i}
                         key = {i}
-                        category = {e}
-                        editEntry = {props.editEntry}
-                        removeEntry = {props.removeEntry}
-                        onChangeValue = {props.onChangeValue}
-                        onChangeTitle = {props.onChangeTitle}
-                        onChangeInterest = {props.onChangeInterest}
-                        onConfirm = {props.onConfirm}
-                        addInstance = {props.addInstance}
+                        instance = {e}
+
+                        // editEntry = {props.editEntry}
+                        // removeEntry = {props.removeEntry}
+                        // onChangeValue = {props.onChangeValue}
+                        // onChangeTitle = {props.onChangeTitle}
+                        // onChangeInterest = {props.onChangeInterest}
+                        // onConfirm = {props.onConfirm}
+                        // addInstance = {props.addInstance}
                     />
                 })}
-                {props.year.expenses.map((e,i)=>{
+                {props.year.expenses.instances.map((e,i)=>{
                     return <Category
                     yearIndex= {props.yearIndex}
                         key = {i}
                         catKey = {i}
                         catName = "expenses"
-                        category = {e}
-                        editEntry = {props.editEntry}
-                        removeEntry = {props.removeEntry}
-                        onChangeValue = {props.onChangeValue}
-                        onChangeTitle = {props.onChangeTitle}
-                        onChangeInterest = {props.onChangeInterest}
-                        onConfirm = {props.onConfirm}
-                        addInstance = {props.addInstance}
+                        instance = {e}
+                        // editEntry = {props.editEntry}
+                        // removeEntry = {props.removeEntry}
+                        // onChangeValue = {props.onChangeValue}
+                        // onChangeTitle = {props.onChangeTitle}
+                        // onChangeInterest = {props.onChangeInterest}
+                        // onConfirm = {props.onConfirm}
+                        // addInstance = {props.addInstance}
                     />
                 })}
                 {/* {props.year.debt.map((e,i)=>{

@@ -71,8 +71,13 @@ const  StartCategoryForm = (props)=> {
 }
 
 StartCategoryForm.propTypes = {
-    // title: PropTypes.string.isRequired,
-    // onChange: PropTypes.func.isRequired
+  title: PropTypes.string.isRequired,
+  instances: PropTypes.array.isRequired,
+  onEditAt: PropTypes.func.isRequired,
+  addInstance: PropTypes.func.isRequired,
+  removeInstanceAt: PropTypes.func.isRequired,
+  onChangeAt: PropTypes.func.isRequired,
+  onConfirmAt: PropTypes.func.isRequired
 }
 
 export default StartCategoryForm;

@@ -3,24 +3,24 @@ import PropTypes from 'prop-types';
 import Year from './Year';
 
 const YearsContainer = (props) =>{
-    
+
     return(
         <div id="years-container">
             <h1>Years Container</h1>
             <table>
                 <tbody>
                     {props.years.map((y, i)=>{
-                        return <Year 
+                        return <Year
                                 key = {i}
                                 yearIndex = {i}
                                 year = {y}
-                                editEntry = {props.editEntry}
-                                removeEntry = {props.removeEntry}
-                                onChangeValue = {props.onChangeValue}
-                                onChangeTitle = {props.onChangeTitle}
-                                onChangeInterest = {props.onChangeInterest}
-                                onConfirm = {props.onConfirm}
-                                addInstance = {props.addInstance}
+                                // editEntry = {props.editEntry}
+                                // removeEntry = {props.removeEntry}
+                                // onChangeValue = {props.onChangeValue}
+                                // onChangeTitle = {props.onChangeTitle}
+                                // onChangeInterest = {props.onChangeInterest}
+                                // onConfirm = {props.onConfirm}
+                                // addInstance = {props.addInstance}
                             />
                     })}
                 </tbody>
