@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SubCategoryForm from './SubCategoryForm.js';
+import StartCategoryForm from './StartCategoryForm.js';
 
 class Start extends React.Component {
   constructor(props) {
@@ -9,13 +9,15 @@ class Start extends React.Component {
     this.addInstance = this.addInstance.bind(this);
     this.onChangeAt = this.onChangeAt.bind(this);
     this.onConfirmAt = this.onConfirmAt.bind(this);
-    this.alterCategory = this.alterCategory.bind(this);
+    this.alterInstances = this.alterInstances.bind(this);
+    this.packageData = this.packageData.bind(this);
     this.state = {
       pendingRetirment: '',
       retirmentYear: '',
-      income: [{
-        title: 'Jobs',
-        instances: [{
+      income: {
+        title: 'Income',
+        instances: [
+          {
           title: 'Set Job title',
           value: 5000,
           isEditing: true,
@@ -28,14 +30,10 @@ class Start extends React.Component {
           duration: "retirement",
           pendingDuration: "retirement"
         }],
-        get totals() {
-          return this.instances.reduce((sum, entry) => {
-            return sum + entry.value
-          }, 0)
-        }
-      }],
-      expenses: [{
-          title: 'Housing',
+
+        },
+      expenses: {
+          title: 'Expenses',
           instances: [{
             title: 'Rent',
             value: 1000,
@@ -48,53 +46,37 @@ class Start extends React.Component {
             pendingLength: 'auto',
             duration: "retirement",
             pendingDuration: "retirement"
-          }, ],
-          get totals() {
-            console.log("Calculating Housing totals: " + this.instances.reduce((sum, entry) => {
-              return sum + entry.value
-            }, 0))
-            return this.instances.reduce((sum, entry) => {
-              return sum + entry.value
-            }, 0)
+          },
+          {
+            title: 'Eating Out',
+            value: 60,
+            isEditing: true,
+            pendingTitle: 'Eating Out',
+            pendingValue: '60',
+            pendingInterest: '1',
+            interest: 1.4,
+            length: 'auto',
+            pendingLength: 'auto',
+            duration: "retirement",
+            pendingDuration: "retirement"
+          },
+          {
+            title: 'Groceries',
+            value: 50,
+            isEditing: true,
+            pendingTitle: 'Groceries',
+            pendingValue: '50',
+            pendingInterest: '1',
+            interest: 1,
+            length: 'auto',
+            pendingLength: 'auto',
+            duration: "retirement",
+            pendingDuration: "retirement"
           }
-        },
-        {
-          title: 'food',
-          instances: [{
-              title: 'Eating Out',
-              value: 60,
-              isEditing: true,
-              pendingTitle: 'Eating Out',
-              pendingValue: '60',
-              pendingInterest: '1',
-              interest: 1.4,
-              length: 'auto',
-              pendingLength: 'auto',
-              duration: "retirement",
-              pendingDuration: "retirement"
-            },
-            {
-              title: 'Groceries',
-              value: 50,
-              isEditing: true,
-              pendingTitle: 'Groceries',
-              pendingValue: '50',
-              pendingInterest: '1',
-              interest: 1,
-              length: 'auto',
-              pendingLength: 'auto',
-              duration: "retirement",
-              pendingDuration: "retirement"
-            }
-          ],
-          get totals() {
-            return this.instances.reduce((sum, entry) => {
-              return sum + entry.value
-            }, 0)
-          }
-        }
-      ],
-      debt: [{
+        ],
+
+      },
+      debt: {
         title: 'Loans',
         instances: [{
           title: 'Mortgage',
@@ -108,14 +90,11 @@ class Start extends React.Component {
           pendingLength: 'auto',
           duration: "retirement",
           pendingDuration: "retirement"
-        }, ],
-        get totals() {
-          return this.instances.reduce((sum, entry) => {
-            return sum + entry.value
-          }, 0)
-        }
-      }, ],
-      savings: [{
+          },
+
+        ],
+      },
+      savings: {
         title: 'Retirment Savings',
         instances: [{
           title: '401K',
@@ -130,322 +109,186 @@ class Start extends React.Component {
           duration: "retirement",
           pendingDuration: "retirement"
 
-        }, ],
-        get totals() {
-          return this.instances.reduce((sum, entry) => {
-            return sum + entry.value
-          }, 0)
-        }
-      }, ]
-
+        },
+      ],
+      }
     }
   }
 
-  changeInstanceObject = () => {
-
-  }
-
   //*****Button and Input Change/Click functions********//
-  alterInstance = (instances, instanceIndex, newState) => {
-    const newinstances = [];
-    instances.map((e, i) => {
-      if (i === instanceIndex) {
-        newinstances.push(newState(e));
+
+  //Common Function
+  alterInstances = (type, instanceIndex, newInstance) => {
+    return this.state[type].instances.map((e, i) => {
+      if (i === instanceIndex){
+        return newInstance(e,i)
       } else {
-        newinstances.push(e)
+        return e;
       }
-      return null;
     })
-    return newinstances;
   }
 
-  alterCategory = (type, catIndex, instanceIndex, newState) => {
-    console.log("AlterCat called");
-    let newCategory = [];
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: this.alterInstance(e.instances, instanceIndex, newState)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
+  changeStateInstancesAt = (type, newInstances)=> {
+    this.setState({
+      ...this.state,
+      [type]: {
+        ...this.state[type],
+        instances: newInstances
       }
-
     })
-    console.log(newCategory);
-    return newCategory;
   }
 
-  onEditAt = (type, catIndex, instanceIndex) => {
-    console.log("Edit Called");
+  validateValue = (e, type) => {
+    const falseChars = [',', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
+    const strippedValue = (pendingString) => {
+      falseChars.map((char) => {
+        pendingString = pendingString.replace(char, '');
+        return null;
+      })
+      return pendingString
+    }
+
+    let newValue;
+    if (!Number.isNaN(parseFloat(strippedValue(e['pending' + type])))) {
+      newValue = parseFloat(strippedValue(e['pending' + type]));
+    } else {
+      console.log('value failed:' + strippedValue(e[type]));
+      newValue = "Invalid Entry, Try Again";
+    }
+    return newValue
+  }
+
+  //Event Handlers
+  onEditAt = (type, instanceIndex) => {
+    console.log("Edit Called at " + type + ' ' + instanceIndex);
     const newState = (e) => {
       return {
         ...e,
         isEditing: !e.isEditing
       }
     }
-    this.setState({
-      ...this.state,
-      [type]: this.alterCategory(type, catIndex, instanceIndex, newState)
-    })
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newState))
   }
 
-  addInstance = (type, catIndex) => {
-    const newCategory = [];
-    const alterInstance = (instances) => {
-      let oldinstances = instances.slice();
-      oldinstances.push({
-        title: 'set',
-        value: 'set',
-        isEditing: true,
-        pendingTitle: '',
-        pendingValue: '',
-        pendingInterest: '1',
-        interest: 1,
-        duration: 'retirement',
-        pendingDuration: 'retirement'
-      })
-
-      return oldinstances;
+  addInstance = (type) => {
+    console.log("Adding Instance to: " + type);
+    let newInstance = {
+      title: 'set',
+      value: 'set',
+      isEditing: true,
+      pendingTitle: '',
+      pendingValue: '',
+      pendingInterest: '1',
+      interest: 1,
+      duration: 'retirement',
+      pendingDuration: 'retirement'
     }
 
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-      return null;
-    })
+    let currentInstances = this.state[type].instances.slice();
+    currentInstances.push(newInstance);
 
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+    this.changeStateInstancesAt(type, currentInstances);
   }
 
-  removeInstanceAt = (type, catIndex, instanceIndex) => {
-    const newCategory = [];
-    const alterInstance = (instances, instanceIndex) => {
-      const newinstances = [];
-      instances.map((e, i) => {
-        if (i === instanceIndex) {
-          return false;
-        } else {
-          newinstances.push(e)
-        }
-        return null;
-      })
-      return newinstances;
-    }
-
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances, instanceIndex)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-      return null;
-    })
-
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+  removeInstanceAt = (type, instanceIndex) => {
+    console.log("Remove Instance at " + type + " " + instanceIndex);
+    let newInstances = this.state[type].instances.filter((e, i) => {
+      return i !== instanceIndex;
+    });
+    this.changeStateInstancesAt(type, newInstances);
   }
 
-  onChangeAt = (type, catIndex, instanceIndex) => {
-    const newCategory = [];
-    const alterInstance = (instances, instanceIndex) => {
-      const newinstances = [];
-      instances.map((e, i) => {
-        if (i === instanceIndex) {
-          const valueValue = document.getElementById(`value-${type}-${catIndex}-${i}`).value;
-          const titleValue = document.getElementById(`title-${type}-${catIndex}-${i}`).value;
-          const interestValue = document.getElementById(`interest-${type}-${catIndex}-${i}`).value;
-          const lengthValue = document.getElementById(`length-${type}-${catIndex}-${i}`).value;
-          const durationValue = document.getElementById(`duration-${type}-${catIndex}-${i}`).value;
+  onChangeAt = (type, instanceIndex) => {
+    console.log("Change Called at " + type + " " + instanceIndex)
+    const newInstance = (e,i)=> {
+      const valueValue = document.getElementById(`value-${type}-${i}`).value;
+      const titleValue = document.getElementById(`title-${type}-${i}`).value;
+      const interestValue = document.getElementById(`interest-${type}-${i}`).value;
+      const lengthValue = document.getElementById(`length-${type}-${i}`).value;
+      //const durationValue = document.getElementById(`duration-${type}-${i}`).value;
 
-          console.log(interestValue);
-
-          let newInstance = {
-            ...e,
-            pendingValue: valueValue,
-            pendingTitle: titleValue,
-            pendingInterest: interestValue,
-            pendingLength: lengthValue,
-            pendingDuration: durationValue
-          }
-
-          newinstances.push(newInstance);
-        } else {
-          newinstances.push(e)
-        }
-
-        return null;
-
-      })
-      return newinstances;
+      return {
+        ...e,
+        pendingValue: valueValue,
+        pendingTitle: titleValue,
+        pendingInterest: interestValue,
+        pendingLength: lengthValue,
+        //pendingDuration: durationValue
+      }
     }
 
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances, instanceIndex)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-      return null;
-    })
-
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
   }
 
-  onConfirmAt = (type, catIndex, instanceIndex) => {
-    console.log("Confirm Called");
-    console.log(this.state.income);
-    const newCategory = [];
-    const alterInstance = (instances, instanceIndex) => {
-      const newinstances = [];
-      instances.map((e, i) => {
-        if (i === instanceIndex) {
-
-          const validateValue = (e, type) => {
-            const falseChars = [',', '/', '$', '#', ' ', '*', ';', ':', '^', '%', '!', '\''];
-            const strippedValue = (pendingString) => {
-              falseChars.map((char) => {
-                pendingString = pendingString.replace(char, '');
-              })
-              return pendingString
-            }
-
-            let newValue;
-            if (!Number.isNaN(parseFloat(strippedValue(e['pending' + type])))) {
-              newValue = parseFloat(strippedValue(e['pending' + type]));
-            } else {
-              console.log('value failed:' + strippedValue(e[type]));
-              newValue = "Invalid Entry, Try Again";
-            }
-            return newValue
-          }
-
-          let validatedValue = validateValue(e, 'Value');
-          let validatedInterest = validateValue(e, 'Interest');
-
-          let newInstance = {
-            ...e,
-            title: e.pendingTitle,
-            value: validatedValue,
-            interest: validatedInterest,
-            length: e.pendingLength,
-            duration: e.pendingDuration,
-            isEditing: false,
-          }
-          console.log(newInstance);
-          newinstances.push(newInstance);
-        } else {
-          newinstances.push(e)
-        }
-
-        return null;
-
-      })
-      return newinstances;
+  onConfirmAt = (type, instanceIndex) => {
+    console.log("Confirming Inputs at " + type + " " + instanceIndex);
+    let newInstance = (e, i)=>{
+      let validatedValue = this.validateValue(e, 'Value');
+      let validatedInterest = this.validateValue(e, 'Interest');
+      return {
+        ...e,
+        title: e.pendingTitle,
+        value: validatedValue,
+        interest: validatedInterest,
+        length: e.pendingLength,
+        duration: e.pendingDuration,
+        isEditing: false,
+      }
     }
 
-    this.state[type].map((e, i) => {
-      if (i === catIndex) {
-        let subCategory = {
-          ...e,
-          instances: alterInstance(e.instances, instanceIndex)
-        }
-        newCategory.push(subCategory);
-      } else {
-        newCategory.push(e);
-      }
-      return null;
-    })
-
-    this.setState({
-      ...this.state,
-      [type]: newCategory
-    })
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
   }
 
   confirmAll = () => {
-    const getNewTypes = () => {
-      const types = ['income', 'expenses', 'debt', 'savings'];
-      const newTypes = {};
-      for (let i = 0; i < types.length; i++) {
-        let newType = [];
-        let typeName = types[i];
-        this.state[typeName].map((subCat) => {
-          newType.push(getNewSubCat(subCat));
-        })
-        newTypes[typeName] = newType;
-      }
-      return newTypes;
-    }
+    const types = ['income', 'expenses', 'debt', 'savings'];
+    let newInstancesObjs = {};
 
-    const getNewSubCat = (subCat) => {
-      return {
-        ...subCat,
-        instances: getNewInstances(subCat.instances)
-      };
-    }
+    types.map((type, i)=>{
 
-    const getNewInstances = (instances) => {
-      const arr = [];
-      instances.map((instance) => {
-        let newInstance = {
-          ...instance,
-          title: instance.pendingTitle,
-          value: instance.pendingValue,
-          interest: instance.pendingInterest,
-          length: instance.pendingLength,
-          duration: instance.pendingDuration,
-          isEditing: false
+      newInstancesObjs[type] = this.state[type].instances.map((e,i)=>{
+        let validatedValue = this.validateValue(e, 'Value');
+        let validatedInterest = this.validateValue(e, 'Interest');
+        return {
+          ...e,
+          title: e.pendingTitle,
+          value: validatedValue,
+          interest: validatedInterest,
+          length: e.pendingLength,
+          duration: e.pendingDuration,
+          isEditing: false,
+
         }
-        console.log('instance: ' + newInstance)
-        arr.push(newInstance);
+
       })
-      return arr;
+      return null;
     }
+  )
 
-    let newIncome = getNewTypes()['income'];
-    let newExpenses = getNewTypes()['expenses'];
-    let newDebt = getNewTypes()['debt'];
-    let newSavings = getNewTypes()['savings'];
-
-    this.setState({
-      ...this.state,
-      income: newIncome,
-      expenses: newExpenses,
-      debt: newDebt,
-      savings: newSavings
-
-    })
-
+  this.setState({
+    ...this.state,
+    income: {
+      ...this.state.income,
+      instances: newInstancesObjs.income
+    },
+    expenses: {
+      ...this.state.expenses,
+      instances: newInstancesObjs.expenses
+    },
+    debt: {
+      ...this.state.debt,
+      instances: newInstancesObjs.debt
+    },
+    savings: {
+      ...this.state.savings,
+      instances: newInstancesObjs.savings
+    },
+  })
   }
 
   packageData = () => {
+    console.log("Attempting Data Packaging")
     if ((typeof parseFloat(this.state.retirmentYear) === "number") && Math.floor(parseFloat(this.state.retirmentYear)) === parseFloat(this.state.retirmentYear) && parseFloat(this.state.retirmentYear) > this.props.year) {
+      console.log("Retirment year is valid, packaging data")
       this.props.getStartingFormData({
         retirmentYear: this.state.retirmentYear,
         income: this.state.income,
@@ -461,201 +304,71 @@ class Start extends React.Component {
 
 
   render() {
-
-    return ( <
-      div className = "start-main-container" >
-      <
-      div className = "start-instances-container" > {
-        this.state.income.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'income'
-          }
-          title = {
-            e.title
-          }
-          subCat = {
-            e
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('income', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
+    return (
+      <div className = "start-main-container" >
+        <StartCategoryForm
+          title = {"income"}
+          instances = {this.state.income.instances}
+          onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('income')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
+        />
+        <StartCategoryForm
+          title = {"expenses"}
+          instances = {this.state.expenses.instances}
+          onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('expenses')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
           />
-        })
-      }
-
-      {
-        this.state.expenses.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'expenses'
-          }
-          subCat = {
-            e
-          }
-          title = {
-            e.title
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('expenses', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
-          />
-        })
-      }
-
-      {
-        this.state.debt.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'debt'
-          }
-          subCat = {
-            e
-          }
-          title = {
-            e.title
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('debt', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
-          />
-        })
-      }
-
-      {
-        this.state.savings.map((e, i) => {
-          return <SubCategoryForm
-          key = {
-            i
-          }
-          catIndex = {
-            i
-          }
-          type = {
-            'savings'
-          }
-          subCat = {
-            e
-          }
-          title = {
-            e.title
-          }
-          onEditAt = {
-            this.onEditAt
-          }
-          removeInstanceAt = {
-            this.removeInstanceAt
-          }
-          addInstance = {
-            () => this.addInstance('savings', i)
-          }
-          onChange = {
-            this.onChangeAt
-          }
-          onConfirm = {
-            this.onConfirmAt
-          }
-          />
-        })
-      } <
-      /div> <
-      hr / >
-      <
-      button onClick = {
-        () => this.confirmAll()
-      } > Confirm All < /button> <
-      div id = "retirment-form" >
-      <
-      input placeholder = 'Enter Retirment Year'
-      id = "retirment-input"
-      value = {
-        this.state.pendingRetirment
-      }
-      onChange = {
-        (e) => {
-          this.setState({
+        <StartCategoryForm
+          title = {"debt"}
+          instances = {this.state.debt.instances}
+          onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('debt')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
+        />
+        <StartCategoryForm
+          title = {"savings"}
+          instances = {this.state.savings.instances}
+          onEditAt = {this.onEditAt}
+          addInstance = {()=>this.addInstance('savings')}
+          removeInstanceAt = {this.removeInstanceAt}
+          onChangeAt = {this.onChangeAt}
+          onConfirmAt = {this.onConfirmAt}
+        />
+        <button onClick={()=> this.confirmAll()}>Confirm All</button>
+        <hr/>
+        <input
+          placeholder="Enter your target retirement age"
+          onChange={(event)=>{this.setState({
             ...this.state,
-            pendingRetirment: e.target.value
-          })
-        }
-      }
-      /> <
-      button onClick = {
-        () => {
-          this.setState({
-            ...this.state,
-            retirmentYear: this.state.pendingRetirment
-          })
-        }
-      } > Confirm Retirment < /button> < /
-      div > <
-      button onClick = {
-        () => this.packageData()
-      } > Package Data < /button>
-
-      <
-      /div>
-    )
-
+            pendingRetirment: event.target.value
+          })}}
+        />
+        <button
+          onClick={()=>{
+            this.setState({
+              ...this.state,
+              retirmentYear: parseInt(this.state.pendingRetirment, 10)
+            })
+          }}>Confirm retirement year</button>
+          <button
+            onClick={()=> this.packageData()}
+          >Create my Chart</button>
+      </div>
+         )
   }
 }
 
 Start.propTypes = {
-
+  getStartingFormData: PropTypes.func.isRequired,
+  year: PropTypes.number.isRequired
 }
 
 export default Start;

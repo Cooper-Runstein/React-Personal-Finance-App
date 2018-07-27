@@ -1,52 +1,73 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Category from './Category';
+import Instance from './Instance';
 
 
 const Year =(props)=>{
-           
+
            return (
             <tr className="year">
-                <td>{props.year.year}</td>
-                {props.year.income.map((e,i)=>{
-                    return <Category
+                <th>{props.year.year}</th>
+                <td>
+                  <h2>Income</h2>
+                  {props.year.income.instances.map((e,i)=>{
+                      return <Instance
+                        key = {i}
+                        instanceIndex = {i}
                         yearIndex = {props.yearIndex}
-                        catName = "income"
-                        catKey = {i}
-                        key = {i}
-                        category = {e}
-                        editEntry = {props.editEntry}
-                        removeEntry = {props.removeEntry}
-                        onChangeValue = {props.onChangeValue}
-                        onChangeTitle = {props.onChangeTitle}
-                        onChangeInterest = {props.onChangeInterest}
-                        onConfirm = {props.onConfirm}
-                        addInstance = {props.addInstance}
-                    />
-                })}
-                {props.year.expenses.map((e,i)=>{
-                    return <Category 
-                    yearIndex= {props.yearIndex}
-                        key = {i}
-                        catKey = {i}
-                        catName = "expenses"
-                        category = {e}
-                        editEntry = {props.editEntry}
-                        removeEntry = {props.removeEntry}
-                        onChangeValue = {props.onChangeValue}
-                        onChangeTitle = {props.onChangeTitle}
-                        onChangeInterest = {props.onChangeInterest}
-                        onConfirm = {props.onConfirm}
-                        addInstance = {props.addInstance}
-                    />
-                })}
-                {props.year.debt.map((e,i)=>{
-                    return <Category 
+                        type = "income"
+                        instance = {e}
+                        title = {e.title}
+                        value = {e.value}
+                        pendingValue = {e.pendingValue}
+                        pendingTitle = {e.pendingTitle}
+                        isEditing = {e.isEditing}
+                        interest = {e.interest}
+                        editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'income', i)}
+                        removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'income', i)}
+                        onChange = {props.onChange}
+                          // onChangeInterest = {props.onChangeInterest}
+                        onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'income', i)}
+
+                      />
+                  })}
+                  <button
+                    onClick={()=> props.addInstance(props.yearIndex, 'income')}>Add</button>
+
+
+                <h2>Expenses</h2>
+                  {props.year.expenses.instances.map((e,i)=>{
+                      return <Instance
+                      yearIndex= {props.yearIndex}
+                          key = {i}
+                          catKey = {i}
+                          type = "expenses"
+                          instance = {e}
+                          title = {e.title}
+                          value = {e.value}
+                          pendingValue = {e.pendingValue}
+                          pendingTitle = {e.pendingTitle}
+                          isEditing = {e.isEditing}
+                          editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'expenses', i)}
+                          removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'expenses', i)}
+                          // editEntry = {props.editEntry}
+                          // removeEntry = {props.removeEntry}
+                          // onChangeValue = {props.onChangeValue}
+                          // onChangeTitle = {props.onChangeTitle}
+                          // onChangeInterest = {props.onChangeInterest}
+                          // onConfirm = {props.onConfirm}
+                          // addInstance = {props.addInstance}
+                      />
+                  })}
+                  <button
+                    onClick={()=> props.addInstance(props.yearIndex, 'expenses')}>Add</button>
+                {/* {props.year.debt.map((e,i)=>{
+                    return <Instance
                         key = {i}
                         catKey = {i}
                         yearIndex = {props.yearIndex}
                         catName = "debt"
-                        category = {e}
+                        instance = {e}
                         editEntry = {props.editEntry}
                         removeEntry = {props.removeEntry}
                         onChangeValue = {props.onChangeValue}
@@ -57,12 +78,12 @@ const Year =(props)=>{
                     />
                 })}
                 {props.year.savings.map((e,i)=>{
-                    return <Category 
+                    return <Instance
                         key = {i}
                         catKey = {i}
                         yearIndex = {props.yearIndex}
                         catName = "savings"
-                        category = {e}
+                        instance = {e}
                         editEntry = {props.editEntry}
                         removeEntry = {props.removeEntry}
                         onChangeValue = {props.onChangeValue}
@@ -70,21 +91,16 @@ const Year =(props)=>{
                         onChangeInterest = {props.onChangeInterest}
                         onConfirm = {props.onConfirm}
                         addInstance = {props.addInstance}
-                    />
-                })}
+                    /> */}
+                {/* })} */}
+
+              </td>
             </tr>
            )
-    } 
+    }
 
 
 Year.propTypes = {
     year: PropTypes.object.isRequired,
-    editEntry: PropTypes.func.isRequired,
-    yearIndex: PropTypes.number.isRequired,
-    removeEntry: PropTypes.func.isRequired,
-    onChangeValue: PropTypes.func.isRequired,
-    onChangeTitle: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired,
-    addInstance: PropTypes.func.isRequired
 }
 export default Year;

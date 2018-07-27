@@ -4,23 +4,26 @@ import Interest from './Interest';
 
 const Value = (props) =>{
     return (
-        props.isEditing ? 
+        props.isEditing ?
         <div>
-            <input 
+            <input
                 placeholder={props.value}
-                onChange={(e)=> {props.onChangeVal(e, props.location)}}
+                onChange={(e)=> {props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'value')}}
             />
-            <Interest 
-                interest = {parseFloat(props.interest)}
-                onChange = {(e)=> {props.onChangeInt(e, props.location)}}
+            <Interest
+                //interest = {parseFloat(props.interest)}
+                //onChange = {(e)=> {props.onChangeInt(e, props.location)}}
             />
-            
+
         </div>
-        
+
 
         :
 
-        <span> Amount:{Number.isNaN(parseFloat(props.value)) ? props.value : props.value * (parseFloat(props.interest) ** props.yearIndex)}</span>
+        <span> Amount: {props.value}
+        {//Number.isNaN(parseFloat(props.value)) ? props.value : props.value * (parseFloat(props.interest) ** props.yearIndex)
+        }
+        </span>
     )
 }
 

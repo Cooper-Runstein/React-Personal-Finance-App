@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 
 const Title = (props) => {
     return (
-        props.isEditing ? 
-        <input 
+        props.isEditing ?
+        <input
             placeholder= {props.title}
-            onChange= {(e)=> props.onChange(e, props.location)}
-        /> 
+            onChange= {(e)=> props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'title')}
+        />
 
-        : 
+        :
 
         <span> {props.title} </span>
     )
 }
-    
+
 
 Title.propTypes = {
     title: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
 }
 
 export default Title;
