@@ -9,6 +9,7 @@ import Value from "./Value";
 const Instance = (props) =>{
     //const totalValue = ()=>props.category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)
     return(
+
             <div>
                 <Title
                   title = {props.title}
@@ -36,8 +37,17 @@ const Instance = (props) =>{
                   //location = {props.location}
 
                 />
-                <button
-                  onClick = {props.editEntry}>Edit</button>
+
+                {
+              !props.isEditing ?
+
+              <button
+                onClick = {props.editEntry}>Edit</button>
+
+              :
+                  <button
+                    onClick = {props.onConfirm}>Confirm</button>
+            }
                 <button
                   onClick = {props.removeInstance}>Remove</button>
                 {/* <AddInstanceButton

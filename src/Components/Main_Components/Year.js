@@ -27,8 +27,8 @@ const Year =(props)=>{
                         removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'income', i)}
                         onChange = {props.onChange}
                           // onChangeInterest = {props.onChangeInterest}
-                          // onConfirm = {props.onConfirm}
-                          // addInstance = {props.addInstance}
+                        onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'income', i)}
+
                       />
                   })}
                   <button

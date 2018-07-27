@@ -18,7 +18,7 @@ class App extends Component {
     this.toggleEditEntry = this.toggleEditEntry.bind(this);
     this.removeInstanceAt = this.removeInstanceAt.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.onConfirm = this.onConfirm.bind(this);
+    this.onConfirmAt = this.onConfirmAt.bind(this);
     this.addInstance = this.addInstance.bind(this);
     this.getIncome = this.getIncome.bind(this);
     this.getExpenses = this.getExpenses.bind(this);
@@ -282,26 +282,16 @@ class App extends Component {
     this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
   }
 
-  onConfirm = (location)=>{
-    console.log('Confirming at: ' + location)
-    const func = ()=>{false};
-    const newState = (e)=>{
+  onConfirmAt = (yearIndex, type, instanceIndex)=>{
+    let newInstance = (instance)=>{
       return {
-        ...e,
-        isEditing: false,
-        value: e.pendingValue,
-        title: e.pendingTitle,
-        interest: e.pendingInterest
+        ...instance,
+        value: instance.pendingValue,
+        title: instance.pendingTitle,
+        isEditing: false
       }
     }
-    const info ={
-      func,
-      newState
-    }
-    this.setState({
-      ...this.state,
-      years: this.alterYearsAt(location, info)
-    })
+    this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
   }
 
   getStartingFormData = (packagedData)=>{
@@ -352,7 +342,7 @@ class App extends Component {
             toggleEditEntry = {this.toggleEditEntry}
             removeInstanceAt = {this.removeInstanceAt}
             onChange = {this.onChange}
-            // onConfirm = {this.onConfirm}
+            onConfirmAt = {this.onConfirmAt}
             addInstance = {this.addInstance}
         />
 

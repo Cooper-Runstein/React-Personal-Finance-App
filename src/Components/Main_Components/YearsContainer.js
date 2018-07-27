@@ -19,7 +19,7 @@ const YearsContainer = (props) =>{
                                 onChange = {props.onChange}
                                 // onChangeTitle = {props.onChangeTitle}
                                 // onChangeInterest = {props.onChangeInterest}
-                                // onConfirm = {props.onConfirm}
+                                onConfirmAt = {props.onConfirmAt}
                                 removeInstanceAt = {props.removeInstanceAt}
                                 addInstance = {props.addInstance}
                             />
