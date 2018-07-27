@@ -12,17 +12,25 @@ const Instance = (props) =>{
             <div>
                 <Title
                   title = {props.title}
+                  yearIndex = {props.yearIndex}
+                  type = {props.type}
+                  instanceIndex = {props.instanceIndex}
+
                   isEditing = {props.isEditing}
                   pendingTitle = {props.pendingTitle}
-                  // onChange = {props.onChangeTitle}
+                  onChange = {props.onChange}
                   // location = {props.location}
                 />
                 <Value
                   interest = {props.interest}
                   yearIndex = {props.yearIndex}
+                  type = {props.type}
+                  instanceIndex = {props.instanceIndex}
+
                   value = {props.value}
                   isEditing = {props.isEditing}
                   pendingValue = {props.pendingValue}
+                  onChange = {props.onChange}
                   //onChangeVal = {props.onChangeValue}
                   //onChangeInt = {props.onChangeInterest}
                   //location = {props.location}

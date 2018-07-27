@@ -8,11 +8,11 @@ const Value = (props) =>{
         <div>
             <input
                 placeholder={props.value}
-                //onChange={(e)=> {props.onChangeVal(e, props.location)}}
+                onChange={(e)=> {props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'value')}}
             />
             <Interest
                 //interest = {parseFloat(props.interest)}
-                onChange = {(e)=> {props.onChangeInt(e, props.location)}}
+                //onChange = {(e)=> {props.onChangeInt(e, props.location)}}
             />
 
         </div>

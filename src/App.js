@@ -17,8 +17,7 @@ class App extends Component {
     //Functions
     this.toggleEditEntry = this.toggleEditEntry.bind(this);
     this.removeInstanceAt = this.removeInstanceAt.bind(this);
-    this.onChangeValue = this.onChangeValue.bind(this);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.addInstance = this.addInstance.bind(this);
     this.getIncome = this.getIncome.bind(this);
@@ -186,6 +185,7 @@ class App extends Component {
 
 
   changeInstanceAt = (yearIndex, type, instanceIndex, newInstance) =>{
+    console.log("Called for changed instance at: " + yearIndex, type, instanceIndex, newInstance)
     let targetYear = this.state.years.filter((year, i)=>{
       return i === yearIndex;
     });
@@ -270,42 +270,16 @@ class App extends Component {
     this.changeYearAt(yearIndex, newYear);
   }
 
-  onChangeFor = (e, location, type) =>{
-    console.log('Change Called at: ' + location);
-    console.log(e.target.value);
-    const newVal = e.target.value;
-    const newState = (e)=>{
-      return{
-      ...e,
-      ['pending' + type]: newVal
+  onChange = (yearIndex, type, instanceIndex, event, obj) =>{
+    let upperedObj = (obj)=> obj.charAt(0).toUpperCase() + obj.slice(1);
+
+    let newInstance = (e)=>{
+      return {
+        ...e,
+        ['pending' + upperedObj(obj)]: event.target.value
+      }
     }
-  };
-    const func = ()=>{null};
-    const info = {
-      newState,
-      func
-    }
-
-    this.setState({
-      ...this.state,
-      years: this.alterYearsAt(location, info)
-    })
-
-  }
-
-  onChangeValue = (e, location)=> {
-    console.log("Value Change");
-    this.onChangeFor(e, location, 'Value');
-  }
-
-  onChangeInterest = (e, location)=>{
-    console.log("Interest Change");
-    this.onChangeFor(e, location, 'Interest');
-  }
-
-  onChangeTitle = (e, location)=>{
-    console.log("Title Change");
-    this.onChangeFor(e, location, 'Title');
+    this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
   }
 
   onConfirm = (location)=>{
@@ -377,9 +351,7 @@ class App extends Component {
             years = {this.state.years}
             toggleEditEntry = {this.toggleEditEntry}
             removeInstanceAt = {this.removeInstanceAt}
-            // onChangeValue = {this.onChangeValue}
-            // onChangeTitle = {this.onChangeTitle}
-            // onChangeInterest = {this.onChangeInterest}
+            onChange = {this.onChange}
             // onConfirm = {this.onConfirm}
             addInstance = {this.addInstance}
         />

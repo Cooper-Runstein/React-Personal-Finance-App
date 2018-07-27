@@ -16,7 +16,7 @@ const YearsContainer = (props) =>{
                                 year = {y}
                                 toggleEditEntry = {props.toggleEditEntry}
                                 // removeEntry = {props.removeEntry}
-                                // onChangeValue = {props.onChangeValue}
+                                onChange = {props.onChange}
                                 // onChangeTitle = {props.onChangeTitle}
                                 // onChangeInterest = {props.onChangeInterest}
                                 // onConfirm = {props.onConfirm}

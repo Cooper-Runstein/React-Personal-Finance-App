@@ -6,7 +6,7 @@ const Title = (props) => {
         props.isEditing ?
         <input
             placeholder= {props.title}
-            //onChange= {(e)=> props.onChange(e, props.location)}
+            onChange= {(e)=> props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'title')}
         />
 
         :

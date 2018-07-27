@@ -13,8 +13,9 @@ const Year =(props)=>{
                   {props.year.income.instances.map((e,i)=>{
                       return <Instance
                         key = {i}
-                        catKey = {i}
-                        catName = "income"
+                        instanceIndex = {i}
+                        yearIndex = {props.yearIndex}
+                        type = "income"
                         instance = {e}
                         title = {e.title}
                         value = {e.value}
@@ -23,10 +24,8 @@ const Year =(props)=>{
                         isEditing = {e.isEditing}
                         interest = {e.interest}
                         editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'income', i)}
-                        removeEntry = {()=>props.removeEntryAt(props.index, 'income', i)}
-                          // removeEntry = {props.removeEntry}
-                          // onChangeValue = {props.onChangeValue}
-                          // onChangeTitle = {props.onChangeTitle}
+                        removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'income', i)}
+                        onChange = {props.onChange}
                           // onChangeInterest = {props.onChangeInterest}
                           // onConfirm = {props.onConfirm}
                           // addInstance = {props.addInstance}
@@ -42,7 +41,7 @@ const Year =(props)=>{
                       yearIndex= {props.yearIndex}
                           key = {i}
                           catKey = {i}
-                          catName = "expenses"
+                          type = "expenses"
                           instance = {e}
                           title = {e.title}
                           value = {e.value}
