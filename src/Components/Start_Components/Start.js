@@ -11,6 +11,8 @@ class Start extends React.Component {
     this.onConfirmAt = this.onConfirmAt.bind(this);
     this.alterInstances = this.alterInstances.bind(this);
     this.packageData = this.packageData.bind(this);
+    this.staticTypes = ['debt', 'savings'];
+    this.durationalTypes = ['income', 'expenses'];
     this.state = {
       pendingRetirment: '',
       retirmentYear: '',
@@ -306,61 +308,53 @@ class Start extends React.Component {
   render() {
     return (
       <div className = "start-main-container" >
-        <StartCategoryForm
-          title = {"income"}
-          instances = {this.state.income.instances}
-          onEditAt = {this.onEditAt}
-          addInstance = {()=>this.addInstance('income')}
-          removeInstanceAt = {this.removeInstanceAt}
-          onChangeAt = {this.onChangeAt}
-          onConfirmAt = {this.onConfirmAt}
-        />
-        <StartCategoryForm
-          title = {"expenses"}
-          instances = {this.state.expenses.instances}
-          onEditAt = {this.onEditAt}
-          addInstance = {()=>this.addInstance('expenses')}
-          removeInstanceAt = {this.removeInstanceAt}
-          onChangeAt = {this.onChangeAt}
-          onConfirmAt = {this.onConfirmAt}
+        {
+          this.durationalTypes.map((type)=>{
+            return <StartCategoryForm
+            title = {type}
+            instances = {this.state.income.instances}
+            onEditAt = {this.onEditAt}
+            addInstance = {()=>this.addInstance(type)}
+            removeInstanceAt = {this.removeInstanceAt}
+            onChangeAt = {this.onChangeAt}
+            onConfirmAt = {this.onConfirmAt}
           />
-        <StartCategoryForm
-          title = {"debt"}
-          instances = {this.state.debt.instances}
-          onEditAt = {this.onEditAt}
-          addInstance = {()=>this.addInstance('debt')}
-          removeInstanceAt = {this.removeInstanceAt}
-          onChangeAt = {this.onChangeAt}
-          onConfirmAt = {this.onConfirmAt}
-        />
-        <StartCategoryForm
-          title = {"savings"}
-          instances = {this.state.savings.instances}
-          onEditAt = {this.onEditAt}
-          addInstance = {()=>this.addInstance('savings')}
-          removeInstanceAt = {this.removeInstanceAt}
-          onChangeAt = {this.onChangeAt}
-          onConfirmAt = {this.onConfirmAt}
-        />
+          })
+        }
+        {
+          this.staticTypes.map((type)=>{
+            return <StartCategoryForm
+            title = {type}
+            instances = {this.state.income.instances}
+            onEditAt = {this.onEditAt}
+            addInstance = {()=>this.addInstance(type)}
+            removeInstanceAt = {this.removeInstanceAt}
+            onChangeAt = {this.onChangeAt}
+            onConfirmAt = {this.onConfirmAt}
+          />
+          })
+        }
         <button onClick={()=> this.confirmAll()}>Confirm All</button>
         <hr/>
-        <input
-          placeholder="Enter your target retirement age"
-          onChange={(event)=>{this.setState({
-            ...this.state,
-            pendingRetirment: event.target.value
-          })}}
-        />
-        <button
-          onClick={()=>{
-            this.setState({
+        <div className="start-retirementForm">
+          <input
+            placeholder="Enter your target retirement age"
+            onChange={(event)=>{this.setState({
               ...this.state,
-              retirmentYear: parseInt(this.state.pendingRetirment, 10)
-            })
-          }}>Confirm retirement year</button>
+              pendingRetirment: event.target.value
+            })}}
+          />
           <button
-            onClick={()=> this.packageData()}
-          >Create my Chart</button>
+            onClick={()=>{
+              this.setState({
+                ...this.state,
+                retirmentYear: parseInt(this.state.pendingRetirment, 10)
+              })
+            }}>Confirm retirement year</button>
+            <button
+              onClick={()=> this.packageData()}
+            >Create my Chart</button>
+          </div>
       </div>
          )
   }
