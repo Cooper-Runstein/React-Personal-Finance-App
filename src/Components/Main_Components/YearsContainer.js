@@ -14,13 +14,14 @@ const YearsContainer = (props) =>{
                                 key = {i}
                                 yearIndex = {i}
                                 year = {y}
-                                // editEntry = {props.editEntry}
+                                toggleEditEntry = {props.toggleEditEntry}
                                 // removeEntry = {props.removeEntry}
                                 // onChangeValue = {props.onChangeValue}
                                 // onChangeTitle = {props.onChangeTitle}
                                 // onChangeInterest = {props.onChangeInterest}
                                 // onConfirm = {props.onConfirm}
-                                // addInstance = {props.addInstance}
+                                removeInstanceAt = {props.removeInstanceAt}
+                                addInstance = {props.addInstance}
                             />
                     })}
                 </tbody>
@@ -31,12 +32,6 @@ const YearsContainer = (props) =>{
 
 YearsContainer.propTypes = {
     years: PropTypes.array.isRequired,
-    editEntry: PropTypes.func.isRequired,
-    removeEntry: PropTypes.func.isRequired,
-    onChangeValue:  PropTypes.func.isRequired,
-    onChangeTitle: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired,
-    addInstance: PropTypes.func.isRequired
 }
 
 export default YearsContainer;

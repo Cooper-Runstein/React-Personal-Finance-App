@@ -288,7 +288,7 @@ class Start extends React.Component {
   packageData = () => {
     console.log("Attempting Data Packaging")
     if ((typeof parseFloat(this.state.retirmentYear) === "number") && Math.floor(parseFloat(this.state.retirmentYear)) === parseFloat(this.state.retirmentYear) && parseFloat(this.state.retirmentYear) > this.props.year) {
-      console.log("retirment year is valid, packaging data")
+      console.log("Retirment year is valid, packaging data")
       this.props.getStartingFormData({
         retirmentYear: this.state.retirmentYear,
         income: this.state.income,

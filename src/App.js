@@ -12,9 +12,11 @@ import YearsContainer from './Components/Main_Components/YearsContainer';
 
 class App extends Component {
   constructor(props){
-    super(props)
+    super(props);
+
+    //Functions
     this.toggleEditEntry = this.toggleEditEntry.bind(this);
-    this.removeEntry = this.removeEntry.bind(this);
+    this.removeInstanceAt = this.removeInstanceAt.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
@@ -22,6 +24,7 @@ class App extends Component {
     this.getIncome = this.getIncome.bind(this);
     this.getExpenses = this.getExpenses.bind(this);
     this.getStartingFormData = this.getStartingFormData.bind(this);
+
     this.state = {
       date: new Date().getFullYear(),
       years: [
@@ -41,9 +44,7 @@ class App extends Component {
   //MAIN TABLE CREATION FUNCTIONS
 
   getNumberOfRows = (retirmentYear) =>{
-    console.log(retirmentYear)
     let currentYear = this.state.date;
-    console.log(currentYear)
     let rows = retirmentYear - currentYear;
 
     if((rows <= 0) || !rows){
@@ -82,7 +83,7 @@ class App extends Component {
   }
 
   extendInstances = (category, yearIndex) =>{
-    let newCategory
+    let newCategory;
     newCategory = this.applyInitialInterest(category, yearIndex);
     newCategory = this.applyInitialDuration(newCategory, yearIndex);
     return newCategory;
@@ -98,10 +99,6 @@ class App extends Component {
         })
       }
     })
-
-
-
-
 
   applyInitialInterest = (category, yearIndex)=>{
     let alteredCategory = category.map((subCat, subCatIndex)=>{
@@ -174,134 +171,103 @@ class App extends Component {
 
 
 
-
-
-
-
   //ALTER MAIN TABLE
-  toggleEditEntry = (location) =>{
-    console.log("Called Edit");
-    const newState = (e, entry)=>{
-      return{
-          ...e,
-          isEditing: !entry.isEditing
-        }
-    }
-    const info = {
-      newState: newState,
-      func: ()=>{false}
-    }
-    this.setState(
-      {
-        pendingTitle: "",
-        pendingValue: "",
-        years: this.alterYearsAt(location, info)
-      }
-    );
-    console.log('Years altered');
-  }
 
-  addInstance = (location)=>{
-    const info = {
-        func: (array)=>{
-          array.push({
-            title: 'set',
-            value: 'set',
-            isEditing: true,
-            pendingInterest: '1',
-            pendingTitle: 'set',
-            pendingValue: 'set',
-            interest: 1
-          })
-        },
-        newState: (e)=> e
-    }
+
+
+  changeYearAt = (yearIndex, newYear)=>{
+    let oldYears = this.state.years.slice();
+    oldYears.splice(yearIndex, 1, newYear)
     this.setState({
       ...this.state,
-      years: this.alterYearsAt(location, info)
+      years: oldYears
     })
   }
 
-  alterYearsAt = (location, info)=>{
-    //location is an object with instance's postion
-    //info is and object with two functions:
-    //newState returns the new instance values in state
-    //func will run after state has been changed at given instance
-    const yearIndex = location.yearIndex;
-    const category = location.catName;
-    const years = [];
-    const currentCategory = this.state.years[yearIndex][category];
-    location.currentCategory = currentCategory;
-    this.state.years.map((e,i)=>{
-    if(i === yearIndex){
-      let newYear = {
-        ...e,
-        [category]: this.getCategory(location, info)
+
+  changeInstanceAt = (yearIndex, type, instanceIndex, newInstance) =>{
+    let targetYear = this.state.years.filter((year, i)=>{
+      return i === yearIndex;
+    });
+    targetYear = targetYear[0];
+    console.log(targetYear + type);
+
+    let newInstances = targetYear[type].instances.map((instance, i)=>{
+      if ( i === instanceIndex ){
+        console.log(instance);
+        return newInstance(instance);
+      } else {
+        return instance;
       }
-      years.push(newYear)
+    });
+
+    let newYear = {
+      ...targetYear,
+      [type]: {
+        ...targetYear[type],
+        instances: newInstances
+      }
     }
-    else{
-      years.push(e)
-    }
-    return true;
-  })
-    return years;
+
+    this.changeYearAt(yearIndex, newYear);
   }
 
-  getCategory = (location, info)=>{
-    const currentCategory = location.currentCategory;
-    const catKey = location.catKey;
-    const currentinstances = currentCategory[catKey]['instances'];
-    location.currentinstances = currentinstances;
-    const newCat = []
-    currentCategory.map((e,i)=>{
-      if (i === catKey){
-        let newEntry = {
-          ...e,
-          instances: this.getInstance(location, info)
-        }
-        newCat.push(newEntry)
-      }
-      else{
-        newCat.push(e)
+
+  toggleEditEntry = (yearIndex, type, instanceIndex)=>{
+    console.log("Toggling Edit at:" + yearIndex + " " + type + " " + instanceIndex)
+    let newInstance = (instance)=>{
+      return {
+        ...instance,
+        isEditing: !instance.isEditing
       }
     }
-  )
-    return newCat;
+    this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
   }
 
-  getInstance = (location, info)=>{
-    const currentinstances = location.currentinstances;
-    const index = location.instanceIndex;
-    const entry = currentinstances[index];
-    const newinstances = [];
-    currentinstances.map((e,i)=>{
-      if (i === index){
-        newinstances.push(info.newState(e, entry))
-      }else{
-        newinstances.push(e)
+  addInstance = (yearIndex, type)=>{
+
+    const newInstanceObj = {
+      title: 'set title',
+      value: 'set value',
+      isEditing: true,
+      pendingInterest: '1',
+      pendingTitle: 'set',
+      pendingValue: 'set',
+      interest: 1
+    }
+
+    let newInstancesArr = this.state.years[yearIndex][type].instances.slice()
+    newInstancesArr.push(newInstanceObj);
+
+    const newYear = {
+      ...this.state.years[yearIndex],
+      [type]: {
+        ...[type],
+        instances: newInstancesArr
       }
     }
-  )
-    info.func(newinstances, index);
-    return newinstances;
+    this.changeYearAt(yearIndex, newYear);
   }
 
-  removeEntry = (location)=>{
-    console.log("Called Remove")
-    const info = {
-      newState: ()=>{return false},
-      func: (array, index)=>{
-        console.log(array, index)
-        array.splice(index, index + 1);
-      }
-    }
-    this.setState({
-      pendingTitle: "",
-      pendingValue: "",
-      years: this.alterYearsAt(location, info)
+
+  removeInstanceAt = (yearIndex, type, instanceIndex)=>{
+    console.log("Remove Instance At: " + yearIndex + " " + type + " " + instanceIndex);
+    const targetInstanceArr = this.state.years[yearIndex][type].instances;
+    console.log(targetInstanceArr);
+
+    let newInstancesArr = targetInstanceArr.filter((instance, index)=>{
+      return instanceIndex !== index;
     })
-    console.log('Years altered')
+
+    const newYear = {
+      ...this.state.years[yearIndex],
+      [type]: {
+        ...[type],
+        instances: newInstancesArr
+      }
+    }
+
+    this.changeYearAt(yearIndex, newYear);
   }
 
   onChangeFor = (e, location, type) =>{
@@ -406,16 +372,16 @@ class App extends Component {
         {
           this.state.displays.displayYears ?
           <YearsContainer
-          retirmentYear = {this.getRetirmentYear}
-          currentYear = {this.state.date}
-          years = {this.state.years}
-          // editEntry = {this.toggleEditEntry}
-          // removeEntry = {this.removeEntry}
-          // onChangeValue = {this.onChangeValue}
-          // onChangeTitle = {this.onChangeTitle}
-          // onChangeInterest = {this.onChangeInterest}
-          // onConfirm = {this.onConfirm}
-          // addInstance = {this.addInstance}
+            retirmentYear = {this.getRetirmentYear}
+            currentYear = {this.state.date}
+            years = {this.state.years}
+            toggleEditEntry = {this.toggleEditEntry}
+            removeInstanceAt = {this.removeInstanceAt}
+            // onChangeValue = {this.onChangeValue}
+            // onChangeTitle = {this.onChangeTitle}
+            // onChangeInterest = {this.onChangeInterest}
+            // onConfirm = {this.onConfirm}
+            addInstance = {this.addInstance}
         />
 
         :
