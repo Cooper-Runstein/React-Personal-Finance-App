@@ -3,9 +3,26 @@ import PropTypes from 'prop-types';
 import StartInstanceForm from './StartInstanceForm';
 
 const  StartCategoryForm = (props)=> {
+    let isDurational = ()=>{
+      console.log("Is durational used")
+      //Durational Categories add value each period, static categories only gain instance.
+      //Example: income of $50 over two years with 10% growth means possesion of $105 at the end of year 2
+      //         A loan of $50 only increases by the interest on the loan, there is not reoccuring addition of cost
+
+      if (props.title === 'income' || props.title === 'expenses'){
+        console.log("Is durational");
+        return true;
+      } else {
+        console.log("Not durational");
+        return false;
+      }
+
+    }
+
     return (
       <div>
         <h2>{props.title}</h2>
+
         {props.instances.map((e, i)=>{
           return <StartInstanceForm
           key = {
@@ -22,6 +39,9 @@ const  StartCategoryForm = (props)=> {
           }
           value = {
             e.value
+          }
+          isDurational = {
+            ()=> isDurational()
           }
           isEditing = {
             e.isEditing
