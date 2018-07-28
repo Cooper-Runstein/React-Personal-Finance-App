@@ -1,0 +1,23 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const StartStandardForm = (props)=>{
+  return (
+      <div className={`start-${props.category}-container`}>
+        <p>{props.description}</p>
+        {props.category}:<input
+              placeholder = {props.category}
+              value = {props.pendingCategory}
+              id = {props.id}
+              onChange = {props.onChange}
+        />
+    </div>
+)
+}
+
+StartStandardForm.propTypes = {
+    growth: PropTypes.number.isRequired,
+    pendingGrowth: PropTypes.string.isRequired
+}
+
+export default StartStandardForm;

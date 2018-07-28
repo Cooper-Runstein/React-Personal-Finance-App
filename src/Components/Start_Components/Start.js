@@ -203,16 +203,16 @@ class Start extends React.Component {
     const newInstance = (e,i)=> {
       const valueValue = document.getElementById(`value-${type}-${i}`).value;
       const titleValue = document.getElementById(`title-${type}-${i}`).value;
-      const interestValue = document.getElementById(`interest-${type}-${i}`).value;
-      const lengthValue = document.getElementById(`length-${type}-${i}`).value;
+      //const interestValue = document.getElementById(`interest-${type}-${i}`).value;
+      //const lengthValue = document.getElementById(`length-${type}-${i}`).value;
       //const durationValue = document.getElementById(`duration-${type}-${i}`).value;
 
       return {
         ...e,
         pendingValue: valueValue,
         pendingTitle: titleValue,
-        pendingInterest: interestValue,
-        pendingLength: lengthValue,
+        //pendingInterest: interestValue,
+        //pendingLength: lengthValue,
         //pendingDuration: durationValue
       }
     }

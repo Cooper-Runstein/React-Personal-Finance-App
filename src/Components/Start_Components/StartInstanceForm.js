@@ -1,44 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import StartDuratoinalForm from './StartDurationalForm';
+import StartDurationalForm from './StartDurationalForm';
+import StartIncomeLinkForm from './StartIncomeLinkForm';
+import StartStandardForm from './StartStandardForm';
+
 const StartInstanceForm = (props)=> {
 
     const activeForm = ()=>{
 
       return (
         <div>
-          <div className="start-sub-category-instances">
+        <div>
+          <StartStandardForm
+            category = {props.title}
+            pendingTitle = {props.pendingTitle}
+            onChange = {props.onChange}
+            id = { `title-${props.type}-${props.instanceIndex}`}
+          />
 
-              <div className="start-input-container"> title:
-                <input
-                    placeholder = {props.title}
-                    value = {props.pendingTitle}
-                    id={`title-${props.type}-${props.instanceIndex}`}
-                    onChange={props.onChange}
-                />
-              </div>
+          <StartStandardForm
+            category = {props.value}
+            pendingTitle = {props.pendingValue}
+            onChange = {props.onChange}
+            id = { `value-${props.type}-${props.instanceIndex}`}
+          />
 
-              <div className="start-input-container"> value:
-                <input
-                    placeholder = {props.value}
-                    value = {props.pendingValue}
-                    id={`value-${props.type}-${props.instanceIndex}`}
-                    onChange={props.onChange}
+          {
+          props.isDurational()
+          ?
+          <StartDurationalForm
+            growth = {props.interest}
+            pendingGrowth = {props.pendingInterest}
 
-                />
-              </div>
+          />
+          :
+          <StartStandardForm
+          category = {props.interest}
+          pendingTitle = {props.pendingInterest}
+          onChange = {props.onChange}
+          id = { `interest-${props.type}-${props.instanceIndex}`}
+          />
+        }
 
-              {props.isDurational() ? <StartDuratoinalForm /> : null}
-
-              {/* <div className="start-input-container"> interest/growth: <input
-                  placeholder = {props.interest}
-                  value = {props.pendingInterest}
-                  id={`interest-${props.type}-${props.instanceIndex}`}
-                  onChange={()=> props.onChange(props.type, props.catIndex, i)}
-              />
-              </div>
-
+              {
+                /*
               <div className="start-input-container"> growth period: <input
                   placeholder = {props.length}
                   value = {props.pendingLength}
