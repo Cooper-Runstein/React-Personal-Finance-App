@@ -5,12 +5,18 @@ import StartCategoryForm from './StartCategoryForm.js';
 class Start extends React.Component {
   constructor(props) {
     super(props);
+
     this.onEditAt = this.onEditAt.bind(this);
     this.addInstance = this.addInstance.bind(this);
     this.onChangeAt = this.onChangeAt.bind(this);
     this.onConfirmAt = this.onConfirmAt.bind(this);
     this.alterInstances = this.alterInstances.bind(this);
     this.packageData = this.packageData.bind(this);
+
+    this.handleConnectedSelctionChange = this.handleConnectedSelctionChange.bind(this);
+    this.toggleDisplayLinkOptions = this.toggleDisplayLinkOptions.bind(this);
+    this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
+
     this.state = {
       pendingRetirment: '',
       retirmentYear: '',
@@ -28,7 +34,8 @@ class Start extends React.Component {
           length: 'auto',
           pendingLength: 'auto',
           duration: "retirement",
-          pendingDuration: "retirement"
+          pendingDuration: "retirement",
+
         }],
 
         },
@@ -45,7 +52,9 @@ class Start extends React.Component {
             length: 'auto',
             pendingLength: 'auto',
             duration: "retirement",
-            pendingDuration: "retirement"
+            pendingDuration: "retirement",
+            connectedIndex: '',
+            displayLinkOptions: false
           },
           {
             title: 'Eating Out',
@@ -89,7 +98,8 @@ class Start extends React.Component {
           length: 'auto',
           pendingLength: 'auto',
           duration: "retirement",
-          pendingDuration: "retirement"
+          pendingDuration: "retirement",
+          linkedpayment: ''
           },
 
         ],
@@ -119,6 +129,7 @@ class Start extends React.Component {
 
   //Common Function
   alterInstances = (type, instanceIndex, newInstance) => {
+    console.log("Altering instance at: " + type + ' ' + instanceIndex)
     return this.state[type].instances.map((e, i) => {
       if (i === instanceIndex){
         return newInstance(e,i)
@@ -303,6 +314,36 @@ class Start extends React.Component {
   }
 
 
+  //Link Expense to Debt Functions
+  handleConnectedSelctionChange = (index, event)=>{
+    console.log("loan Selection Called: " + event.target.value)
+    let newInstance = (instance)=> {
+      return {
+        ...instance,
+        connectedIndex: event.target.value
+      }
+    };
+    this.changeStateInstancesAt('expenses', this.alterInstances('expenses', index, newInstance));
+  }
+
+  toggleDisplayLinkOptions = (index)=>{
+    console.log("Called toggle display links at: " + index);
+    const myNewinstance = (instance)=> {
+      return {
+        ...instance,
+        displayLinkOptions: true
+      }
+    };
+
+    this.changeStateInstancesAt('expenses', this.alterInstances('expenses', index, myNewinstance));
+  }
+
+handleLinkSubmit(index, event){
+  event.preventDefault();
+  alert('Linked expense: ' + index + 'to: ' + this.state.debt.instances[this.state.expenses.instances[index].connectedIndex].title);
+}
+
+
   render() {
     return (
       <div className = "start-main-container" >
@@ -314,6 +355,9 @@ class Start extends React.Component {
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
           onConfirmAt = {this.onConfirmAt}
+
+
+
         />
         <StartCategoryForm
           title = {"expenses"}
@@ -324,7 +368,11 @@ class Start extends React.Component {
           onChangeAt = {this.onChangeAt}
           onConfirmAt = {this.onConfirmAt}
           debts = {this.state.debt.instances}
-          />
+          handleConnectedSelctionChange = { this.handleConnectedSelctionChange }
+          toggleDisplayLinkOptions = { this.toggleDisplayLinkOptions }
+          handleLinkSubmit = { this.handleLinkSubmit }
+
+        />
         <StartCategoryForm
           title = {"debt"}
           instances = {this.state.debt.instances}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import StartDurationalForm from './StartDurationalForm';
-import StartIncomeLinkForm from './StartIncomeLinkForm';
+import StartExpensesLinkForm from './StartExpensesLinkForm';
 import StartStandardForm from './StartStandardForm';
 
 const StartInstanceForm = (props)=> {
@@ -53,17 +53,25 @@ const StartInstanceForm = (props)=> {
 
             <StartStandardForm
             name = 'interest'
-            category = {props.interest}
-            pendingTitle = {props.pendingInterest}
-            onChange = {props.onChange}
-            id = { `interest-${props.type}-${props.instanceIndex}`}
+            category = { props.interest }
+            pendingTitle = { props.pendingInterest }
+            onChange = { props.onChange }
+            id = { `interest-${props.type}-${props.instanceIndex}` }
             />
           }
           {
             props.type === 'expenses'
             ?
-            <StartIncomeLinkForm
-              debts = {props.debts}
+            <StartExpensesLinkForm
+              debts = { props.debts }
+              instanceIndex = { props.instanceIndex }
+              handleChange = { props.handleConnectedSelctionChange }
+              connectedIndex = { props.connectedIndex }
+              display = { props.displayLinkOptions }
+              toggleDisplay = { props.toggleDisplayLinkOptions }
+              handleSubmit = { props.handleLinkSubmit }
+
+
 
             />
             :
