@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const StartStandardForm = (props)=>{
   return (
-      <div className={`start-${props.category}-container`}>
+      <div className={`start-${props.name}-container`}>
         <p>{props.description}</p>
-        {props.category}:<input
+        {props.name}:<input
               placeholder = {props.category}
               value = {props.pendingCategory}
               id = {props.id}

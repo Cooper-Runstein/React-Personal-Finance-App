@@ -41,7 +41,7 @@ class Start extends React.Component {
             pendingTitle: 'Rent',
             pendingValue: '1000',
             pendingInterest: '1',
-            interest: 1,
+            interest: 0,
             length: 'auto',
             pendingLength: 'auto',
             duration: "retirement",
@@ -54,7 +54,7 @@ class Start extends React.Component {
             pendingTitle: 'Eating Out',
             pendingValue: '60',
             pendingInterest: '1',
-            interest: 1.4,
+            interest: .4,
             length: 'auto',
             pendingLength: 'auto',
             duration: "retirement",
@@ -67,7 +67,7 @@ class Start extends React.Component {
             pendingTitle: 'Groceries',
             pendingValue: '50',
             pendingInterest: '1',
-            interest: 1,
+            interest: 0,
             length: 'auto',
             pendingLength: 'auto',
             duration: "retirement",
@@ -85,7 +85,7 @@ class Start extends React.Component {
           pendingTitle: 'Mortgage',
           pendingValue: '1000',
           pendingInterest: '1',
-          interest: 1,
+          interest: 0,
           length: 'auto',
           pendingLength: 'auto',
           duration: "retirement",
@@ -100,7 +100,7 @@ class Start extends React.Component {
           title: '401K',
           isEditing: true,
           value: 500,
-          interest: 1,
+          interest: 0,
           length: 'auto',
           pendingTitle: '401K',
           pendingValue: '500',
@@ -323,6 +323,7 @@ class Start extends React.Component {
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
           onConfirmAt = {this.onConfirmAt}
+          debts = {this.state.debt.instances}
           />
         <StartCategoryForm
           title = {"debt"}

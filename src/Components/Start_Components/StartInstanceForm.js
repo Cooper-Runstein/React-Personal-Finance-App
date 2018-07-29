@@ -11,58 +11,77 @@ const StartInstanceForm = (props)=> {
 
       return (
         <div>
-        <div>
-          <StartStandardForm
-            category = {props.title}
-            pendingTitle = {props.pendingTitle}
-            onChange = {props.onChange}
-            id = { `title-${props.type}-${props.instanceIndex}`}
-          />
+          <div className = "start-input-forms-container">
 
-          <StartStandardForm
-            category = {props.value}
-            pendingTitle = {props.pendingValue}
-            onChange = {props.onChange}
-            id = { `value-${props.type}-${props.instanceIndex}`}
-          />
+            <StartStandardForm
+              name = 'title'
+              description = {'Name this ' + props.type + ':'}
+              category = {props.title}
+              pendingCategory = {props.pendingTitle}
+              onChange = {props.onChange}
+              id = { `title-${props.type}-${props.instanceIndex}` }
+            />
 
+            <StartStandardForm
+              name = 'value'
+              category = {props.value}
+              pendingCategory = {props.pendingValue}
+              onChange = {props.onChange}
+              id = { `value-${props.type}-${props.instanceIndex}`}
+            />
+
+            {
+            props.isDurational()
+            ?
+            <div>
+              <StartDurationalForm
+                growth = {props.interest}
+                pendingGrowth = {props.pendingInterest}
+              />
+              <span><input type = 'checkbox' value="retirement"/>Continue Till Retirment</span>
+              <StartStandardForm
+                name = 'duration period'
+                category = {props.length}
+                description = {'How many years does this ' + props.type +' apply?'}
+                pendingCategory = {props.pendingLength}
+                onChange = {props.onChange}
+                id = {`length-${props.type}-${props.instanceIndex}`}
+              />
+            </div>
+
+            :
+
+            <StartStandardForm
+            name = 'interest'
+            category = {props.interest}
+            pendingTitle = {props.pendingInterest}
+            onChange = {props.onChange}
+            id = { `interest-${props.type}-${props.instanceIndex}`}
+            />
+          }
           {
-          props.isDurational()
-          ?
-          <StartDurationalForm
-            growth = {props.interest}
-            pendingGrowth = {props.pendingInterest}
+            props.type === 'expenses'
+            ?
+            <StartIncomeLinkForm
+              debts = {props.debts}
 
-          />
-          :
-          <StartStandardForm
-          category = {props.interest}
-          pendingTitle = {props.pendingInterest}
-          onChange = {props.onChange}
-          id = { `interest-${props.type}-${props.instanceIndex}`}
-          />
-        }
+            />
+            :
+            null
+          }
 
-              {
-                /*
-              <div className="start-input-container"> growth period: <input
-                  placeholder = {props.length}
-                  value = {props.pendingLength}
-                  id={`length-${props.type}-${props.instanceIndex}`}
-                  onChange={()=> props.onChange(props.type, props.catIndex, i)}
-              /> */}
+        </div>
 
-            </div>
+        <div className="start-instance-buttons">
+          <button
+              onClick={props.onConfirm}
+              > Confirm </button>
+          <button
+              onClick={props.onRemove}
+            >Remove</button>
+        </div>
 
-            <div className="start-instance-buttons">
-              <button
-                  onClick={props.onConfirm}
-                  > Confirm </button>
-              <button
-                  onClick={props.onRemove}
-                >Remove</button>
-            </div>
-          </div>
+      </div>
 
 
       )

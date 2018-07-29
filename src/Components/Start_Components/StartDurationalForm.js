@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import StartStandardForm from "./StartStandardForm";
+
 const StartDurationalForm = (props)=>{
   return (
     <div className="start-growth-container">

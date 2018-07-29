@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StartInstanceForm from './StartInstanceForm';
 
+
 const  StartCategoryForm = (props)=> {
     let isDurational = ()=>{
       console.log("Is durational used")
@@ -76,6 +77,7 @@ const  StartCategoryForm = (props)=> {
           onConfirm = {
             ()=> props.onConfirmAt(props.title, i)
           }
+          debts = {props.debts}
           />
 
           })
