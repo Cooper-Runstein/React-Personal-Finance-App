@@ -11,10 +11,8 @@ const  StartCategoryForm = (props)=> {
       //Thus, Durational Categories can end at a selected year, but static can end only when value is 0 or are manually removed
 
       if (props.title === 'income' || props.title === 'expenses'){
-        console.log("Is durational");
         return true;
       } else {
-        console.log("Not durational");
         return false;
       }
 
@@ -30,37 +28,17 @@ const  StartCategoryForm = (props)=> {
           instanceIndex = { i }
           type = { props.title }
           title = { e.title }
-          value = {
-            e.value
-          }
-          isDurational = {
-            ()=> isDurational()
-          }
-          isEditing = {
-            e.isEditing
-          }
-          pendingTitle = {
-            e.pendingTitle
-          }
-          pendingValue = {
-            e.pendingValue
-          }
-          pendingInterest = {
-            e.pendingInterest
-          }
-          interest = {
-            e.interest
-          }
-          duration = {
-            e.duration
-          }
-          pendingDuration = {
-            e.pendingDuration
-          }
+          value = { e.value }
+          isDurational = { ()=> isDurational() }
+          isEditing = { e.isEditing }
+          pendingTitle = { e.pendingTitle }
+          pendingValue = { e.pendingValue }
+          pendingInterest = { e.pendingInterest }
+          interest = { e.interest }
+          duration = { e.duration }
+          pendingDuration = { e.pendingDuration }
           connectedIndex = { e.connectedIndex }
-          onEdit = {
-            ()=> props.onEditAt(props.title, i)
-          }
+          onEdit = { ()=> props.onEditAt(props.title, i) }
           onRemove = { ()=> props.removeInstanceAt(props.title, i) }
           onChange = { ()=> props.onChangeAt(props.title, i) }
           onConfirm = { ()=> props.onConfirmAt(props.title, i) }
@@ -69,7 +47,7 @@ const  StartCategoryForm = (props)=> {
           displayLinkOptions = { e.displayLinkOptions }
           toggleDisplayLinkOptions = { ()=> props.toggleDisplayLinkOptions(i) }
           handleLinkSubmit = { props.handleLinkSubmit }
-          />
+        />
 
 
           })

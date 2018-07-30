@@ -24,6 +24,7 @@ class Start extends React.Component {
         title: 'Income',
         instances: [
           {
+
           title: 'Set Job title',
           value: 5000,
           isEditing: true,
@@ -86,7 +87,7 @@ class Start extends React.Component {
 
       },
       debt: {
-        title: 'Loans',
+        title: 'Debt',
         instances: [{
           title: 'Mortgage',
           value: 1000,
@@ -99,13 +100,11 @@ class Start extends React.Component {
           pendingLength: 'auto',
           duration: "retirement",
           pendingDuration: "retirement",
-          linkedpayment: ''
-          },
-
-        ],
+          linkedPaymentIndex: ''
+        }],
       },
       savings: {
-        title: 'Retirment Savings',
+        title: 'Savings',
         instances: [{
           title: '401K',
           isEditing: true,
@@ -132,7 +131,9 @@ class Start extends React.Component {
     console.log("Altering instance at: " + type + ' ' + instanceIndex)
     return this.state[type].instances.map((e, i) => {
       if (i === instanceIndex){
-        return newInstance(e,i)
+        console.log('found');
+        console.log(newInstance(e,i));
+        return newInstance(e,i);
       } else {
         return e;
       }
@@ -340,7 +341,18 @@ class Start extends React.Component {
 
 handleLinkSubmit(index, event){
   event.preventDefault();
-  alert('Linked expense: ' + index + 'to: ' + this.state.debt.instances[this.state.expenses.instances[index].connectedIndex].title);
+  let newInstance = (instance) => {
+    return (
+      {
+        ...instance,
+        linkedPaymentIndex: index
+      }
+    )
+  };
+
+  let debtIndex = this.state.expenses.instances[index].connectedIndex;
+  let newInstances = this.alterInstances('debt', parseInt(debtIndex), newInstance);
+  this.changeStateInstancesAt('debt', newInstances);
 }
 
 
@@ -416,8 +428,8 @@ handleLinkSubmit(index, event){
 }
 
 Start.propTypes = {
-  getStartingFormData: PropTypes.func.isRequired,
-  year: PropTypes.number.isRequired
+  getStartingFormData: PropTypes.func,
+  year: PropTypes.number
 }
 
 export default Start;

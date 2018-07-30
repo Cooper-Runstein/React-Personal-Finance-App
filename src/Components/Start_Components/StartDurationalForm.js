@@ -12,6 +12,7 @@ const StartDurationalForm = (props)=>{
           placeholder = {props.growth}
           value = {props.pendingGrowth}
           id = {`growth-${props.type}-${props.instanceIndex}`}
+          onChange = {()=>{console.log("Growth Change called")}}
       />
     </div>
 )

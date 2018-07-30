@@ -16,8 +16,8 @@ const StartStandardForm = (props)=>{
 }
 
 StartStandardForm.propTypes = {
-    growth: PropTypes.number.isRequired,
-    pendingGrowth: PropTypes.string.isRequired
+    growth: PropTypes.number,
+    pendingGrowth: PropTypes.string
 }
 
 export default StartStandardForm;
