@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-/* import './App.css';
-import './css/main.css';
-import './css/display.css'; */
+
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Counter from './Components/Counter';
 import Start from './Components/Start_Components/Start';
 import YearsContainer from './Components/Main_Components/YearsContainer';
-
 
 
 class App extends Component {
@@ -53,7 +50,6 @@ class App extends Component {
   }
 
   generateYears = (e) =>{
-    // e.preventDefault();
     const years = [];
     let numYears = this.getNumberOfRows(this.state.packagedData.retirmentYear)
     let initialYear = {
@@ -67,18 +63,33 @@ class App extends Component {
       years.push(
         {
           year: this.state.date + i,
-          income: this.state.packagedData.income,
-          expenses: this.state.packagedData.expenses,
-          debt: this.state.packagedData.debt,
-          savings: this.state.packagedData.savings,
+          income: this.createIncomeInstances(this.state.packagedData.income, i),
+          expenses: this.createExpensesInstances(this.state.packagedData.expenses, i),
+          debt: this.createDebtInstances(this.state.packagedData.debt, i),
+          savings: this.createSavingsInstances(this.state.packagedData.savings, i),
         }
       );
     }
-    console.log(years);
     this.setState({
       years: years
     })
+  }
 
+  createIncomeInstances = (packageIncome, yearIndex)=>{
+    let newInstances = packageIncome.instances.filter((instance, index)=>{
+      return this.isDurationApplied(instance, yearIndex);
+    });
+    return {...packageIncome, instances: newInstances};
+  }
+
+  createExpensesInstances = (packageExpenses, yearIndex)=>{
+    return packageExpenses;
+  }
+  createDebtInstances = (packageDebt, yearIndex)=>{
+    return packageDebt;
+  }
+  createSavingsInstances = (packageSavings, yearIndex)=>{
+    return packageSavings;
   }
 
   extendInstances = (category, yearIndex) =>{
@@ -88,16 +99,21 @@ class App extends Component {
     return newCategory;
   }
 
-  applyInitialDuration = (category, yearIndex)=>
-    category.map((subCat, subCatIndex)=>{
-      return {
-        ...subCat,
-        instances: subCat.instances.filter((instance, instanceIndex)=> {
-          return instance.duration === 'retirement' || parseFloat(instance.duration) >= yearIndex + 1
-
-        })
-      }
-    })
+  isDurationApplied = (instance, yearIndex)=>{
+    console.log('duration called');
+    if (instance.duration === "retirement"){
+      console.log("retirement", instance.duration);
+      return true;
+    }
+    if (parseInt(instance.duration, 10) >= (yearIndex + 1)){
+      console.log(true, yearIndex);
+      return true;
+    }
+    else {
+      console.log(instance, yearIndex);
+      return false;
+    }
+  }
 
   applyInitialInterest = (category, yearIndex)=>{
     let alteredCategory = category.map((subCat, subCatIndex)=>{

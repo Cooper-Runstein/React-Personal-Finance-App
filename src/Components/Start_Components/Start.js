@@ -23,8 +23,7 @@ class Start extends React.Component {
       income: {
         title: 'Income',
         instances: [
-          {
-
+        {
           title: 'Set Job title',
           value: 5000,
           isEditing: true,
@@ -34,8 +33,8 @@ class Start extends React.Component {
           interest: 1,
           length: 'auto',
           pendingLength: 'auto',
-          duration: "retirement",
-          pendingDuration: "retirement",
+          duration: 3,
+          pendingDuration: "3",
 
         }],
 
