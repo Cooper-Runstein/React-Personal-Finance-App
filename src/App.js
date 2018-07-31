@@ -83,7 +83,10 @@ class App extends Component {
   }
 
   createExpensesInstances = (packageExpenses, yearIndex)=>{
-    return packageExpenses;
+    let newInstances = packageExpenses.instances.filter((instance, index)=>{
+      return this.isDurationApplied(instance, yearIndex);
+    });
+    return {...packageExpenses, instances: newInstances};
   }
   createDebtInstances = (packageDebt, yearIndex)=>{
     return packageDebt;
@@ -100,17 +103,13 @@ class App extends Component {
   }
 
   isDurationApplied = (instance, yearIndex)=>{
-    console.log('duration called');
     if (instance.duration === "retirement"){
-      console.log("retirement", instance.duration);
       return true;
     }
     if (parseInt(instance.duration, 10) >= (yearIndex + 1)){
-      console.log(true, yearIndex);
       return true;
     }
     else {
-      console.log(instance, yearIndex);
       return false;
     }
   }

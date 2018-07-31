@@ -26,6 +26,16 @@ const StartExpensesLinkForm = (props) =>{
 
           })}
           <button type='submit'>Link to Loan</button>
+          {
+            //This double ternary gives user feedback if
+            //associated debt has been succesfully linked to this instance
+            //First conditional checks if this instance has a connectedIndex,
+            //Second checks if connectedIndex matches 'linkedPaymentIndex' in applicable debt
+
+            props.connectedIndex
+            ?
+            (props.debts[props.connectedIndex].linkedPaymentIndex === props.instanceIndex ? <p>Linked</p> : null)
+            : null}
         </form>
 
 

@@ -21,7 +21,7 @@ const  StartCategoryForm = (props)=> {
     return (
       <div>
         <h2>{props.title}</h2>
-
+        <h3>{props.description}</h3>
         {props.instances.map((e, i)=>{
           return <StartInstanceForm
           key = { i }
@@ -38,6 +38,7 @@ const  StartCategoryForm = (props)=> {
           duration = { e.duration }
           pendingDuration = { e.pendingDuration }
           connectedIndex = { e.connectedIndex }
+          debts = { props.debts }
           onEdit = { ()=> props.onEditAt(props.title, i) }
           onRemove = { ()=> props.removeInstanceAt(props.title, i) }
           onChange = { ()=> props.onChangeAt(props.title, i) }

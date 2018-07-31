@@ -15,7 +15,7 @@ const StartInstanceForm = (props)=> {
 
             <StartStandardForm
               name = 'title'
-              description = {'Name this ' + props.type + ':'}
+              description = {'Give this a title: '}
               category = {props.title}
               pendingCategory = {props.pendingTitle}
               onChange = {props.onChange}
@@ -24,6 +24,7 @@ const StartInstanceForm = (props)=> {
 
             <StartStandardForm
               name = 'value'
+              description = {'Give this a vaule: '}
               category = {props.value}
               pendingCategory = {props.pendingValue}
               onChange = {props.onChange}
@@ -42,10 +43,10 @@ const StartInstanceForm = (props)=> {
               <StartStandardForm
                 name = 'duration period'
                 category = {props.length}
-                description = {'How many years does this ' + props.type +' apply?'}
+                description = {'For how many years will this instance be applicable?'}
                 pendingCategory = {props.pendingLength}
                 onChange = {props.onChange}
-                id = {`length-${props.type}-${props.instanceIndex}`}
+                id = {`duration-${props.type}-${props.instanceIndex}`}
               />
             </div>
 
@@ -53,6 +54,7 @@ const StartInstanceForm = (props)=> {
 
             <StartStandardForm
             name = 'interest'
+            description = 'If applicable, enter interest'
             category = { props.interest }
             pendingTitle = { props.pendingInterest }
             onChange = { props.onChange }
@@ -67,6 +69,7 @@ const StartInstanceForm = (props)=> {
               instanceIndex = { props.instanceIndex }
               handleChange = { props.handleConnectedSelctionChange }
               connectedIndex = { props.connectedIndex }
+              debts = { props.debts }
               display = { props.displayLinkOptions }
               toggleDisplay = { props.toggleDisplayLinkOptions }
               handleSubmit = { props.handleLinkSubmit }

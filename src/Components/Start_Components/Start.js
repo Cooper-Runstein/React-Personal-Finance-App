@@ -29,12 +29,12 @@ class Start extends React.Component {
           isEditing: true,
           pendingTitle: 'Set Job Title',
           pendingValue: '5000',
-          pendingInterest: '1',
-          interest: 1,
+          pendingInterest: '0',
+          interest: 0,
           length: 'auto',
           pendingLength: 'auto',
-          duration: 3,
-          pendingDuration: "3",
+          duration: "retierment",
+          pendingDuration: "retierment",
 
         }],
 
@@ -47,7 +47,7 @@ class Start extends React.Component {
             isEditing: true,
             pendingTitle: 'Rent',
             pendingValue: '1000',
-            pendingInterest: '1',
+            pendingInterest: '0',
             interest: 0,
             length: 'auto',
             pendingLength: 'auto',
@@ -62,8 +62,8 @@ class Start extends React.Component {
             isEditing: true,
             pendingTitle: 'Eating Out',
             pendingValue: '60',
-            pendingInterest: '1',
-            interest: .4,
+            pendingInterest: '0',
+            interest: 0,
             length: 'auto',
             pendingLength: 'auto',
             duration: "retirement",
@@ -75,7 +75,7 @@ class Start extends React.Component {
             isEditing: true,
             pendingTitle: 'Groceries',
             pendingValue: '50',
-            pendingInterest: '1',
+            pendingInterest: '0',
             interest: 0,
             length: 'auto',
             pendingLength: 'auto',
@@ -93,7 +93,7 @@ class Start extends React.Component {
           isEditing: true,
           pendingTitle: 'Mortgage',
           pendingValue: '1000',
-          pendingInterest: '1',
+          pendingInterest: '0',
           interest: 0,
           length: 'auto',
           pendingLength: 'auto',
@@ -112,7 +112,7 @@ class Start extends React.Component {
           length: 'auto',
           pendingTitle: '401K',
           pendingValue: '500',
-          pendingInterest: '1',
+          pendingInterest: '0',
           pendingLength: 'auto',
           duration: "retirement",
           pendingDuration: "retirement"
@@ -216,7 +216,7 @@ class Start extends React.Component {
       const titleValue = document.getElementById(`title-${type}-${i}`).value;
       //const interestValue = document.getElementById(`interest-${type}-${i}`).value;
       //const lengthValue = document.getElementById(`length-${type}-${i}`).value;
-      //const durationValue = document.getElementById(`duration-${type}-${i}`).value;
+      const durationValue = document.getElementById(`duration-${type}-${i}`).value;
 
       return {
         ...e,
@@ -224,7 +224,7 @@ class Start extends React.Component {
         pendingTitle: titleValue,
         //pendingInterest: interestValue,
         //pendingLength: lengthValue,
-        //pendingDuration: durationValue
+        pendingDuration: durationValue
       }
     }
 
@@ -360,7 +360,9 @@ handleLinkSubmit(index, event){
       <div className = "start-main-container" >
         <StartCategoryForm
           title = {"income"}
+          description = {'Add your income from jobs/payements, etc. below'}
           instances = {this.state.income.instances}
+
           onEditAt = {this.onEditAt}
           addInstance = {()=>this.addInstance('income')}
           removeInstanceAt = {this.removeInstanceAt}
@@ -372,6 +374,7 @@ handleLinkSubmit(index, event){
         />
         <StartCategoryForm
           title = {"expenses"}
+          description = {"Add your reoccuring expenses below"}
           instances = {this.state.expenses.instances}
           onEditAt = {this.onEditAt}
           addInstance = {()=>this.addInstance('expenses')}
@@ -385,9 +388,10 @@ handleLinkSubmit(index, event){
 
         />
         <StartCategoryForm
-          title = {"debt"}
-          instances = {this.state.debt.instances}
-          onEditAt = {this.onEditAt}
+          title = { "debt" }
+          description = { "Input your debts below, if you have a reoccuring payement, link it in expenses" }
+          instances = { this.state.debt.instances }
+          onEditAt = { this.onEditAt }
           addInstance = {()=>this.addInstance('debt')}
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
@@ -395,6 +399,7 @@ handleLinkSubmit(index, event){
         />
         <StartCategoryForm
           title = {"savings"}
+          description = { "Input your savings below" }
           instances = {this.state.savings.instances}
           onEditAt = {this.onEditAt}
           addInstance = {()=>this.addInstance('savings')}
