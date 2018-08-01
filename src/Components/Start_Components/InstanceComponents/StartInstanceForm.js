@@ -57,6 +57,7 @@ const StartInstanceForm = (props)=> {
                 pendingCategory = {props.pendingLength}
                 onChange = {props.onChange}
                 id = {`duration-${props.type}-${props.instanceIndex}`}
+                active = { props.duration === 'retirement' ? false : true }
               />
             </div>
 

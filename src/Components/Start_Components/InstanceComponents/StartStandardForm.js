@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const StartStandardForm = (props)=>{
+  const greyedDiv = {
+    color: 'grey'
+  }
+  const fullDiv = {
+    color: 'inherit'
+  }
   return (
-      <div className={`start-${props.name}-container`}>
+      <div className={`start-${props.name}-container`} style={props.active ? fullDiv : greyedDiv }>
         <p>{props.description}</p>
         {props.name}:<input
               placeholder = {props.category}
