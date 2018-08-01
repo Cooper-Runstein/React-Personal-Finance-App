@@ -9,6 +9,7 @@ import Interest from "./Interest";
 
 const Instance = (props) =>{
     //const totalValue = ()=>props.category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)
+    console.log(props.title  + props.interest)
     return(
 
             <div>

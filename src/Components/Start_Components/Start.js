@@ -329,7 +329,7 @@ class Start extends React.Component {
         income: this.state.income,
         expenses: this.state.expenses,
         debt: this.state.debt,
-        savings: this.state.savings
+        savings: this.state.savings,
       })
       console.log("Succesful pacakge submission");
     } else {

@@ -66,6 +66,8 @@ const Year =(props)=>{
                           instance = {e}
                           title = {e.title}
                           value = {e.value}
+                          interest = {e.interest}
+                          pendinInterest = {e.pendinInterest}
                           pendingValue = {e.pendingValue}
                           pendingTitle = {e.pendingTitle}
                           isEditing = {e.isEditing}
@@ -87,6 +89,8 @@ const Year =(props)=>{
                           instance = {e}
                           title = {e.title}
                           value = {e.value}
+                          interest = {e.interest}
+                          pendinInterest = {e.pendinInterest}
                           pendingValue = {e.pendingValue}
                           pendingTitle = {e.pendingTitle}
                           isEditing = {e.isEditing}
