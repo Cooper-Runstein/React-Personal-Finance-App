@@ -193,8 +193,8 @@ class Start extends React.Component {
       isEditing: true,
       pendingTitle: '',
       pendingValue: '',
-      pendingInterest: '1',
-      interest: 1,
+      pendingInterest: '0',
+      interest: 0,
       duration: 'retirement',
       pendingDuration: 'retirement'
     }
@@ -215,22 +215,42 @@ class Start extends React.Component {
 
   onChangeAt = (type, instanceIndex) => {
     console.log("Change Called at " + type + " " + instanceIndex)
+
     const newInstance = (e,i)=> {
       const valueValue = document.getElementById(`value-${type}-${i}`).value;
       const titleValue = document.getElementById(`title-${type}-${i}`).value;
-      //const interestValue = document.getElementById(`interest-${type}-${i}`).value;
-      //const lengthValue = document.getElementById(`length-${type}-${i}`).value;
-      const durationValue = document.getElementById(`duration-${type}-${i}`).value;
 
-      return {
+      let baseObj =  {
         ...e,
         pendingValue: valueValue,
         pendingTitle: titleValue,
-        //pendingInterest: interestValue,
-        //pendingLength: lengthValue,
-        pendingDuration: durationValue
       }
+
+      let durationalObj = ()=> {
+        if (type === 'income' || type === 'expenses'){
+          const durationValue = document.getElementById(`duration-${type}-${i}`).value;
+          return {pendingDuration: durationValue}
+        }
+        else {
+          return {}
+        }
+      }
+
+      let interestObj = ()=> {
+        if (type === 'debt' || type === 'savings'){
+          const interestValue = document.getElementById(`interest-${type}-${i}`).value;
+          return {pendingInterest: interestValue}
+        } else {
+          return {}
+        }
+      }
+
+      baseObj = Object.assign(baseObj, durationalObj());
+      baseObj = Object.assign(baseObj, interestObj());
+
+      return baseObj;
     }
+
 
     this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
   }
@@ -361,7 +381,6 @@ handleLinkSubmit(index, event){
   setDurationToRetirement = (type, instanceIndex) =>{
     let newState;
     if (this.state[type].instances[instanceIndex].duration === 'retirement'){
-      alert("Box was already checked");
       newState = (e) => {
         return{
           ...e,

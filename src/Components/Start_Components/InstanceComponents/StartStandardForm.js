@@ -3,20 +3,42 @@ import PropTypes from 'prop-types';
 
 const StartStandardForm = (props)=>{
   const greyedDiv = {
-    color: 'grey'
+    color: 'gray'
   }
   const fullDiv = {
-    color: 'inherit'
+    color: 'black'
   }
+
   return (
-      <div className={`start-${props.name}-container`} style={props.active ? fullDiv : greyedDiv }>
+      <div className={`start-${props.name}-container`} style={props.active === 'off' ? greyedDiv : fullDiv}>
         <p>{props.description}</p>
-        {props.name}:<input
-              placeholder = {props.category}
-              value = {props.pendingCategory}
-              id = {props.id}
-              onChange = {props.onChange}
-        />
+        {props.name}:
+        {
+            !(props.active === 'off')
+
+            ?
+
+            <input
+                placeholder = {props.category}
+                value = {props.pendingCategory}
+                id = {props.id}
+                onChange = {props.onChange}
+            />
+
+          :
+
+          (
+          <input
+          placeholder = {props.category}
+                value = {props.pendingCategory}
+                id = {props.id}
+                onChange = {props.onChange}
+                disabled
+          />
+          )
+
+        }
+
     </div>
 )
 }
