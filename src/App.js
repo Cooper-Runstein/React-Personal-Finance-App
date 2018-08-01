@@ -38,8 +38,8 @@ class App extends Component {
 
 
   //MAIN TABLE CREATION FUNCTIONS
-
   getNumberOfRows = (retirmentYear) =>{
+    //Determines Size of Chart to Render
     let currentYear = this.state.date;
     let rows = retirmentYear - currentYear;
 
@@ -50,6 +50,7 @@ class App extends Component {
   }
 
   generateYears = (e) =>{
+    //Main Chart Generation Function
     const years = [];
     let numYears = this.getNumberOfRows(this.state.packagedData.retirmentYear)
     let initialYear = {
@@ -76,6 +77,7 @@ class App extends Component {
   }
 
   createIncomeInstances = (packageIncome, yearIndex)=>{
+    //Determines How Income Instances are Displayed At Given Year
     let newInstances = packageIncome.instances.filter((instance, index)=>{
       return this.isDurationApplied(instance, yearIndex);
     });
@@ -83,15 +85,19 @@ class App extends Component {
   }
 
   createExpensesInstances = (packageExpenses, yearIndex)=>{
+    //Determines How Expenses Instances are Displayed At Given Year
     let newInstances = packageExpenses.instances.filter((instance, index)=>{
       return this.isDurationApplied(instance, yearIndex);
     });
     return {...packageExpenses, instances: newInstances};
   }
+
   createDebtInstances = (packageDebt, yearIndex)=>{
+    //Determines How Debt Instances are Displayed At Given Year
     return packageDebt;
   }
   createSavingsInstances = (packageSavings, yearIndex)=>{
+    //Determines How Savings Instances are Displayed At Given Year
     return packageSavings;
   }
 
@@ -103,6 +109,7 @@ class App extends Component {
   }
 
   isDurationApplied = (instance, yearIndex)=>{
+    //Determine if Instance Should Render at Given Year
     if (instance.duration === "retirement"){
       return true;
     }

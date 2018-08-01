@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Interest from './Interest';
 
 const Value = (props) =>{
     return (
@@ -10,11 +9,6 @@ const Value = (props) =>{
                 placeholder={props.value}
                 onChange={(e)=> {props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'value')}}
             />
-            <Interest
-                //interest = {parseFloat(props.interest)}
-                //onChange = {(e)=> {props.onChangeInt(e, props.location)}}
-            />
-
         </div>
 
 

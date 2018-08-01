@@ -15,10 +15,7 @@ const YearsContainer = (props) =>{
                                 yearIndex = {i}
                                 year = {y}
                                 toggleEditEntry = {props.toggleEditEntry}
-                                // removeEntry = {props.removeEntry}
                                 onChange = {props.onChange}
-                                // onChangeTitle = {props.onChangeTitle}
-                                // onChangeInterest = {props.onChangeInterest}
                                 onConfirmAt = {props.onConfirmAt}
                                 removeInstanceAt = {props.removeInstanceAt}
                                 addInstance = {props.addInstance}

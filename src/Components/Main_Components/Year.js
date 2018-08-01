@@ -50,49 +50,54 @@ const Year =(props)=>{
                           isEditing = {e.isEditing}
                           editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'expenses', i)}
                           removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'expenses', i)}
-                          // editEntry = {props.editEntry}
-                          // removeEntry = {props.removeEntry}
-                          // onChangeValue = {props.onChangeValue}
-                          // onChangeTitle = {props.onChangeTitle}
-                          // onChangeInterest = {props.onChangeInterest}
-                          // onConfirm = {props.onConfirm}
-                          // addInstance = {props.addInstance}
+                          onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'expenses', i)}
                       />
                   })}
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'expenses')}>Add</button>
-                {/* {props.year.debt.map((e,i)=>{
-                    return <Instance
-                        key = {i}
-                        catKey = {i}
-                        yearIndex = {props.yearIndex}
-                        catName = "debt"
-                        instance = {e}
-                        editEntry = {props.editEntry}
-                        removeEntry = {props.removeEntry}
-                        onChangeValue = {props.onChangeValue}
-                        onChangeTitle = {props.onChangeTitle}
-                        onChangeInterest = {props.onChangeInterest}
-                        onConfirm = {props.onConfirm}
-                        addInstance = {props.addInstance}
-                    />
-                })}
-                {props.year.savings.map((e,i)=>{
-                    return <Instance
-                        key = {i}
-                        catKey = {i}
-                        yearIndex = {props.yearIndex}
-                        catName = "savings"
-                        instance = {e}
-                        editEntry = {props.editEntry}
-                        removeEntry = {props.removeEntry}
-                        onChangeValue = {props.onChangeValue}
-                        onChangeTitle = {props.onChangeTitle}
-                        onChangeInterest = {props.onChangeInterest}
-                        onConfirm = {props.onConfirm}
-                        addInstance = {props.addInstance}
-                    /> */}
-                {/* })} */}
+
+                <h2>Debt</h2>
+                  {props.year.debt.instances.map((e,i)=>{
+                      return <Instance
+                      yearIndex= {props.yearIndex}
+                          key = {i}
+                          catKey = {i}
+                          type = "debt"
+                          instance = {e}
+                          title = {e.title}
+                          value = {e.value}
+                          pendingValue = {e.pendingValue}
+                          pendingTitle = {e.pendingTitle}
+                          isEditing = {e.isEditing}
+                          editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'debt', i)}
+                          removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'debt', i)}
+                          onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'debt', i)}
+                      />
+                  })}
+                  <button
+                    onClick={()=> props.addInstance(props.yearIndex, 'debt')}>Add</button>
+
+                <h2>Savings</h2>
+                  {props.year.savings.instances.map((e,i)=>{
+                      return <Instance
+                      yearIndex= {props.yearIndex}
+                          key = {i}
+                          catKey = {i}
+                          type = "savings"
+                          instance = {e}
+                          title = {e.title}
+                          value = {e.value}
+                          pendingValue = {e.pendingValue}
+                          pendingTitle = {e.pendingTitle}
+                          isEditing = {e.isEditing}
+                          editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'savings', i)}
+                          removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'savings', i)}
+                          onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'savings', i)}
+                      />
+                  })}
+                  <button
+                    onClick={()=> props.addInstance(props.yearIndex, 'savings')}>Add</button>
+
 
               </td>
             </tr>
