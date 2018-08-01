@@ -12,10 +12,12 @@ class Start extends React.Component {
     this.onConfirmAt = this.onConfirmAt.bind(this);
     this.alterInstances = this.alterInstances.bind(this);
     this.packageData = this.packageData.bind(this);
+    this.setDurationToRetirement = this.setDurationToRetirement.bind(this);
 
     this.handleConnectedSelctionChange = this.handleConnectedSelctionChange.bind(this);
     this.toggleDisplayLinkOptions = this.toggleDisplayLinkOptions.bind(this);
     this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
+
 
     this.state = {
       pendingRetirment: '',
@@ -33,8 +35,8 @@ class Start extends React.Component {
           interest: 0,
           length: 'auto',
           pendingLength: 'auto',
-          duration: "retierment",
-          pendingDuration: "retierment",
+          duration: "retirement",
+          pendingDuration: "retirement",
 
         }],
 
@@ -127,8 +129,8 @@ class Start extends React.Component {
 
   //Common Function
   alterInstances = (type, instanceIndex, newInstance) => {
-    console.log("Altering instance at: " + type + ' ' + instanceIndex)
-    return this.state[type].instances.map((e, i) => {
+    console.log("Altering instance at: " + type + ' ' + instanceIndex);
+     let newInstances = this.state[type].instances.map((e, i) => {
       if (i === instanceIndex){
         console.log('found');
         console.log(newInstance(e,i));
@@ -136,7 +138,9 @@ class Start extends React.Component {
       } else {
         return e;
       }
-    })
+    });
+    console.log(newInstances);
+    return newInstances;
   }
 
   changeStateInstancesAt = (type, newInstances)=> {
@@ -354,6 +358,28 @@ handleLinkSubmit(index, event){
   this.changeStateInstancesAt('debt', newInstances);
 }
 
+  setDurationToRetirement = (type, instanceIndex) =>{
+    let newState;
+    if (this.state[type].instances[instanceIndex].duration === 'retirement'){
+      alert("Box was already checked");
+      newState = (e) => {
+        return{
+          ...e,
+          duration: ''
+      }
+    }
+    } else {
+       newState = (e) => {
+        return {
+          ...e,
+          duration: 'retirement'
+        }
+      }
+    }
+
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newState));
+  }
+
 
   render() {
     return (
@@ -362,14 +388,12 @@ handleLinkSubmit(index, event){
           title = {"income"}
           description = {'Add your income from jobs/payements, etc. below'}
           instances = {this.state.income.instances}
-
+          setDurationToRetirement = {this.setDurationToRetirement}
           onEditAt = {this.onEditAt}
           addInstance = {()=>this.addInstance('income')}
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
           onConfirmAt = {this.onConfirmAt}
-
-
 
         />
         <StartCategoryForm
@@ -378,6 +402,7 @@ handleLinkSubmit(index, event){
           instances = {this.state.expenses.instances}
           onEditAt = {this.onEditAt}
           addInstance = {()=>this.addInstance('expenses')}
+          setDurationToRetirement = {this.setDurationToRetirement}
           removeInstanceAt = {this.removeInstanceAt}
           onChangeAt = {this.onChangeAt}
           onConfirmAt = {this.onConfirmAt}

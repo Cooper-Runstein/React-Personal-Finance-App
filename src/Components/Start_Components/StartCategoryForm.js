@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StartInstanceForm from './StartInstanceForm';
+import StartInstanceForm from './InstanceComponents/StartInstanceForm';
 
 
 const  StartCategoryForm = (props)=> {
@@ -18,45 +18,48 @@ const  StartCategoryForm = (props)=> {
 
     }
 
+
     return (
       <div>
         <h2>{props.title}</h2>
         <h3>{props.description}</h3>
         {props.instances.map((e, i)=>{
           return <StartInstanceForm
-          key = { i }
-          instanceIndex = { i }
-          type = { props.title }
-          title = { e.title }
-          value = { e.value }
-          isDurational = { ()=> isDurational() }
-          isEditing = { e.isEditing }
-          pendingTitle = { e.pendingTitle }
-          pendingValue = { e.pendingValue }
-          pendingInterest = { e.pendingInterest }
-          interest = { e.interest }
-          duration = { e.duration }
-          pendingDuration = { e.pendingDuration }
-          connectedIndex = { e.connectedIndex }
-          debts = { props.debts }
-          onEdit = { ()=> props.onEditAt(props.title, i) }
-          onRemove = { ()=> props.removeInstanceAt(props.title, i) }
-          onChange = { ()=> props.onChangeAt(props.title, i) }
-          onConfirm = { ()=> props.onConfirmAt(props.title, i) }
-          debts = {props.debts}
-          handleConnectedSelctionChange = {props.handleConnectedSelctionChange}
-          displayLinkOptions = { e.displayLinkOptions }
-          toggleDisplayLinkOptions = { ()=> props.toggleDisplayLinkOptions(i) }
-          handleLinkSubmit = { props.handleLinkSubmit }
-        />
-
+            key = { i }
+            instanceIndex = { i }
+            type = { props.title }
+            title = { e.title }
+            value = { e.value }
+            isDurational = { ()=> isDurational() }
+            isEditing = { e.isEditing }
+            pendingTitle = { e.pendingTitle }
+            pendingValue = { e.pendingValue }
+            pendingInterest = { e.pendingInterest }
+            interest = { e.interest }
+            duration = { e.duration }
+            pendingDuration = { e.pendingDuration }
+            connectedIndex = { e.connectedIndex }
+            debts = { props.debts }
+            onEdit = { ()=> props.onEditAt(props.title, i) }
+            onRemove = { ()=> props.removeInstanceAt(props.title, i) }
+            onChange = { ()=> props.onChangeAt(props.title, i) }
+            onConfirm = { ()=> props.onConfirmAt(props.title, i) }
+            setDurationToRetirement = { ()=> props.setDurationToRetirement(props.title, i) }
+            debts = {props.debts}
+            handleConnectedSelctionChange = {props.handleConnectedSelctionChange}
+            displayLinkOptions = { e.displayLinkOptions }
+            toggleDisplayLinkOptions = { ()=> props.toggleDisplayLinkOptions(i) }
+            handleLinkSubmit = { props.handleLinkSubmit }
+          />
 
           })
         }
         <div className="start-add-button-container">
           <button
             onClick={ props.addInstance }
-          >Add</button>
+          >Add
+          </button>
+
       </div>
       </div>
 

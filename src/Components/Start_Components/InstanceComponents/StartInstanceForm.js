@@ -32,14 +32,24 @@ const StartInstanceForm = (props)=> {
             />
 
             {
+              //This ternary displays duration componenet if category type is durational
             props.isDurational()
+
             ?
+
             <div>
               <StartDurationalForm
                 growth = {props.interest}
                 pendingGrowth = {props.pendingInterest}
               />
-              <span><input type = 'checkbox' value="retirement"/>Continue Till Retirment</span>
+              <span>
+                <input
+                  type = 'checkbox'
+                  checked={props.duration === 'retirement' ? true : false}
+                  onChange={props.setDurationToRetirement}
+                />Continue Till Retirment
+              </span>
+
               <StartStandardForm
                 name = 'duration period'
                 category = {props.length}
@@ -62,6 +72,7 @@ const StartInstanceForm = (props)=> {
             />
           }
           {
+            //This ternary returns form for expense link checks if type is expenses
             props.type === 'expenses'
             ?
             <StartExpensesLinkForm
