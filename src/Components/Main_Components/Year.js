@@ -26,7 +26,6 @@ const Year =(props)=>{
                         editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'income', i)}
                         removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'income', i)}
                         onChange = {props.onChange}
-                          // onChangeInterest = {props.onChangeInterest}
                         onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'income', i)}
 
                       />
@@ -36,9 +35,10 @@ const Year =(props)=>{
 
 
                 <h2>Expenses</h2>
-                  {props.year.expenses.instances.map((e,i)=>{
+                  {props.year.expenses.instances.map((e, i)=>{
                       return <Instance
                       yearIndex= {props.yearIndex}
+                      instanceIndex = {i}
                           key = {i}
                           catKey = {i}
                           type = "expenses"
@@ -50,7 +50,8 @@ const Year =(props)=>{
                           isEditing = {e.isEditing}
                           editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'expenses', i)}
                           removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'expenses', i)}
-                          onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'expenses', i)}
+                          onConfirm = { ()=> props.onConfirmAt(props.yearIndex, 'expenses', i) }
+                          onChange = {props.onChange}
                       />
                   })}
                   <button
@@ -60,6 +61,7 @@ const Year =(props)=>{
                   {props.year.debt.instances.map((e,i)=>{
                       return <Instance
                       yearIndex= {props.yearIndex}
+                      instanceIndex = {i}
                           key = {i}
                           catKey = {i}
                           type = "debt"
@@ -71,6 +73,7 @@ const Year =(props)=>{
                           pendingValue = {e.pendingValue}
                           pendingTitle = {e.pendingTitle}
                           isEditing = {e.isEditing}
+                          onChange = {props.onChange}
                           editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'debt', i)}
                           removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'debt', i)}
                           onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'debt', i)}
@@ -83,6 +86,7 @@ const Year =(props)=>{
                   {props.year.savings.instances.map((e,i)=>{
                       return <Instance
                       yearIndex= {props.yearIndex}
+                      instanceIndex = {i}
                           key = {i}
                           catKey = {i}
                           type = "savings"
@@ -94,6 +98,7 @@ const Year =(props)=>{
                           pendingValue = {e.pendingValue}
                           pendingTitle = {e.pendingTitle}
                           isEditing = {e.isEditing}
+                          onChange = {props.onChange}
                           editEntry = {()=> props.toggleEditEntry(props.yearIndex, 'savings', i)}
                           removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'savings', i)}
                           onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'savings', i)}

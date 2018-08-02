@@ -305,6 +305,8 @@ class App extends Component {
   }
 
   onConfirmAt = (yearIndex, type, instanceIndex)=>{
+    console.log(instanceIndex);
+
     let newInstance = (instance)=>{
       return {
         ...instance,

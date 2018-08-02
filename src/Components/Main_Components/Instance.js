@@ -8,8 +8,6 @@ import Interest from "./Interest";
 
 
 const Instance = (props) =>{
-    //const totalValue = ()=>props.category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)
-    console.log(props.title  + props.interest)
     return(
 
             <div>
@@ -22,8 +20,8 @@ const Instance = (props) =>{
                   isEditing = {props.isEditing}
                   pendingTitle = {props.pendingTitle}
                   onChange = {props.onChange}
-                  // location = {props.location}
                 />
+
                 <Value
                   interest = {props.interest}
                   yearIndex = {props.yearIndex}
@@ -34,11 +32,8 @@ const Instance = (props) =>{
                   isEditing = {props.isEditing}
                   pendingValue = {props.pendingValue}
                   onChange = {props.onChange}
-                  //onChangeVal = {props.onChangeValue}
-                  //onChangeInt = {props.onChangeInterest}
-                  //location = {props.location}
-
                 />
+
                 {
                   (props.type === 'debt' || props.type === 'savings')
 
@@ -47,7 +42,7 @@ const Instance = (props) =>{
                   <Interest
                   isEditing = {props.isEditing}
                   interest = {parseFloat(props.interest)}
-                    //onChange = {(e)=> {props.onChangeInt(e, props.location)}}
+
                   />
 
                   :
@@ -73,6 +68,8 @@ const Instance = (props) =>{
 }
 
 Instance.propTypes = {
-    title: PropTypes.string.isRequired
+  removeInstance: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  editEntry: PropTypes.func.isRequired
 }
 export default Instance;
