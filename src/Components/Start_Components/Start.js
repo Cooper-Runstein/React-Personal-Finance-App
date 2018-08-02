@@ -37,6 +37,8 @@ class Start extends React.Component {
           pendingLength: 'auto',
           duration: "retirement",
           pendingDuration: "retirement",
+          growth: '0',
+          pendingGrowth: '0'
 
         }],
 
@@ -56,7 +58,10 @@ class Start extends React.Component {
             duration: "retirement",
             pendingDuration: "retirement",
             connectedIndex: '',
-            displayLinkOptions: false
+            displayLinkOptions: false,
+            growth: '0',
+            pendingGrowth: '0'
+
           },
           {
             title: 'Eating Out',
@@ -69,7 +74,9 @@ class Start extends React.Component {
             length: 'auto',
             pendingLength: 'auto',
             duration: "retirement",
-            pendingDuration: "retirement"
+            pendingDuration: "retirement",
+            growth: '0',
+            pendingGrowth: '0'
           },
           {
             title: 'Groceries',
@@ -82,7 +89,9 @@ class Start extends React.Component {
             length: 'auto',
             pendingLength: 'auto',
             duration: "retirement",
-            pendingDuration: "retirement"
+            pendingDuration: "retirement",
+            growth: '0',
+            pendingGrowth: '0'
           }
         ],
 
@@ -229,7 +238,8 @@ class Start extends React.Component {
       let durationalObj = ()=> {
         if (type === 'income' || type === 'expenses'){
           const durationValue = document.getElementById(`duration-${type}-${i}`).value;
-          return {pendingDuration: durationValue}
+          const growthValue = document.getElementById(`growth-${type}-${i}`).value;
+          return {pendingDuration: durationValue, pendingGrowth: growthValue}
         }
         else {
           return {}
@@ -267,6 +277,7 @@ class Start extends React.Component {
         interest: validatedInterest,
         length: e.pendingLength,
         duration: e.pendingDuration,
+        growth: e.pendingGrowth,
         isEditing: false,
       }
     }
@@ -291,6 +302,7 @@ class Start extends React.Component {
           length: e.pendingLength,
           duration: e.pendingDuration,
           isEditing: false,
+          growth: e.pendingGrowth
 
         }
 

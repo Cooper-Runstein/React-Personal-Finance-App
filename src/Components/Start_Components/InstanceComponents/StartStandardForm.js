@@ -12,28 +12,27 @@ const StartStandardForm = (props)=>{
   return (
       <div className={`start-${props.name}-container`} style={props.active === 'off' ? greyedDiv : fullDiv}>
         <p>{props.description}</p>
-        {props.name}:
         {
             !(props.active === 'off')
 
             ?
 
-            <input
-                placeholder = {props.category}
-                value = {props.pendingCategory}
-                id = {props.id}
-                onChange = {props.onChange}
-            />
+            <span>{props.pre}<input
+              placeholder = {props.category}
+              value = {props.pendingCategory}
+              id = {props.id}
+              onChange = {props.onChange}
+            /></span>
 
           :
 
           (
           <input
-          placeholder = {props.category}
-                value = {props.pendingCategory}
-                id = {props.id}
-                onChange = {props.onChange}
-                disabled
+            placeholder = {props.category}
+            value = {props.pendingCategory}
+            id = {props.id}
+            onChange = {props.onChange}
+            disabled
           />
           )
 

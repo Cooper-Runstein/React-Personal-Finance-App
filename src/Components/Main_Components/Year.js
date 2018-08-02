@@ -9,6 +9,7 @@ const Year =(props)=>{
             <tr className="year">
                 <th>{props.year.year}</th>
                 <td>
+                  <div>
                   <h2>Income</h2>
                   {props.year.income.instances.map((e,i)=>{
                       return <Instance
@@ -32,8 +33,8 @@ const Year =(props)=>{
                   })}
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'income')}>Add</button>
-
-
+                </div>
+                <div>
                 <h2>Expenses</h2>
                   {props.year.expenses.instances.map((e, i)=>{
                       return <Instance
@@ -56,7 +57,8 @@ const Year =(props)=>{
                   })}
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'expenses')}>Add</button>
-
+                </div>
+                <div>
                 <h2>Debt</h2>
                   {props.year.debt.instances.map((e,i)=>{
                       return <Instance
@@ -81,7 +83,8 @@ const Year =(props)=>{
                   })}
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'debt')}>Add</button>
-
+                  </div>
+                  <div>
                 <h2>Savings</h2>
                   {props.year.savings.instances.map((e,i)=>{
                       return <Instance
@@ -107,7 +110,7 @@ const Year =(props)=>{
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'savings')}>Add</button>
 
-
+                  </div>
               </td>
             </tr>
            )

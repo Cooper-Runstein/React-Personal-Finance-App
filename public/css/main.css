@@ -79,3 +79,8 @@ html{
   margin-bottom: 3px;
   border-bottom: 3px solid black;
 }
+
+td{
+  display: flex;
+  flex-direction: row;
+}

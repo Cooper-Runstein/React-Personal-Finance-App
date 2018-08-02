@@ -37,7 +37,13 @@ class App extends Component {
   }
 
 
+
+
+
+
   //MAIN TABLE CREATION FUNCTIONS
+  //##############################
+
   getNumberOfRows = (retirmentYear) =>{
     //Determines Size of Chart to Render
     let currentYear = this.state.date;
@@ -81,8 +87,18 @@ class App extends Component {
     let newInstances = packageIncome.instances.filter((instance, index)=>{
       return this.isDurationApplied(instance, yearIndex);
     });
-    return {...packageIncome, instances: newInstances};
+
+    newInstances = newInstances.map((instance, index)=>{
+      return this.applyGrowth(instance, yearIndex);
+    })
+
+    return {
+      ...packageIncome,
+      instances: newInstances
+    };
   }
+
+
 
   createExpensesInstances = (packageExpenses, yearIndex)=>{
     //Determines How Expenses Instances are Displayed At Given Year
@@ -168,6 +184,20 @@ class App extends Component {
     return alteredCategory
   }
 
+
+
+
+
+
+
+
+
+
+
+
+  //############Counter Rendering###############
+  //############################################
+
   getColumnTotals = (type)=>{
     let totalValue = 0;
     this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> {return category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)}, 0))
@@ -192,9 +222,16 @@ class App extends Component {
 
 
 
-  //ALTER MAIN TABLE
 
 
+
+
+
+
+
+
+//######ALTER MAIN TABLE############
+//##################################
 
   changeYearAt = (yearIndex, newYear)=>{
     let oldYears = this.state.years.slice();

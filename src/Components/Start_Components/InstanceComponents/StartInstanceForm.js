@@ -14,7 +14,9 @@ const StartInstanceForm = (props)=> {
           <div className = "start-input-forms-container">
 
             <StartStandardForm
+              //Title Form
               name = 'title'
+              pre = 'Set Title: '
               description = {'Give this a title: '}
               category = {props.title}
               pendingCategory = {props.pendingTitle}
@@ -23,27 +25,35 @@ const StartInstanceForm = (props)=> {
             />
 
             <StartStandardForm
+              //Value Form
               name = 'value'
               description = {'Give this a vaule: '}
               category = {props.value}
               pendingCategory = {props.pendingValue}
               onChange = {props.onChange}
+              pre = {'Set Amount: $'}
               id = { `value-${props.type}-${props.instanceIndex}`}
             />
 
             {
-              //This ternary displays duration componenet if category type is durational
+              //This ternary displays duration componenet if category type is durational or interest if else
             props.isDurational()
 
             ?
 
             <div>
               <StartDurationalForm
-                growth = {props.interest}
-                pendingGrowth = {props.pendingInterest}
+              //Growth Form
+                growth = {props.growth}
+                pre = {'Set Growth Percentage: '}
+                pendingGrowth = {props.pendingGrowth}
+                instanceIndex = {props.instanceIndex}
+                type = { props.type }
+                onChange = {props.onChange}
               />
               <span>
                 <input
+                  //Retirement Checkbox
                   type = 'checkbox'
                   checked={props.duration === 'retirement' ? true : false}
                   onChange={props.setDurationToRetirement}
@@ -51,8 +61,10 @@ const StartInstanceForm = (props)=> {
               </span>
 
               <StartStandardForm
+                //Duration Form
                 name = 'duration period'
                 category = {props.length}
+                pre = {'Set Length To Apply: '}
                 description = {'For how many years will this instance be applicable?'}
                 pendingCategory = {props.pendingLength}
                 onChange = {props.onChange}

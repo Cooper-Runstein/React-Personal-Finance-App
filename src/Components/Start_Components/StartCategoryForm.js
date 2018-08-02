@@ -30,11 +30,13 @@ const  StartCategoryForm = (props)=> {
             type = { props.title }
             title = { e.title }
             value = { e.value }
+            growth = { e.growth }
             isDurational = { ()=> isDurational() }
             isEditing = { e.isEditing }
             pendingTitle = { e.pendingTitle }
             pendingValue = { e.pendingValue }
             pendingInterest = { e.pendingInterest }
+            pendingGrowth = { e.pendingGrowth }
             interest = { e.interest }
             duration = { e.duration }
             pendingDuration = { e.pendingDuration }
