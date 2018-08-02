@@ -6,6 +6,8 @@ import Counter from './Components/Counter';
 import Start from './Components/Start_Components/Start';
 import YearsContainer from './Components/Main_Components/YearsContainer';
 
+import { applyGrowth, createIncomeInstances, isDurationApplied } from './app_functions.js';
+
 
 class App extends Component {
   constructor(props){
@@ -20,6 +22,11 @@ class App extends Component {
     this.getIncome = this.getIncome.bind(this);
     this.getExpenses = this.getExpenses.bind(this);
     this.getStartingFormData = this.getStartingFormData.bind(this);
+
+    //Imported
+    this.applyGrowth = applyGrowth.bind(this);
+    this.createIncomeInstances = createIncomeInstances.bind(this);
+    this.isDurationApplied = isDurationApplied.bind(this);
 
     this.state = {
       date: new Date().getFullYear(),
@@ -82,24 +89,6 @@ class App extends Component {
     })
   }
 
-  createIncomeInstances = (packageIncome, yearIndex)=>{
-    //Determines How Income Instances are Displayed At Given Year
-    let newInstances = packageIncome.instances.filter((instance, index)=>{
-      return this.isDurationApplied(instance, yearIndex);
-    });
-
-    newInstances = newInstances.map((instance, index)=>{
-      return this.applyGrowth(instance, yearIndex);
-    })
-
-    return {
-      ...packageIncome,
-      instances: newInstances
-    };
-  }
-
-
-
   createExpensesInstances = (packageExpenses, yearIndex)=>{
     //Determines How Expenses Instances are Displayed At Given Year
     let newInstances = packageExpenses.instances.filter((instance, index)=>{
@@ -124,18 +113,18 @@ class App extends Component {
     return newCategory;
   }
 
-  isDurationApplied = (instance, yearIndex)=>{
-    //Determine if Instance Should Render at Given Year
-    if (instance.duration === "retirement"){
-      return true;
-    }
-    if (parseInt(instance.duration, 10) >= (yearIndex + 1)){
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
+  // isDurationApplied = (instance, yearIndex)=>{
+  //   //Determine if Instance Should Render at Given Year
+  //   if (instance.duration === "retirement"){
+  //     return true;
+  //   }
+  //   if (parseInt(instance.duration, 10) >= (yearIndex + 1)){
+  //     return true;
+  //   }
+  //   else {
+  //     return false;
+  //   }
+  // }
 
   applyInitialInterest = (category, yearIndex)=>{
     let alteredCategory = category.map((subCat, subCatIndex)=>{

@@ -1,6 +1,36 @@
-const applyGrowth = (instance, yearIndex)=>{
-  let growth = instance.growth;
-  return {...instance, growth: (instance.value * (1 + parseFloat(growth)) ** yearIndex) }
+
+const createIncomeInstances = (packageIncome, yearIndex)=>{
+  let targetInstances = packageIncome.instances;
+
+  let newInstances = targetInstances.filter((instance)=> isDurationApplied(instance, yearIndex))
+
+
+
+    return {
+      ...packageIncome,
+      instances: newInstances
+    };
 }
 
-export {applyGrowth};
+const applyGrowth = (instance, yearIndex)=>{
+  let growth = instance.growth;
+  let appliedGrowth = parseFloat(`1.${growth}`);
+  console.log((instance.value * appliedGrowth ** yearIndex))
+  let newValue = (instance.value * appliedGrowth ** yearIndex);
+  return {...instance, value: newValue }
+}
+
+const isDurationApplied = (instance, yearIndex)=>{
+  //Determine if Instance Should Render at Given Year
+  if (instance.duration === "retirement"){
+    return true;
+  }
+  if (parseInt(instance.duration, 10) >= (yearIndex + 1)){
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+export { applyGrowth, createIncomeInstances, isDurationApplied};
