@@ -1,4 +1,4 @@
-import { applyGrowth, createIncomeInstances, createExpensesInstances, isDurationApplied} from '../src/app_functions.js';
+import { applyGrowth, createIncomeInstances, createExpensesInstances, isDurationApplied, reassignPending} from '../src/functions/create_functions.js';
 import expect from 'expect';
 
 describe('Test applyGrowthTests function', ()=>{
@@ -138,4 +138,22 @@ describe ('Test Create Income Instances Function', ()=>{
       expect(createIncomeInstances(testPackageIncome2, 1).instances[0]).toMatchObject(obj);
     });
 
+})
+
+describe('Test Reassign Pending Function', ()=>{
+  let obj1 = {
+    title: 'burgers',
+    pendingTitle: 'not burgers',
+    value: 5000,
+    pendingValue: 3000,
+    interest: 10,
+    pendingInterest: '12'
+  }
+  test('Title and pending title equal each other', ()=>{
+    expect(reassignPending(obj1).pendingTitle).toBe('burgers');
+  })
+
+  test('Title and pending title equal each other', ()=>{
+    expect(reassignPending(obj1).pendingValue).toBe('5000');
+  })
 })

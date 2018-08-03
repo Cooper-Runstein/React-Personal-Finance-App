@@ -6,7 +6,7 @@ const Value = (props) =>{
         props.isEditing ?
         <div>
             <input
-                placeholder={props.value}
+                placeholder={ Math.round(props.value * 100) / 100}
                 onChange={(e)=> {props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'value')}}
             />
         </div>
@@ -14,9 +14,7 @@ const Value = (props) =>{
 
         :
 
-        <span> Amount: {props.value}
-        {//Number.isNaN(parseFloat(props.value)) ? props.value : props.value * (parseFloat(props.interest) ** props.yearIndex)
-        }
+        <span> Amount: {Math.round(props.value * 100) / 100}
         </span>
     )
 }

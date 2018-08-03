@@ -5,11 +5,13 @@ const createIncomeInstances = (packageIncome, yearIndex)=>{
 
   let newInstances = targetInstances.filter((instance)=> isDurationApplied(instance, yearIndex))
 
-  let growthInstances = newInstances.map((instance)=> applyGrowth(instance, yearIndex));
+  let growthInstances = newInstances.map((instance)=> applyGrowth(instance, yearIndex));4
+
+  let reassignPendingInstances = growthInstances.map((instance)=> reassignPending(instance, yearIndex));
 
     return {
       ...packageIncome,
-      instances: growthInstances
+      instances: reassignPendingInstances
     };
 }
 const createExpensesInstances = (packageExpenses, yearIndex)=>{
@@ -19,10 +21,12 @@ const createExpensesInstances = (packageExpenses, yearIndex)=>{
 
   let growthInstances = newInstances.map((instance)=> applyGrowth(instance, yearIndex));
 
+  let reassignPendingInstances = growthInstances.map((instance)=> reassignPending(instance, yearIndex));
+
 
     return {
       ...packageExpenses,
-      instances: growthInstances
+      instances: reassignPendingInstances
     };
 }
 
@@ -42,6 +46,15 @@ const applyGrowth = (instance, yearIndex)=>{
   let appliedGrowth = parseFloat(`1.${growth}`);
   let newValue = (instance.value * appliedGrowth ** yearIndex);
   return {...instance, value: newValue }
+}
+
+const reassignPending = (instance)=>{
+  let newInstance = {
+    ...instance,
+    pendingTitle: instance.title,
+    pendingValue: String(instance.value)
+  }
+  return newInstance;
 }
 
 const isDurationApplied = (instance, yearIndex)=>{
@@ -91,4 +104,6 @@ const generateYears = (packagedData, date) =>{
 }
 
 export default generateYears;
+
+export { getNumberOfRows, isDurationApplied, applyGrowth, createIncomeInstances, createDebtInstances, reassignPending}
 
