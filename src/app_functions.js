@@ -4,11 +4,11 @@ const createIncomeInstances = (packageIncome, yearIndex)=>{
 
   let newInstances = targetInstances.filter((instance)=> isDurationApplied(instance, yearIndex))
 
-
+  let growthInstances = newInstances.map((instance)=> applyGrowth(instance, yearIndex));
 
     return {
       ...packageIncome,
-      instances: newInstances
+      instances: growthInstances
     };
 }
 

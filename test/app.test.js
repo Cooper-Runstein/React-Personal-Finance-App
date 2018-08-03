@@ -1,7 +1,7 @@
 import { applyGrowth, createIncomeInstances, isDurationApplied} from '../src/app_functions.js';
 import expect from 'expect';
 
-describe('applyGrowthTests', ()=>{
+describe('Test applyGrowthTests function', ()=>{
     let testObj1 = {
       title: 'My Instance',
       value: 100,
@@ -58,7 +58,7 @@ describe('Test isDurational function', ()=>{
 
 });
 
-describe ('Test Create Income Instances', ()=>{
+describe ('Test Create Income Instances Function', ()=>{
   let testPackageIncome1 = {
     title: 'Income',
     instances: [
@@ -68,23 +68,43 @@ describe ('Test Create Income Instances', ()=>{
       isEditing: true,
       pendingTitle: 'Set Job Title',
       pendingValue: '5000',
-      pendingInterest: '0',
-      interest: 0,
-      length: 'auto',
-      pendingLength: 'auto',
       duration: "3",
-      pendingDuration: "retirement",
-      growth: '10',
-      pendingGrowth: '0'
-
+      pendingDuration: "3",
     }],
-    }
+  }
+  let testPackageIncome3 = {
+    title: 'Income',
+    instances: [
+    {
+      title: 'Set Job title',
+      value: 5000,
+      isEditing: true,
+      pendingTitle: 'Set Job Title',
+      pendingValue: '5000',
+      duration: "retirement",
+      pendingDuration: "retirement",
+    }],
+  }
+
+  let testPackageIncome2 = {
+    title: 'Income',
+    instances: [
+    {
+      title: 'Set Job title',
+      value: 1000,
+      isEditing: true,
+      pendingTitle: 'Set Job Title',
+      pendingValue: '1000',
+      growth: '10',
+      pendingGrowth: '10',
+      duration: 'retirement'
+    }],
+  }
 
 
     test('Function returns Object with same title', ()=>{
       expect(createIncomeInstances(testPackageIncome1, 0).title).toBe('Income');
     });
-
 
     test('Expect Instances to exist', ()=>{
       expect(createIncomeInstances(testPackageIncome1, 0).instances).not.toBe(undefined);
@@ -94,9 +114,29 @@ describe ('Test Create Income Instances', ()=>{
       expect(createIncomeInstances(testPackageIncome1, 0).instances[0]).not.toBe(undefined);
     });
 
-    test('Expect instance to not be rendered if yearIndex>duration', ()=>{
-      expect(createIncomeInstances(testPackageIncome1, 4).instances[0]).toBe(undefined);
+    test('Expect Exact Instance to exist at yearIndex 1', ()=>{
+      expect(createIncomeInstances(testPackageIncome1, 1).instances[0]).toMatchObject(testPackageIncome1.instances[0]);
     })
 
+    test('Expect Exact Instance to exist at yearIndex 1', ()=>{
+      expect(createIncomeInstances(testPackageIncome3, 1).instances[0]).toMatchObject(testPackageIncome3.instances[0]);
+    })
+
+    test('Expect Second Instance to exist', ()=>{
+      expect(createIncomeInstances(testPackageIncome1, 1).instances[0]).not.toBe(undefined);
+    });
+
+    test('Expect instance to not be rendered if yearIndex>duration', ()=>{
+      expect(createIncomeInstances(testPackageIncome1, 4).instances[0]).toBe(undefined);
+    });
+
+    test('Expect applied starting instance to equal starting instance', ()=>{
+      expect(createIncomeInstances(testPackageIncome1, 0).instances[0]).toMatchObject(testPackageIncome1.instances[0]);
+    });
+
+    test('Expect year 2 instance to have growth applied', ()=>{
+      let obj = { value: 1100};
+      expect(createIncomeInstances(testPackageIncome2, 1).instances[0]).toMatchObject(obj);
+    });
 
 })

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import StartDurationalForm from './StartDurationalForm';
+import StartGrowthForm from './StartGrowthForm';
 import StartExpensesLinkForm from './StartExpensesLinkForm';
 import StartStandardForm from './StartStandardForm';
 
@@ -42,7 +42,7 @@ const StartInstanceForm = (props)=> {
             ?
 
             <div>
-              <StartDurationalForm
+              <StartGrowthForm
               //Growth Form
                 growth = {props.growth}
                 pre = {'Set Growth Percentage: '}
@@ -63,10 +63,10 @@ const StartInstanceForm = (props)=> {
               <StartStandardForm
                 //Duration Form
                 name = 'duration period'
-                category = {props.length}
+                category = {props.duration}
                 pre = {'Set Length To Apply: '}
                 description = {'For how many years will this instance be applicable?'}
-                pendingCategory = {props.pendingLength}
+                pendingCategory = {props.pendingDuration}
                 onChange = {props.onChange}
                 id = {`duration-${props.type}-${props.instanceIndex}`}
                 active = { props.duration === 'retirement' ? 'off' : 'on' }

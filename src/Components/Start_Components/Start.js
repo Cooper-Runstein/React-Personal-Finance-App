@@ -10,6 +10,7 @@ class Start extends React.Component {
     this.addInstance = this.addInstance.bind(this);
     this.onChangeAt = this.onChangeAt.bind(this);
     this.onConfirmAt = this.onConfirmAt.bind(this);
+    this.confirmAll = this.confirmAll.bind(this);
     this.alterInstances = this.alterInstances.bind(this);
     this.packageData = this.packageData.bind(this);
     this.setDurationToRetirement = this.setDurationToRetirement.bind(this);
@@ -443,6 +444,7 @@ handleLinkSubmit(index, event){
           handleLinkSubmit = { this.handleLinkSubmit }
 
         />
+
         <StartCategoryForm
           title = { "debt" }
           description = { "Input your debts below, if you have a reoccuring payement, link it in expenses" }
