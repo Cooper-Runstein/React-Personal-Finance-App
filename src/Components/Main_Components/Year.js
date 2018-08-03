@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Instance from './Instance';
 
 
+
 const Year =(props)=>{
 
            return (
@@ -71,7 +72,7 @@ const Year =(props)=>{
                           title = {e.title}
                           value = {e.value}
                           interest = {e.interest}
-                          pendinInterest = {e.pendinInterest}
+                          pendingInterest = {e.pendingInterest}
                           pendingValue = {e.pendingValue}
                           pendingTitle = {e.pendingTitle}
                           isEditing = {e.isEditing}
@@ -120,4 +121,5 @@ const Year =(props)=>{
 Year.propTypes = {
     year: PropTypes.object.isRequired,
 }
+
 export default Year;

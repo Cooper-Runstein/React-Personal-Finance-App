@@ -1,4 +1,4 @@
-import { applyGrowth, createIncomeInstances, isDurationApplied} from '../src/app_functions.js';
+import { applyGrowth, createIncomeInstances, createExpensesInstances, isDurationApplied} from '../src/app_functions.js';
 import expect from 'expect';
 
 describe('Test applyGrowthTests function', ()=>{
@@ -100,7 +100,6 @@ describe ('Test Create Income Instances Function', ()=>{
       duration: 'retirement'
     }],
   }
-
 
     test('Function returns Object with same title', ()=>{
       expect(createIncomeInstances(testPackageIncome1, 0).title).toBe('Income');

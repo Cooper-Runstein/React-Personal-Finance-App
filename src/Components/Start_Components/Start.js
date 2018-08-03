@@ -111,7 +111,7 @@ class Start extends React.Component {
           pendingLength: 'auto',
           duration: "retirement",
           pendingDuration: "retirement",
-          linkedPaymentIndex: ''
+          linkedPaymentIndex: []
         }],
       },
       savings: {
@@ -378,10 +378,15 @@ class Start extends React.Component {
 handleLinkSubmit(index, event){
   event.preventDefault();
   let newInstance = (instance) => {
+    let lPIcopy =  instance.linkedPaymentIndex.slice();
+    if (!lPIcopy.includes(index)){
+      lPIcopy.push(index);
+    }
+
     return (
       {
         ...instance,
-        linkedPaymentIndex: index
+        linkedPaymentIndex: lPIcopy
       }
     )
   };

@@ -6,7 +6,9 @@ import Counter from './Components/Counter';
 import Start from './Components/Start_Components/Start';
 import YearsContainer from './Components/Main_Components/YearsContainer';
 
-import { applyGrowth, createIncomeInstances, isDurationApplied } from './app_functions.js';
+import generateYears from './functions/create_functions.js';
+import { access } from 'fs';
+//import { getDebtValue } from './functions/instance_functions.js';
 
 
 class App extends Component {
@@ -22,11 +24,8 @@ class App extends Component {
     this.getIncome = this.getIncome.bind(this);
     this.getExpenses = this.getExpenses.bind(this);
     this.getStartingFormData = this.getStartingFormData.bind(this);
-
-    //Imported
-    this.applyGrowth = applyGrowth.bind(this);
-    this.createIncomeInstances = createIncomeInstances.bind(this);
-    this.isDurationApplied = isDurationApplied.bind(this);
+    this.generateYears = generateYears.bind(this);
+    this.alterDebtValues = this.alterDebtValues.bind(this);
 
     this.state = {
       date: new Date().getFullYear(),
@@ -38,150 +37,32 @@ class App extends Component {
         displayStartForm: true,
         displayYears: false
       }
-
-
     }
   }
 
-
-
-
-
-
-  //MAIN TABLE CREATION FUNCTIONS
-  //##############################
-
-  getNumberOfRows = (retirmentYear) =>{
-    //Determines Size of Chart to Render
-    let currentYear = this.state.date;
-    let rows = retirmentYear - currentYear;
-
-    if((rows <= 0) || !rows){
-      return 0;
-    }
-    return rows;
-  }
-
-  generateYears = (e) =>{
-    //Main Chart Generation Function
-    const years = [];
-    let numYears = this.getNumberOfRows(this.state.packagedData.retirmentYear)
-    let initialYear = {
-      year: this.state.date,
-      income: this.state.packagedData.income,
-      expenses: this.state.packagedData.expenses,
-      debt: this.state.packagedData.debt,
-      savings: this.state.packagedData.savings
-    }
-    for (let i = 0; i < numYears; i++){
-      years.push(
-        {
-          year: this.state.date + i,
-          income: this.createIncomeInstances(this.state.packagedData.income, i),
-          expenses: this.createExpensesInstances(this.state.packagedData.expenses, i),
-          debt: this.createDebtInstances(this.state.packagedData.debt, i),
-          savings: this.createSavingsInstances(this.state.packagedData.savings, i),
-        }
-      );
-    }
+  getStartingFormData = (packagedData)=>{
     this.setState({
-      years: years
-    })
-  }
-
-  createExpensesInstances = (packageExpenses, yearIndex)=>{
-    //Determines How Expenses Instances are Displayed At Given Year
-    let newInstances = packageExpenses.instances.filter((instance, index)=>{
-      return this.isDurationApplied(instance, yearIndex);
-    });
-    return {...packageExpenses, instances: newInstances};
-  }
-
-  createDebtInstances = (packageDebt, yearIndex)=>{
-    //Determines How Debt Instances are Displayed At Given Year
-    return packageDebt;
-  }
-  createSavingsInstances = (packageSavings, yearIndex)=>{
-    //Determines How Savings Instances are Displayed At Given Year
-    return packageSavings;
-  }
-
-  extendInstances = (category, yearIndex) =>{
-    let newCategory;
-    newCategory = this.applyInitialInterest(category, yearIndex);
-    newCategory = this.applyInitialDuration(newCategory, yearIndex);
-    return newCategory;
-  }
-
-  // isDurationApplied = (instance, yearIndex)=>{
-  //   //Determine if Instance Should Render at Given Year
-  //   if (instance.duration === "retirement"){
-  //     return true;
-  //   }
-  //   if (parseInt(instance.duration, 10) >= (yearIndex + 1)){
-  //     return true;
-  //   }
-  //   else {
-  //     return false;
-  //   }
-  // }
-
-  applyInitialInterest = (category, yearIndex)=>{
-    let alteredCategory = category.map((subCat, subCatIndex)=>{
-      let newSubcat = subCat.instances.map((instance, instanceIndex)=>{
-        let initialInstance = category[subCatIndex]['instances'][instanceIndex];
-        let initialInterest = initialInstance.interest;
-        let initialLength = initialInstance.length;
-        const applyInterest = ()=>{
-          if (initialLength === 'auto'){
-            return {
-              ...instance,
-              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
-              interest: 1,
-              pendingValue: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex)
-            }
-          }
-          if (initialLength !== 'auto' && parseFloat(initialLength) > yearIndex){
-            return {
-              ...instance,
-              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
-              pendingValue: parseFloat(instance.value) * (parseFloat(initialInterest) ** yearIndex),
-              interest: 1
-            }
-          }
-          if (initialLength !== 'auto' && parseFloat(initialLength) <= yearIndex){
-            return {
-              ...instance,
-              value: parseFloat(instance.value) * (parseFloat(initialInterest) ** initialLength),
-              pendingValue: parseFloat(instance.value) * (parseFloat(initialInterest) ** initialLength),
-              interest: 1
-          }
-        }
-        }
-        if (initialInterest !== 1){
-          return applyInterest();
-        }
-        else{
-          return initialInstance;
-        }
-      });
-      return {
-        ...subCat,
-        instances: newSubcat
+      ...this.state,
+      packagedData: packagedData,
+      displays: {
+        ...this.state.displays,
+        displayStartForm: false,
+        displayYears: true,
+        displayCounter: true
       }
-    });
-    return alteredCategory
+    })
+
+    setTimeout(
+      ()=> {
+      this.setState({
+        ...this.state,
+        years: this.generateYears(this.state.packagedData, this.state.date)
+      })
+      this.alterDebtValues();
+      }
+      , 1);
+
   }
-
-
-
-
-
-
-
-
-
-
 
 
   //############Counter Rendering###############
@@ -208,15 +89,6 @@ class App extends Component {
   getSavings = ()=>{
     return this.getColumnTotals('savings');
   }
-
-
-
-
-
-
-
-
-
 
 
 //######ALTER MAIN TABLE############
@@ -344,21 +216,6 @@ class App extends Component {
     this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
   }
 
-  getStartingFormData = (packagedData)=>{
-    this.setState({
-      ...this.state,
-      packagedData: packagedData,
-      displays: {
-        ...this.state.displays,
-        displayStartForm: false,
-        displayYears: true,
-        displayCounter: true
-      }
-    })
-    setTimeout(this.generateYears, 1)
-
-  }
-
   getRetirmentYear = ()=>{
     if (this.state.packagedData){
       return this.state.packagedData.retirmentYear;
@@ -366,6 +223,44 @@ class App extends Component {
     else{
       return this.state.date;
     }
+  }
+
+  alterDebtValues = ()=> {
+    this.state.years.map((year, yearIndex)=>{
+      year.debt.instances.map((debtInstance, instanceIndex)=>{
+        if (debtInstance.linkedPaymentIndex.length !== 0){
+          console.log('Linked Payment exists');
+          if (yearIndex !== 0){
+            let prevYear = this.state.years[yearIndex -1 ];
+            let prevYearInstance = prevYear.debt.instances[instanceIndex]
+            let prevYearValue = prevYearInstance.value;
+            let prevYearLinkedIndexs = prevYearInstance.linkedPaymentIndex;
+            let prevYearPayments = [];
+            prevYearLinkedIndexs.map((indexVal)=>{
+              let paymentVal = parseFloat(prevYear.expenses.instances[indexVal].value);
+              prevYearPayments.push(paymentVal);
+            })
+            let sumPayments = prevYearPayments.reduce((sum, val)=> sum + val);
+
+            let newValue = prevYearValue - sumPayments;
+
+            let newInstance = ()=>{
+              return {
+                ...debtInstance,
+                value: newValue
+              }
+            }
+
+            this.changeInstanceAt(yearIndex, 'debt', instanceIndex, newInstance);
+          }
+
+        }
+      })
+    })
+    // let newInstance = (instance, index)=>{
+
+    // }
+    // this.addInstance(yearIndex, 'debt', instanceIndex, newInstance);
   }
 
   render() {

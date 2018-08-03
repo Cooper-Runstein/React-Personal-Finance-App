@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 
 const StartExpensesLinkForm = (props) =>{
+  //This form manages requests for links between expenses and debts
   return (<div className="start-link-container">
     {
       props.display
@@ -29,12 +30,11 @@ const StartExpensesLinkForm = (props) =>{
           {
             //This double ternary gives user feedback if
             //associated debt has been succesfully linked to this instance
-            //First conditional checks if this instance has a connectedIndex,
-            //Second checks if connectedIndex matches 'linkedPaymentIndex' in applicable debt
 
-            props.connectedIndex
+            props.connectedIndex //First conditional checks if this instance has a connectedIndex,
             ?
-            (props.debts[props.connectedIndex].linkedPaymentIndex === props.instanceIndex ? <p>Linked</p> : null)
+            (props.debts[props.connectedIndex].linkedPaymentIndex.includes(props.instanceIndex)
+            ? <p>Linked</p> : null) //Second checks if connectedIndex matches 'linkedPaymentIndex' in applicable debt
             : null}
         </form>
 
