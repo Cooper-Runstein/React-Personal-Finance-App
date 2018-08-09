@@ -246,6 +246,8 @@ class App extends Component {
       year.debt.instances.map((debtInstance, instanceIndex)=>{
         if (debtInstance.linkedPaymentIndex.length !== 0){
           console.log('Linked Payment exists');
+          let payments = debtInstance.linkedPaymentIndex;
+          console.log('Payments :' + payments);
           if (yearIndex !== 0){
             let prevYear = this.state.years[yearIndex -1 ]
 
@@ -254,6 +256,13 @@ class App extends Component {
               prevYearInstance = prevYear.debt.instances[instanceIndex]
             }else{
               this.removeInstanceAt(yearIndex, 'debt', instanceIndex)
+              payments.map((instanceIndex, index)=>{
+                if (this.state.years[yearIndex]['expenses'].instances[instanceIndex]){
+                  console.log("Removing unneccessary expense");
+                  this.removeInstanceAt(yearIndex, 'expenses', payments[instanceIndex]);
+                }
+              })
+
               return null;
             }
             let prevYearValue = prevYearInstance.value
