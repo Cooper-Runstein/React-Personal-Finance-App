@@ -5,7 +5,7 @@ const createIncomeInstances = (packageIncome, yearIndex)=>{
 
   let newInstances = targetInstances.filter((instance)=> isDurationApplied(instance, yearIndex))
 
-  let growthInstances = newInstances.map((instance)=> applyGrowth(instance, yearIndex));4
+  let growthInstances = newInstances.map((instance)=> applyGrowth(instance, yearIndex));
 
   let reassignPendingInstances = growthInstances.map((instance)=> reassignPending(instance, yearIndex));
 

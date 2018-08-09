@@ -95,7 +95,6 @@ const StartInstanceForm = (props)=> {
               instanceIndex = { props.instanceIndex }
               handleChange = { props.handleConnectedSelctionChange }
               connectedIndex = { props.connectedIndex }
-              debts = { props.debts }
               display = { props.displayLinkOptions }
               toggleDisplay = { props.toggleDisplayLinkOptions }
               handleSubmit = { props.handleLinkSubmit }
@@ -162,8 +161,8 @@ const StartInstanceForm = (props)=> {
 }
 
 StartInstanceForm.propTypes = {
-    // title: PropTypes.string.isRequired,
-    // onChange: PropTypes.func.isRequired
+    isEditing: PropTypes.bool.isRequired,
+    instanceIndex: PropTypes.number.isRequired,
 }
 
 export default StartInstanceForm;

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddInstanceButton from './AddInstanceButton';
 import Title from "./Title";
 import Value from "./Value";
 import Interest from "./Interest";

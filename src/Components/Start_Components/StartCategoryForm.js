@@ -47,7 +47,6 @@ const  StartCategoryForm = (props)=> {
             onChange = { ()=> props.onChangeAt(props.title, i) }
             onConfirm = { ()=> props.onConfirmAt(props.title, i) }
             setDurationToRetirement = { ()=> props.setDurationToRetirement(props.title, i) }
-            debts = {props.debts}
             handleConnectedSelctionChange = {props.handleConnectedSelctionChange}
             displayLinkOptions = { e.displayLinkOptions }
             toggleDisplayLinkOptions = { ()=> props.toggleDisplayLinkOptions(i) }

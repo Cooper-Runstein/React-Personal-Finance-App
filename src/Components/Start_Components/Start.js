@@ -397,7 +397,7 @@ handleLinkSubmit(index, event){
   };
 
   let debtIndex = this.state.expenses.instances[index].connectedIndex;
-  let newInstances = this.alterInstances('debt', parseInt(debtIndex), newInstance);
+  let newInstances = this.alterInstances('debt', parseInt(debtIndex, 10), newInstance);
   this.changeStateInstancesAt('debt', newInstances);
 }
 

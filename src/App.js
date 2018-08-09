@@ -7,7 +7,7 @@ import Start from './Components/Start_Components/Start';
 import YearsContainer from './Components/Main_Components/YearsContainer';
 
 import generateYears from './functions/create_functions.js';
-import { access } from 'fs';
+
 //import { getDebtValue } from './functions/instance_functions.js';
 
 
@@ -206,7 +206,7 @@ class App extends Component {
     console.log(instanceIndex);
 
     let newInstance = (instance)=>{
-      let newValue = parseInt(instance.pendingValue);
+      let newValue = parseInt(instance.pendingValue, 10);
 
       return {
         ...instance,
@@ -217,18 +217,20 @@ class App extends Component {
       }
     }
     this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
-    {(type === 'debt' || type === 'savings') ?
-    this.extendInstance(yearIndex, type, instanceIndex, newInstance) : null}
+
+    (type === 'debt' || type === 'savings') ?
+    this.extendInstance(yearIndex, type, instanceIndex, newInstance) : null
   }
 
   extendInstance = (yearIndex, type, instanceIndex, newInstance) =>{
     const { years } = this.state;
     const applyYears = years.map((year, index)=> {
       if (index >= yearIndex){
-        return null
+        return null;
       }
+      return null;
     })
-
+    return null;
     }
 
 
@@ -261,7 +263,8 @@ class App extends Component {
                   console.log("Removing unneccessary expense");
                   this.removeInstanceAt(yearIndex, 'expenses', payments[instanceIndex]);
                 }
-              })
+                return null;
+              });
 
               return null;
             }
@@ -271,6 +274,7 @@ class App extends Component {
             prevYearLinkedIndexs.map((indexVal)=>{
               let paymentVal = parseFloat(prevYear.expenses.instances[indexVal].value);
               prevYearPayments.push(paymentVal);
+              return null;
             })
             let sumPayments = prevYearPayments.reduce((sum, val)=> sum + val);
 
@@ -295,7 +299,9 @@ class App extends Component {
           }
 
         }
+        return null;
       })
+      return null;
     })
     // let newInstance = (instance, index)=>{
 

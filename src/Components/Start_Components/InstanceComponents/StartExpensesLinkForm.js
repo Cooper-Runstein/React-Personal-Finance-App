@@ -17,7 +17,6 @@ const StartExpensesLinkForm = (props) =>{
             return (
               <span key={index}>
                 <input
-                  type='checkbox'
                   value={ index }
                   type='radio'
                   checked = {parseInt(props.connectedIndex, 10) === index}
@@ -56,7 +55,10 @@ const StartExpensesLinkForm = (props) =>{
 }
 
 StartExpensesLinkForm.propTypes = {
-
+  display: PropTypes.bool,
+  toggleDisplay: PropTypes.func.isRequired,
+  debts: PropTypes.array.isRequired,
+  instanceIndex: PropTypes.number
 }
 
 export default StartExpensesLinkForm;
