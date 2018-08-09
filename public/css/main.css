@@ -61,16 +61,6 @@ td{
 }
 
 /* Animations */
-
-.display-enter{
-  transform: translateX(-100%);
-}
-
-.display-enter.display-enter-active{
-  transform: translateX(0);
-  transition: transform .5s ease-in;
-}
-
 .display-appear{
   opacity: 0;
 }
@@ -81,9 +71,9 @@ td{
 }
 
 .display-leave{
-  transform: translateX(0)
+  transform: translateY(0)
 }
 .display-leave.display-leave-active{
-  transform: translateX(100%);
+  transform: translateY(100%);
   transition: transform .5s;
 }

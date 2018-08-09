@@ -148,11 +148,11 @@ class App extends Component {
 
     const newInstanceObj = {
       title: 'set title',
-      value: 'set value',
+      value: '0',
       isEditing: true,
       pendingInterest: '1',
       pendingTitle: 'set',
-      pendingValue: 'set',
+      pendingValue: '0',
       interest: 1
     }
 
@@ -206,15 +206,31 @@ class App extends Component {
     console.log(instanceIndex);
 
     let newInstance = (instance)=>{
+      let newValue = parseInt(instance.pendingValue);
+
       return {
         ...instance,
-        value: instance.pendingValue,
+        value: newValue,
         title: instance.pendingTitle,
+        interest: instance.pendingInterest,
         isEditing: false
       }
     }
     this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
+    {(type === 'debt' || type === 'savings') ?
+    this.extendInstance(yearIndex, type, instanceIndex, newInstance) : null}
   }
+
+  extendInstance = (yearIndex, type, instanceIndex, newInstance) =>{
+    const { years } = this.state;
+    const applyYears = years.map((year, index)=> {
+      if (index >= yearIndex){
+        return null
+      }
+    })
+
+    }
+
 
   getRetirmentYear = ()=>{
     if (this.state.packagedData){
@@ -231,9 +247,16 @@ class App extends Component {
         if (debtInstance.linkedPaymentIndex.length !== 0){
           console.log('Linked Payment exists');
           if (yearIndex !== 0){
-            let prevYear = this.state.years[yearIndex -1 ];
-            let prevYearInstance = prevYear.debt.instances[instanceIndex]
-            let prevYearValue = prevYearInstance.value;
+            let prevYear = this.state.years[yearIndex -1 ]
+
+            let prevYearInstance;
+            if (prevYear.debt.instances[instanceIndex]){
+              prevYearInstance = prevYear.debt.instances[instanceIndex]
+            }else{
+              this.removeInstanceAt(yearIndex, 'debt', instanceIndex)
+              return null;
+            }
+            let prevYearValue = prevYearInstance.value
             let prevYearLinkedIndexs = prevYearInstance.linkedPaymentIndex;
             let prevYearPayments = [];
             prevYearLinkedIndexs.map((indexVal)=>{
@@ -244,7 +267,14 @@ class App extends Component {
 
             let newValue = prevYearValue - sumPayments;
 
-            let newInstance = ()=>{
+            let newInstance;
+
+            if (newValue <= 0){
+              this.removeInstanceAt(yearIndex, 'debt', instanceIndex);
+            }else{
+
+
+            newInstance = ()=>{
               return {
                 ...debtInstance,
                 value: newValue
@@ -252,6 +282,7 @@ class App extends Component {
             }
 
             this.changeInstanceAt(yearIndex, 'debt', instanceIndex, newInstance);
+          }
           }
 
         }
