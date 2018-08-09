@@ -210,7 +210,8 @@ class Start extends React.Component {
       duration: 'retirement',
       pendingDuration: 'retirement',
       growth: '0',
-      pendingGrowth: '0'
+      pendingGrowth: '0',
+      linkedPaymentIndex: []
     }
 
     let currentInstances = this.state[type].instances.slice();

@@ -32,12 +32,20 @@ const createExpensesInstances = (packageExpenses, yearIndex)=>{
 
 const createDebtInstances = (packageDebt, yearIndex)=>{
   //Determines How Debt Instances are Displayed At Given Year
-  return packageDebt;
+  let targetInstances = packageDebt.instances;
+
+  let interestInstances = targetInstances.map((instance)=> applyInterest(instance, yearIndex));
+  return {
+    ...packageDebt,
+    instances: interestInstances
+  }
 }
 
 const createSavingsInstances = (packageSavings, yearIndex)=>{
   //Determines How Savings Instances are Displayed At Given Year
-  return packageSavings;
+  return {
+    ...packageSavings,
+  }
 }
 
 //Accesory Functions
@@ -45,6 +53,16 @@ const applyGrowth = (instance, yearIndex)=>{
   let growth = instance.growth;
   let appliedGrowth = parseFloat(`1.${growth}`);
   let newValue = (instance.value * appliedGrowth ** yearIndex);
+  return {...instance, value: newValue }
+}
+
+const applyInterest = (instance, yearIndex)=>{
+  let interest = instance.interest;
+  console.log('interest: ' + interest);
+  let appliedInterest = parseFloat(`1.${interest}`);
+  console.log('applied int: ' + appliedInterest + ' ' + instance.value + ' ' + yearIndex);
+  let newValue = (instance.value * appliedInterest ** yearIndex);
+  console.log('newVal: ' + newValue);
   return {...instance, value: newValue }
 }
 
