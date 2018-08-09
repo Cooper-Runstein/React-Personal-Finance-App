@@ -1,70 +1,3 @@
-/* *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-html{
-    font-size: 10px;
-}
-
-
-
-.header{
-    margin-bottom: 2rem;
-}
-
-.header h1{
-    font-size: 3rem;
-    color: red;
-}
-
-
-
-.start-sub-category-title{
-    font-size: 2rem;
-    color: blueviolet;
-    margin-bottom: 1rem;
-}
-.start-instances-container{
-    display: flex;
-}
-
-
-.start-sub-category-instances{
-    display: flex;
-    margin-bottom: 1rem;
-}
-
-.start-instance{
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-.start-instance-buttons{
-}
-.start-instance-buttons button{
-    border: .2rem solid blueviolet;
-    padding: .4rem;
-    margin: 1rem;
-    border-radius: 15%;
-}
-
-.start-instance-buttons button:hover, .start-add-button-container button:hover{
-    cursor: pointer;
-}
-
-.start-input-container{
-    margin-bottom: .5rem;
-}
-
-.start-add-button-container button{
-    border: .2rem solid blue;
-    padding: .4rem;
-    border-radius: 15%;
-} */
-
 .counter-container{
   border-top: 5px black solid;
   background: white;
@@ -83,4 +16,74 @@ html{
 td{
   display: flex;
   flex-direction: row;
+  max-height: 500px;
+}
+
+.instances-container{
+  padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-height: 500px;
+  max-width: 500px;
+  flex-grow: 1;
+}
+.main-instance{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+/*Start Components */
+.start-input-forms-container{
+  max-width: 60vw;
+  border: 1px black solid;
+  margin: auto;
+}
+
+/* Info boxes and buttons */
+
+.start-info-button{
+  margin-bottom: 5px;
+  min-width: 5vw;
+  padding: 10px;
+  border-radius: 10px;
+  transition: box-shadow .5s;
+
+}
+.start-info-button:hover{
+  box-shadow: 1px 1px 10px royalblue;
+}
+.start-info{
+  max-width: 60vw;
+  border: 3px solid black;
+  margin: auto;
+}
+
+/* Animations */
+
+.display-enter{
+  transform: translateX(-100%);
+}
+
+.display-enter.display-enter-active{
+  transform: translateX(0);
+  transition: transform .5s ease-in;
+}
+
+.display-appear{
+  opacity: 0;
+}
+
+.display-appear.display-appear-active{
+  opacity: 1;
+  transition: opacity .5s;
+}
+
+.display-leave{
+  transform: translateX(0)
+}
+.display-leave.display-leave-active{
+  transform: translateX(100%);
+  transition: transform .5s;
 }

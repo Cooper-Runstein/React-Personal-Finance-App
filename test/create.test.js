@@ -146,8 +146,6 @@ describe('Test Reassign Pending Function', ()=>{
     pendingTitle: 'not burgers',
     value: 5000,
     pendingValue: 3000,
-    interest: 10,
-    pendingInterest: '12'
   }
   test('Title and pending title equal each other', ()=>{
     expect(reassignPending(obj1).pendingTitle).toBe('burgers');

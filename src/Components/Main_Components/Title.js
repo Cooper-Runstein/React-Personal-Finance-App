@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 const Title = (props) => {
     return (
         props.isEditing ?
-        <input
+        <span>title:  <input
             placeholder= {props.title}
             onChange= {(e)=> props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'title')}
-        />
+        /></span>
 
         :
 

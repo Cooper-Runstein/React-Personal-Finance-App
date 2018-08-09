@@ -10,7 +10,7 @@ import Interest from "./Interest";
 const Instance = (props) =>{
     return(
 
-            <div>
+            <div className="main-instance">
                 <Title
                   title = {props.title}
                   yearIndex = {props.yearIndex}

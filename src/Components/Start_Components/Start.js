@@ -95,6 +95,7 @@ class Start extends React.Component {
             pendingGrowth: '0'
           }
         ],
+        infoDisply: false
 
       },
       debt: {
@@ -131,6 +132,7 @@ class Start extends React.Component {
 
         },
       ],
+      infoDisplay: false
       }
     }
   }
@@ -206,7 +208,9 @@ class Start extends React.Component {
       pendingInterest: '0',
       interest: 0,
       duration: 'retirement',
-      pendingDuration: 'retirement'
+      pendingDuration: 'retirement',
+      growth: '0',
+      pendingGrowth: '0'
     }
 
     let currentInstances = this.state[type].instances.slice();
@@ -343,6 +347,7 @@ class Start extends React.Component {
         expenses: this.state.expenses,
         debt: this.state.debt,
         savings: this.state.savings,
+
       })
       console.log("Succesful pacakge submission");
     } else {
@@ -421,6 +426,23 @@ handleLinkSubmit(index, event){
   render() {
     return (
       <div className = "start-main-container" >
+        <button
+          className='info-button start-info-button'
+          onClick={()=> this.setState({
+            ...this.state,
+            infoDisplay: !this.state.infoDisplay
+        })}
+
+        >Info</button>
+        {this.state.infoDisplay ?
+        <div className= 'info-box start-info'>
+          <h3>Plan for retirment!</h3>
+          <p>This app is meant to help you prepare to retirement.
+            In order to succesfully draw out your future, you need to enter some info today.
+            This info includes your current savings, income, expenses, and debt.
+            This will be used to set up a chart where you can make changes as you see fit!
+            </p>
+        </div> : null}
         <StartCategoryForm
           title = {"income"}
           description = {'Add your income from jobs/payements, etc. below'}
@@ -484,10 +506,13 @@ handleLinkSubmit(index, event){
             this.setState({
               ...this.state,
               retirmentYear: parseInt(this.state.pendingRetirment, 10)
-            })
+            });
+            setTimeout(this.confirmAll, 100);
           }}>Confirm retirement year</button>
           <button
-            onClick={()=> this.packageData()}
+            onClick={()=> {
+              this.packageData();
+            }}
           >Create my Chart</button>
       </div>
          )

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Interest = (props) =>{
     return (
         <div>
-           {props.isEditing ? <input placeholder={props.interest}/> : <span>{props.interest}</span>}
+           {props.isEditing ? <span>interest: <input placeholder={props.interest}/></span> : null}
 
         </div>
     )

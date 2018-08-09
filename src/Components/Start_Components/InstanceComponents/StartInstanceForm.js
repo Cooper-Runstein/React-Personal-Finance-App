@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 import StartGrowthForm from './StartGrowthForm';
 import StartExpensesLinkForm from './StartExpensesLinkForm';
@@ -10,7 +12,7 @@ const StartInstanceForm = (props)=> {
     const activeForm = ()=>{
 
       return (
-        <div>
+        <div className="active-container" key='0'>
           <div className = "start-input-forms-container">
 
             <StartStandardForm
@@ -125,7 +127,7 @@ const StartInstanceForm = (props)=> {
 
     const staticForm = ()=>{
       return (
-        <div>
+        <div className="static-container" key='1'>
           <span>{props.title}</span>
           <span>{props.value}</span>
           <button
@@ -139,9 +141,23 @@ const StartInstanceForm = (props)=> {
     }
 
     return (
-        <div className="start-sub-category-form">
-            {props.isEditing ? activeForm() : staticForm()}
-        </div>
+      <ReactCSSTransitionGroup
+        component="div"
+        transitionName= "display"
+        transitionEnterTimeout= {500}
+        transitionLeaveTimeout= {500}
+        transitionAppear={true}
+        transitionAppearTimeout={500}
+      >
+          {props.isEditing
+            ?
+
+            activeForm()
+
+            :
+            staticForm()
+          }
+      </ReactCSSTransitionGroup>
     )
 }
 

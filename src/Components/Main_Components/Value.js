@@ -5,7 +5,7 @@ const Value = (props) =>{
     return (
         props.isEditing ?
         <div>
-            <input
+            value: <input
                 placeholder={ Math.round(props.value * 100) / 100}
                 onChange={(e)=> {props.onChange(props.yearIndex, props.type, props.instanceIndex, e, 'value')}}
             />

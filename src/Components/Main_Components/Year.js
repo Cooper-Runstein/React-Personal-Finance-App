@@ -10,7 +10,7 @@ const Year =(props)=>{
             <tr className="year">
                 <th>{props.year.year}</th>
                 <td>
-                  <div>
+                  <div className='category-container'>
                   <h2>Income</h2>
                   {props.year.income.instances.map((e,i)=>{
                       return <Instance
@@ -35,8 +35,9 @@ const Year =(props)=>{
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'income')}>Add</button>
                 </div>
-                <div>
+                <div className='category-container'>
                 <h2>Expenses</h2>
+                <div className='instances-container'>
                   {props.year.expenses.instances.map((e, i)=>{
                       return <Instance
                       yearIndex= {props.yearIndex}
@@ -56,11 +57,13 @@ const Year =(props)=>{
                           onChange = {props.onChange}
                       />
                   })}
+                  </div>
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'expenses')}>Add</button>
                 </div>
-                <div>
+                <div className='category-container'>
                 <h2>Debt</h2>
+                <div className='instances-container'>
                   {props.year.debt.instances.map((e,i)=>{
                       return <Instance
                       yearIndex= {props.yearIndex}
@@ -82,11 +85,14 @@ const Year =(props)=>{
                           onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'debt', i)}
                       />
                   })}
+                </div>
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'debt')}>Add</button>
                   </div>
-                  <div>
+                  <div className='category-container'>
+
                 <h2>Savings</h2>
+                <div className='instances-container'>
                   {props.year.savings.instances.map((e,i)=>{
                       return <Instance
                       yearIndex= {props.yearIndex}
@@ -108,6 +114,7 @@ const Year =(props)=>{
                           onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'savings', i)}
                       />
                   })}
+                  </div>
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'savings')}>Add</button>
 
