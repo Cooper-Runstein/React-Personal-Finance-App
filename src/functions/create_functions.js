@@ -43,8 +43,12 @@ const createDebtInstances = (packageDebt, yearIndex)=>{
 
 const createSavingsInstances = (packageSavings, yearIndex)=>{
   //Determines How Savings Instances are Displayed At Given Year
+  let targetInstances = packageSavings.instances;
+
+  let interestInstances = targetInstances.map((instance)=> applyInterest(instance, yearIndex));
   return {
     ...packageSavings,
+    instances: interestInstances
   }
 }
 

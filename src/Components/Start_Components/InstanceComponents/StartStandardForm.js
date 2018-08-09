@@ -14,6 +14,8 @@ const StartStandardForm = (props)=>{
         <p>{props.description}</p>
         {
             !(props.active === 'off')
+            //Active is only off in a durational component with retirement box checked.
+            //This is because duration is set by checkbox, so text input box is turned off
 
             ?
 
@@ -22,18 +24,18 @@ const StartStandardForm = (props)=>{
               value = {props.pendingCategory}
               id = {props.id}
               onChange = {props.onChange}
-            /></span>
+            />{props.post}</span>
 
           :
 
           (
-          <input
+          <span><input
             placeholder = {props.category}
             value = {props.pendingCategory}
             id = {props.id}
             onChange = {props.onChange}
             disabled
-          />
+          />{props.post}</span>
           )
 
         }
