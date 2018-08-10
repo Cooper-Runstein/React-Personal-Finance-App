@@ -7,6 +7,7 @@ import StartGrowthForm from './StartGrowthForm';
 import StartExpensesLinkForm from './StartExpensesLinkForm';
 import StartStandardForm from './StartStandardForm';
 
+
 const StartInstanceForm = (props)=> {
 
     const activeForm = ()=>{
@@ -92,17 +93,19 @@ const StartInstanceForm = (props)=> {
             //This ternary returns form for expense link checks if type is expenses
             props.type === 'expenses'
             ?
+
             <StartExpensesLinkForm
+              //////////////
+              //Link to Id's
+              //////////////
               debts = { props.debts }
               instanceIndex = { props.instanceIndex }
               handleChange = { props.handleConnectedSelctionChange }
-              connectedIndex = { props.connectedIndex }
+              connectedId = { props.connectedId }
               display = { props.displayLinkOptions }
               toggleDisplay = { props.toggleDisplayLinkOptions }
               handleSubmit = { props.handleLinkSubmit }
-
-
-
+              id = { props.id }
             />
             :
             null
@@ -112,9 +115,11 @@ const StartInstanceForm = (props)=> {
 
         <div className="start-instance-buttons">
           <button
+              className='confirm-button'
               onClick={props.onConfirm}
               > Confirm </button>
           <button
+              className='remove-button'
               onClick={props.onRemove}
             >Remove</button>
         </div>
@@ -131,12 +136,16 @@ const StartInstanceForm = (props)=> {
         <div className="static-container" key='1'>
           <span>{props.title}</span>
           <span>{props.value}</span>
+          <div className='start-instance-buttons'>
           <button
+              className='edit-button'
               onClick={props.onEdit}
               > Edit </button>
           <button
+              className='remove-button'
               onClick={props.onRemove}
             >Remove</button>
+          </div>
         </div>
       )
     }

@@ -41,6 +41,58 @@ td{
   margin: auto;
 }
 
+.start-instance-buttons{
+  margin: 10px 0 10px 0;
+}
+
+.start-instance-buttons button{
+  padding: 5px;
+  border-radius: 10px;
+  transition: box-shadow .5s;
+}
+
+.start-instance-buttons button:hover{
+  cursor: pointer;
+}
+
+.remove-button{
+  background-color: red;
+}
+
+.remove-button:hover{
+  box-shadow: 1px 1px 20px red;
+}
+
+.confirm-button{
+  background-color: royalblue;
+}
+
+.confirm-button:hover{
+  box-shadow: 1px 1px 20px royalblue;
+}
+
+.edit-button{
+  background-color: yellow;
+}
+.edit-button:hover{
+  box-shadow: 1px 1px 20px yellow;
+}
+
+.add-img{
+
+  height: 30px;
+  width: 30px;
+  border: black 1px solid;
+  margin: auto;
+
+  border-radius: 100%;
+  transition: box-shadow .5s;
+}
+.add-img:hover{
+  box-shadow: 1px 1px 20px black;
+  cursor: pointer;
+}
+
 /* Info boxes and buttons */
 
 .start-info-button{

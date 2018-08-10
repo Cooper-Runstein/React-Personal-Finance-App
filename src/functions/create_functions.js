@@ -62,11 +62,8 @@ const applyGrowth = (instance, yearIndex)=>{
 
 const applyInterest = (instance, yearIndex)=>{
   let interest = instance.interest;
-  console.log('interest: ' + interest);
   let appliedInterest = parseFloat(`1.${interest}`);
-  console.log('applied int: ' + appliedInterest + ' ' + instance.value + ' ' + yearIndex);
   let newValue = (instance.value * appliedInterest ** yearIndex);
-  console.log('newVal: ' + newValue);
   return {...instance, value: newValue }
 }
 

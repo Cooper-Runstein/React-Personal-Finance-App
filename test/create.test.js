@@ -63,7 +63,7 @@ describe ('Test Create Income Instances Function', ()=>{
     title: 'Income',
     instances: [
     {
-      title: 'Set Job title',
+      title: 'Set Job Title',
       value: 5000,
       isEditing: true,
       pendingTitle: 'Set Job Title',
@@ -76,7 +76,7 @@ describe ('Test Create Income Instances Function', ()=>{
     title: 'Income',
     instances: [
     {
-      title: 'Set Job title',
+      title: 'Set Job Title',
       value: 5000,
       isEditing: true,
       pendingTitle: 'Set Job Title',
@@ -90,7 +90,7 @@ describe ('Test Create Income Instances Function', ()=>{
     title: 'Income',
     instances: [
     {
-      title: 'Set Job title',
+      title: 'Set Job Title',
       value: 1000,
       isEditing: true,
       pendingTitle: 'Set Job Title',

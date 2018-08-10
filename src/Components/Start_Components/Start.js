@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StartCategoryForm from './StartCategoryForm.js';
 
+import blankInstanceConstructor from '../../functions/blankInstanceConstructor.js';
+
 class Start extends React.Component {
   constructor(props) {
     super(props);
@@ -19,127 +21,42 @@ class Start extends React.Component {
     this.toggleDisplayLinkOptions = this.toggleDisplayLinkOptions.bind(this);
     this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
 
-
     this.state = {
       pendingRetirment: '',
       retirmentYear: '',
       income: {
         title: 'Income',
-        instances: [
-        {
-          title: 'Set Job title',
-          value: 5000,
-          isEditing: true,
-          pendingTitle: 'Set Job Title',
-          pendingValue: '5000',
-          pendingInterest: '0',
-          interest: 0,
-          length: 'auto',
-          pendingLength: 'auto',
-          duration: "retirement",
-          pendingDuration: "retirement",
-          growth: '0',
-          pendingGrowth: '0'
-
-        }],
-
-        },
+        instances: [],
+      },
       expenses: {
-          title: 'Expenses',
-          instances: [{
-            title: 'Rent',
-            value: 1000,
-            isEditing: true,
-            pendingTitle: 'Rent',
-            pendingValue: '1000',
-            pendingInterest: '0',
-            interest: 0,
-            length: 'auto',
-            pendingLength: 'auto',
-            duration: "retirement",
-            pendingDuration: "retirement",
-            connectedIndex: '',
-            displayLinkOptions: false,
-            growth: '0',
-            pendingGrowth: '0'
-
-          },
-          {
-            title: 'Eating Out',
-            value: 60,
-            isEditing: true,
-            pendingTitle: 'Eating Out',
-            pendingValue: '60',
-            pendingInterest: '0',
-            interest: 0,
-            length: 'auto',
-            pendingLength: 'auto',
-            duration: "retirement",
-            pendingDuration: "retirement",
-            growth: '0',
-            pendingGrowth: '0'
-          },
-          {
-            title: 'Groceries',
-            value: 50,
-            isEditing: true,
-            pendingTitle: 'Groceries',
-            pendingValue: '50',
-            pendingInterest: '0',
-            interest: 0,
-            length: 'auto',
-            pendingLength: 'auto',
-            duration: "retirement",
-            pendingDuration: "retirement",
-            growth: '0',
-            pendingGrowth: '0'
-          }
-        ],
-        infoDisply: false
-
+        title: 'Expenses',
+        instances: [],
       },
       debt: {
         title: 'Debt',
-        instances: [{
-          title: 'Mortgage',
-          value: 1000,
-          isEditing: true,
-          pendingTitle: 'Mortgage',
-          pendingValue: '1000',
-          pendingInterest: '0',
-          interest: 0,
-          length: 'auto',
-          pendingLength: 'auto',
-          duration: "retirement",
-          pendingDuration: "retirement",
-          linkedPaymentIndex: []
-        }],
+        instances: [],
       },
       savings: {
         title: 'Savings',
-        instances: [{
-          title: '401K',
-          isEditing: true,
-          value: 500,
-          interest: 0,
-          length: 'auto',
-          pendingTitle: '401K',
-          pendingValue: '500',
-          pendingInterest: '0',
-          pendingLength: 'auto',
-          duration: "retirement",
-          pendingDuration: "retirement"
-
-        },
-      ],
+        instances: [],
+      },
       infoDisplay: false
-      }
     }
+  }
+
+  //Initialize Start Form
+  componentDidMount(){
+    this.addInstance('income');
+    this.addInstance('expenses');
+    this.addInstance('debt');
+    this.addInstance('savings');
   }
 
   //*****Button and Input Change/Click functions********//
 
   //Common Function
+
+
   alterInstances = (type, instanceIndex, newInstance) => {
     console.log("Altering instance at: " + type + ' ' + instanceIndex);
      let newInstances = this.state[type].instances.map((e, i) => {
@@ -157,7 +74,6 @@ class Start extends React.Component {
 
   changeStateInstancesAt = (type, newInstances)=> {
     this.setState({
-      ...this.state,
       [type]: {
         ...this.state[type],
         instances: newInstances
@@ -170,7 +86,7 @@ class Start extends React.Component {
     const strippedValue = (pendingString) => {
       falseChars.map((char) => {
         pendingString = pendingString.replace(char, '');
-        return null;
+
       })
       return pendingString
     }
@@ -199,24 +115,9 @@ class Start extends React.Component {
 
   addInstance = (type) => {
     console.log("Adding Instance to: " + type);
-    let newInstance = {
-      title: 'set',
-      value: 'set',
-      isEditing: true,
-      pendingTitle: '',
-      pendingValue: '',
-      pendingInterest: '0',
-      interest: 0,
-      duration: 'retirement',
-      pendingDuration: 'retirement',
-      growth: '0',
-      pendingGrowth: '0',
-      linkedPaymentIndex: []
-    }
-
+    let newInstance = blankInstanceConstructor();
     let currentInstances = this.state[type].instances.slice();
     currentInstances.push(newInstance);
-
     this.changeStateInstancesAt(type, currentInstances);
   }
 
@@ -274,8 +175,10 @@ class Start extends React.Component {
   onConfirmAt = (type, instanceIndex) => {
     console.log("Confirming Inputs at " + type + " " + instanceIndex);
     let newInstance = (e, i)=>{
-      let validatedValue = this.validateValue(e, 'Value');
-      let validatedInterest = this.validateValue(e, 'Interest');
+
+      let validatedValue = parseFloat(e.pendingValue);
+      let validatedInterest = parseFloat(e.pendingInterest);
+
       return {
         ...e,
         title: e.pendingTitle,
@@ -298,8 +201,8 @@ class Start extends React.Component {
     types.map((type, i)=>{
 
       newInstancesObjs[type] = this.state[type].instances.map((e,i)=>{
-        let validatedValue = this.validateValue(e, 'Value');
-        let validatedInterest = this.validateValue(e, 'Interest');
+        let validatedValue = parseFloat(e.value);
+        let validatedInterest = parseFloat(e.interest);
         return {
           ...e,
           title: e.pendingTitle,
@@ -361,9 +264,10 @@ class Start extends React.Component {
   handleConnectedSelctionChange = (index, event)=>{
     console.log("loan Selection Called: " + event.target.value)
     let newInstance = (instance)=> {
+      console.log(event.target.value);
       return {
         ...instance,
-        connectedIndex: event.target.value
+        connectedId: event.target.value
       }
     };
     this.changeStateInstancesAt('expenses', this.alterInstances('expenses', index, newInstance));
@@ -381,26 +285,37 @@ class Start extends React.Component {
     this.changeStateInstancesAt('expenses', this.alterInstances('expenses', index, myNewinstance));
   }
 
-handleLinkSubmit(index, event){
-  event.preventDefault();
-  let newInstance = (instance) => {
-    let lPIcopy =  instance.linkedPaymentIndex.slice();
-    if (!lPIcopy.includes(index)){
-      lPIcopy.push(index);
-    }
+  handleLinkSubmit(instanceIndex, expenseId, event){
+    event.preventDefault();
 
-    return (
-      {
-        ...instance,
-        linkedPaymentIndex: lPIcopy
-      }
-    )
-  };
+    let targetExpense = this.state.expenses.instances[instanceIndex];
+    let connectedDebtId = targetExpense.connectedId;
+    console.log("connectedDebtId: " + connectedDebtId);
 
-  let debtIndex = this.state.expenses.instances[index].connectedIndex;
-  let newInstances = this.alterInstances('debt', parseInt(debtIndex, 10), newInstance);
-  this.changeStateInstancesAt('debt', newInstances);
-}
+    let newInstances = this.state.debt.instances.map((debt, index)=>{
+          if (debt.id === connectedDebtId){
+            let targetedArray = debt.linkedPaymentIndex.slice();
+            targetedArray.push(expenseId);
+            console.log('Pushed expenseId to: ' + debt.id);
+            return {
+              ...debt,
+              linkedPaymentIndex: targetedArray
+            }
+          } else{
+            if(debt.linkedPaymentIndex.includes(expenseId)){
+              let linkedPaymentsArray = debt.linkedPaymentIndex.slice();
+              linkedPaymentsArray = linkedPaymentsArray.filter(paymentId => paymentId !== expenseId);
+              return {
+                ...debt,
+                linkedPaymentIndex: linkedPaymentsArray
+              }
+            }
+            return debt
+          }
+        })
+
+    this.changeStateInstancesAt('debt', newInstances);
+  }
 
   setDurationToRetirement = (type, instanceIndex) =>{
     let newState;

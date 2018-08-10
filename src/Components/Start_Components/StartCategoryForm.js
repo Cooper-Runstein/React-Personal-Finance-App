@@ -29,6 +29,7 @@ const  StartCategoryForm = (props)=> {
             instanceIndex = { i }
             type = { props.title }
             title = { e.title }
+            id = { e.id }
             value = { e.value }
             growth = { e.growth }
             isDurational = { ()=> isDurational() }
@@ -40,7 +41,7 @@ const  StartCategoryForm = (props)=> {
             interest = { e.interest }
             duration = { e.duration }
             pendingDuration = { e.pendingDuration }
-            connectedIndex = { e.connectedIndex }
+            connectedId = { e.connectedId }
             debts = { props.debts }
             onEdit = { ()=> props.onEditAt(props.title, i) }
             onRemove = { ()=> props.removeInstanceAt(props.title, i) }
@@ -56,10 +57,9 @@ const  StartCategoryForm = (props)=> {
           })
         }
         <div className="start-add-button-container">
-          <button
-            onClick={ props.addInstance }
-          >Add
-          </button>
+
+          <div onClick={ props.addInstance } className='add-img' > </div>
+
 
       </div>
       </div>
