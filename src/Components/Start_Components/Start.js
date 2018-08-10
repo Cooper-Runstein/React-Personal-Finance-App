@@ -176,8 +176,8 @@ class Start extends React.Component {
     console.log("Confirming Inputs at " + type + " " + instanceIndex);
     let newInstance = (e, i)=>{
 
-      let validatedValue = parseFloat(e.value);
-      let validatedInterest = parseFloat(e.interest);
+      let validatedValue = parseFloat(e.pendingValue);
+      let validatedInterest = parseFloat(e.pendingInterest);
 
       return {
         ...e,
@@ -302,34 +302,20 @@ class Start extends React.Component {
               linkedPaymentIndex: targetedArray
             }
           } else{
+            if(debt.linkedPaymentIndex.includes(expenseId)){
+              let linkedPaymentsArray = debt.linkedPaymentIndex.slice();
+              linkedPaymentsArray = linkedPaymentsArray.filter(paymentId => paymentId !== expenseId);
+              return {
+                ...debt,
+                linkedPaymentIndex: linkedPaymentsArray
+              }
+            }
             return debt
           }
         })
-    //let target
-
-
-
-    //   let newInstance = (instance) => {
-    //     let linkedPayInx =  instance.linkedPaymentIndex.slice();
-    //     if (!linkedPayInx.includes(id)){
-    //       linkedPayInx.push(id);
-    //     }
-
-    //     return (
-    //       {
-    //         ...instance,
-    //         linkedPaymentIndex: linkedPayInx
-    //       }
-    //     )
-    //   };
-
-    //   this.state.debt.instances.map((instance, index)=>{
-    //     if (instance.id === )
-    //   })
-
 
     this.changeStateInstancesAt('debt', newInstances);
-}
+  }
 
   setDurationToRetirement = (type, instanceIndex) =>{
     let newState;

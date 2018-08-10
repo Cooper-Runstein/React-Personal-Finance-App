@@ -8,8 +8,7 @@ import YearsContainer from './Components/Main_Components/YearsContainer';
 
 import generateYears from './functions/create_functions.js';
 import blankInstanceConstructor from './functions/blankInstanceConstructor';
-
-//import { getDebtValue } from './functions/instance_functions.js';
+import alterDebtValues from './functions/debt-value-applicator';
 
 
 class App extends Component {
@@ -26,7 +25,7 @@ class App extends Component {
     this.getExpenses = this.getExpenses.bind(this);
     this.getStartingFormData = this.getStartingFormData.bind(this);
     this.generateYears = generateYears.bind(this);
-    this.alterDebtValues = this.alterDebtValues.bind(this);
+    this.alterDebtValues = alterDebtValues.bind(this);
 
     this.state = {
       date: new Date().getFullYear(),
@@ -55,15 +54,21 @@ class App extends Component {
 
     setTimeout(
       ()=> {
+        console.log('seting')
       this.setState({
         ...this.state,
         years: this.generateYears(this.state.packagedData, this.state.date)
-      })
-      this.alterDebtValues();
-      }
-      , 1);
+      })}, 500)
+    setTimeout(
+      ()=>{
+        this.setState({
+          years: this.alterDebtValues(this.state.years)
+        })
+      }, 1000
+    )
+    }
 
-  }
+
 
 
   //############Counter Rendering###############
@@ -236,71 +241,7 @@ class App extends Component {
     }
   }
 
-  alterDebtValues = ()=> {
-    this.state.years.map((year, yearIndex)=>{
-      year.debt.instances.map((debtInstance, instanceIndex)=>{
-        if (debtInstance.linkedPaymentIndex.length !== 0){
-          console.log('Linked Payment exists');
-          let payments = debtInstance.linkedPaymentIndex;
-          console.log('Payments :' + payments);
-          if (yearIndex !== 0){
-            let prevYear = this.state.years[yearIndex -1 ]
 
-            let prevYearInstance;
-            if (prevYear.debt.instances[instanceIndex]){
-              prevYearInstance = prevYear.debt.instances[instanceIndex]
-            }else{
-              this.removeInstanceAt(yearIndex, 'debt', instanceIndex)
-              payments.map((instanceIndex, index)=>{
-                if (this.state.years[yearIndex]['expenses'].instances[instanceIndex]){
-                  console.log("Removing unneccessary expense");
-                  this.removeInstanceAt(yearIndex, 'expenses', payments[instanceIndex]);
-                }
-                return null;
-              });
-
-              return null;
-            }
-            let prevYearValue = prevYearInstance.value
-            let prevYearLinkedIndexs = prevYearInstance.linkedPaymentIndex;
-            let prevYearPayments = [];
-            prevYearLinkedIndexs.map((indexVal)=>{
-              let paymentVal = parseFloat(prevYear.expenses.instances[indexVal].value);
-              prevYearPayments.push(paymentVal);
-              return null;
-            })
-            let sumPayments = prevYearPayments.reduce((sum, val)=> sum + val);
-
-            let newValue = prevYearValue - sumPayments;
-
-            let newInstance;
-
-            if (newValue <= 0){
-              this.removeInstanceAt(yearIndex, 'debt', instanceIndex);
-            }else{
-
-
-            newInstance = ()=>{
-              return {
-                ...debtInstance,
-                value: newValue
-              }
-            }
-
-            this.changeInstanceAt(yearIndex, 'debt', instanceIndex, newInstance);
-          }
-          }
-
-        }
-        return null;
-      })
-      return null;
-    })
-    // let newInstance = (instance, index)=>{
-
-    // }
-    // this.addInstance(yearIndex, 'debt', instanceIndex, newInstance);
-  }
 
   render() {
     return (
