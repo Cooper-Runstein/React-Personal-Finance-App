@@ -7,6 +7,7 @@ import Start from './Components/Start_Components/Start';
 import YearsContainer from './Components/Main_Components/YearsContainer';
 
 import generateYears from './functions/create_functions.js';
+import blankInstanceConstructor from './functions/blankInstanceConstructor';
 
 //import { getDebtValue } from './functions/instance_functions.js';
 
@@ -146,15 +147,7 @@ class App extends Component {
 
   addInstance = (yearIndex, type)=>{
 
-    const newInstanceObj = {
-      title: 'set title',
-      value: '0',
-      isEditing: true,
-      pendingInterest: '1',
-      pendingTitle: 'set',
-      pendingValue: '0',
-      interest: 1
-    }
+    const newInstanceObj = blankInstanceConstructor();
 
     let newInstancesArr = this.state.years[yearIndex][type].instances.slice()
     newInstancesArr.push(newInstanceObj);
@@ -219,7 +212,7 @@ class App extends Component {
     this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
 
     (type === 'debt' || type === 'savings') ?
-    this.extendInstance(yearIndex, type, instanceIndex, newInstance) : null
+    this.extendInstance(yearIndex, type, instanceIndex, newInstance) : (type === 'expenses' ?  this.alterDebtValues() : null)
   }
 
   extendInstance = (yearIndex, type, instanceIndex, newInstance) =>{

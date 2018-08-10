@@ -19,6 +19,7 @@ const StartStandardForm = (props)=>{
 
             ?
 
+            //This is the standard input form
             <span>{props.pre}<input
               placeholder = {props.category}
               value = {props.pendingCategory}
@@ -28,6 +29,7 @@ const StartStandardForm = (props)=>{
 
           :
 
+          //This only applys when props.category is duration and active is off.
           (
           <span><input
             placeholder = {props.category}
