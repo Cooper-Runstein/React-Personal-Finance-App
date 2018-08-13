@@ -121,7 +121,8 @@ describe('test main function', ()=>{
   test('it outputs array of size input', ()=>{
     expect(alterDebtValues(years)).toHaveLength(1);
   })
-  test('it outputs array of size input', ()=>{
+  test('it expects correct outputs', ()=>{
     expect(alterDebtValues(years)[0].debt.instances[0].value).toBe(50);
+    expect(alterDebtValues(years)[0].expenses.instances[0].value).toBe(50);
   })
 });

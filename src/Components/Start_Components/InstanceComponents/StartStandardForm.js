@@ -29,7 +29,7 @@ const StartStandardForm = (props)=>{
 
           :
 
-          //This only applys when props.category is duration and active is off.
+          //This only applies when props.category is duration and active is off.
           (
           <span><input
             placeholder = {props.category}

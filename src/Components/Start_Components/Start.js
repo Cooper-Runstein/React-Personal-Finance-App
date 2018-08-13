@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import StartCategoryForm from './StartCategoryForm.js';
 
 import blankInstanceConstructor from '../../functions/blankInstanceConstructor.js';
+import { confirmFunction, changeFunction } from '../../functions/start-functions.js';
 
 class Start extends React.Component {
   constructor(props) {
@@ -16,10 +17,13 @@ class Start extends React.Component {
     this.alterInstances = this.alterInstances.bind(this);
     this.packageData = this.packageData.bind(this);
     this.setDurationToRetirement = this.setDurationToRetirement.bind(this);
+    this.confirmFunction = confirmFunction.bind(this);
+    this.changeFunction = changeFunction.bind(this);
 
     this.handleConnectedSelctionChange = this.handleConnectedSelctionChange.bind(this);
     this.toggleDisplayLinkOptions = this.toggleDisplayLinkOptions.bind(this);
     this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
+
 
     this.state = {
       pendingRetirment: '',
@@ -130,67 +134,13 @@ class Start extends React.Component {
   }
 
   onChangeAt = (type, instanceIndex) => {
-    console.log("Change Called at " + type + " " + instanceIndex)
-
-    const newInstance = (e,i)=> {
-      const valueValue = document.getElementById(`value-${type}-${i}`).value;
-      const titleValue = document.getElementById(`title-${type}-${i}`).value;
-
-      let baseObj =  {
-        ...e,
-        pendingValue: valueValue,
-        pendingTitle: titleValue,
-      }
-
-      let durationalObj = ()=> {
-        if (type === 'income' || type === 'expenses'){
-          const durationValue = document.getElementById(`duration-${type}-${i}`).value;
-          const growthValue = document.getElementById(`growth-${type}-${i}`).value;
-          return {pendingDuration: durationValue, pendingGrowth: growthValue}
-        }
-        else {
-          return {}
-        }
-      }
-
-      let interestObj = ()=> {
-        if (type === 'debt' || type === 'savings'){
-          const interestValue = document.getElementById(`interest-${type}-${i}`).value;
-          return {pendingInterest: interestValue}
-        } else {
-          return {}
-        }
-      }
-
-      baseObj = Object.assign(baseObj, durationalObj());
-      baseObj = Object.assign(baseObj, interestObj());
-
-      return baseObj;
-    }
-
-
-    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
+    let newInstance = this.changeFunction(type, instanceIndex);
+    this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance));
   }
 
   onConfirmAt = (type, instanceIndex) => {
     console.log("Confirming Inputs at " + type + " " + instanceIndex);
-    let newInstance = (e, i)=>{
-
-      let validatedValue = parseFloat(e.pendingValue);
-      let validatedInterest = parseFloat(e.pendingInterest);
-
-      return {
-        ...e,
-        title: e.pendingTitle,
-        value: validatedValue,
-        interest: validatedInterest,
-        length: e.pendingLength,
-        duration: e.pendingDuration,
-        growth: e.pendingGrowth,
-        isEditing: false,
-      }
-    }
-
+    let newInstance = this.confirmFunction;
     this.changeStateInstancesAt(type, this.alterInstances(type, instanceIndex, newInstance))
   }
 
@@ -264,7 +214,6 @@ class Start extends React.Component {
   handleConnectedSelctionChange = (index, event)=>{
     console.log("loan Selection Called: " + event.target.value)
     let newInstance = (instance)=> {
-      console.log(event.target.value);
       return {
         ...instance,
         connectedId: event.target.value

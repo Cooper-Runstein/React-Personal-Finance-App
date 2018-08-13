@@ -82,6 +82,7 @@ const StartInstanceForm = (props)=> {
             name = 'interest'
             description = 'If applicable, enter interest'
             category = { props.interest }
+            pendingCategory = { props.pendingInterest }
             pre = {'Interest: '}
             post = {'%'}
             pendingTitle = { props.pendingInterest }
