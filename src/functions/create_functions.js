@@ -118,7 +118,7 @@ const generateYears = (packagedData, date) =>{
       }
     );
   }
-
+  console.log(years);
   return years;
 }
 

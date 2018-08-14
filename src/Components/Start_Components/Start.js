@@ -146,49 +146,13 @@ class Start extends React.Component {
 
   confirmAll = () => {
     const types = ['income', 'expenses', 'debt', 'savings'];
-    let newInstancesObjs = {};
 
-    types.map((type, i)=>{
+    types.map(type => {
+      this.state[type].instances.map((instance, index) =>{
+        this.onConfirmAt(type, index)
+      });
+    });
 
-      newInstancesObjs[type] = this.state[type].instances.map((e,i)=>{
-        let validatedValue = parseFloat(e.value);
-        let validatedInterest = parseFloat(e.interest);
-        return {
-          ...e,
-          title: e.pendingTitle,
-          value: validatedValue,
-          interest: validatedInterest,
-          length: e.pendingLength,
-          duration: e.pendingDuration,
-          isEditing: false,
-          growth: e.pendingGrowth
-
-        }
-
-      })
-      return null;
-    }
-  )
-
-  this.setState({
-    ...this.state,
-    income: {
-      ...this.state.income,
-      instances: newInstancesObjs.income
-    },
-    expenses: {
-      ...this.state.expenses,
-      instances: newInstancesObjs.expenses
-    },
-    debt: {
-      ...this.state.debt,
-      instances: newInstancesObjs.debt
-    },
-    savings: {
-      ...this.state.savings,
-      instances: newInstancesObjs.savings
-    },
-  })
   }
 
   packageData = () => {
@@ -376,6 +340,7 @@ class Start extends React.Component {
           }}>Confirm retirement year</button>
           <button
             onClick={()=> {
+              console.log('data packaged');
               this.packageData();
             }}
           >Create my Chart</button>

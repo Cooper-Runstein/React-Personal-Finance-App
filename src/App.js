@@ -58,17 +58,18 @@ class App extends Component {
       this.setState({
         ...this.state,
         years: this.generateYears(this.state.packagedData, this.state.date)
-      })}, 500)
+      })
+
+    }, 500)
     setTimeout(
       ()=>{
         this.setState({
           years: this.alterDebtValues(this.state.years)
-        })
+        });
+
       }, 1000
     )
     }
-
-
 
 
   //############Counter Rendering###############
