@@ -103,10 +103,9 @@ const getNumberOfRows = (retirmentYear, date) =>{
 
 const generateYears = (packagedData, date) =>{
   //Main Chart Generation Function
+  console.log('Year Generator Function Called');
   const years = [];
-
   let numYears = getNumberOfRows(packagedData.retirmentYear, date);
-
   for (let i = 0; i < numYears; i++){
     years.push(
       {

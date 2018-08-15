@@ -26,6 +26,8 @@ class App extends Component {
     this.getStartingFormData = this.getStartingFormData.bind(this);
     this.generateYears = generateYears.bind(this);
     this.alterDebtValues = alterDebtValues.bind(this);
+    this.extendPackage = this.extendPackage.bind(this);
+    this.chartCreationFunction = this.chartCreationFunction.bind(this);
 
     this.state = {
       date: new Date().getFullYear(),
@@ -41,34 +43,36 @@ class App extends Component {
   }
 
   getStartingFormData = (packagedData)=>{
-    this.setState({
-      ...this.state,
-      packagedData: packagedData,
-      displays: {
-        ...this.state.displays,
-        displayStartForm: false,
-        displayYears: true,
-        displayCounter: true
-      }
-    })
+    this.chartCreationFunction(packagedData);
 
-    setTimeout(
-      ()=> {
-        console.log('seting')
+    // setTimeout(
+    //   ()=>{
+    //     this.setState({
+    //       years: this.alterDebtValues(this.state.years)
+    //     });
+    //   }, 1000
+    // )
+    }
+
+    extendPackage = (packagedData) => {
+      console.log("Retreving Package");
+      return this.generateYears(packagedData, this.state.date);
+    }
+
+    chartCreationFunction = (packagedData)=>{
+      let renderedYears;
+      renderedYears = this.extendPackage(packagedData);
+      renderedYears = this.alterDebtValues(renderedYears);
       this.setState({
         ...this.state,
-        years: this.generateYears(this.state.packagedData, this.state.date)
+        displays: {
+          displayCounter: true,
+          displayStartForm: false,
+          displayYears: true
+        },
+        years: renderedYears
       })
 
-    }, 500)
-    setTimeout(
-      ()=>{
-        this.setState({
-          years: this.alterDebtValues(this.state.years)
-        });
-
-      }, 1000
-    )
     }
 
 
@@ -110,7 +114,6 @@ class App extends Component {
     })
   }
 
-
   changeInstanceAt = (yearIndex, type, instanceIndex, newInstance) =>{
     console.log("Called for changed instance at: " + yearIndex, type, instanceIndex, newInstance)
     let targetYear = this.state.years.filter((year, i)=>{
@@ -138,7 +141,6 @@ class App extends Component {
 
     this.changeYearAt(yearIndex, newYear);
   }
-
 
   toggleEditEntry = (yearIndex, type, instanceIndex)=>{
     console.log("Toggling Edit at:" + yearIndex + " " + type + " " + instanceIndex)
