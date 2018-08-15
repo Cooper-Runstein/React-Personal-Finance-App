@@ -80,14 +80,13 @@ class App extends Component {
   //############################################
 
   getColumnTotals = (type)=>{
-    let totalValue = 0;
-    this.state.years.map(year=> totalValue += year[type].reduce((sum, category)=> {return category.instances.reduce((sum, entry)=>{ return sum + parseFloat(entry.value)}, 0)}, 0))
-    return totalValue;
+    // let totalValue = 0;
+    return this.state.years.reduce((total, year)=> total += year[type].instances.reduce((value, instance)=>value += instance.value, 0) ,0)
   }
 
   getIncome = ()=> {
     return this.getColumnTotals('income');
-  }
+   }
 
   getExpenses = ()=>{
     return this.getColumnTotals('expenses');
@@ -279,7 +278,7 @@ class App extends Component {
 
         }
 
-        {/* {
+        {
           this.state.displays.displayCounter ?
           <Counter
             income = {this.getIncome()}
@@ -292,7 +291,7 @@ class App extends Component {
           />
           :
           false
-        } */}
+        }
 
         <Footer />
       </div>

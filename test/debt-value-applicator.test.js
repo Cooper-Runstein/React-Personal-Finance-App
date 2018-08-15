@@ -1,38 +1,6 @@
 import alterDebtValues, { getPreviousDebtInstance, getPaymentValues, applyExpenses } from '../src/functions/debt-value-applicator';
 import blankInstanceConstructor from '../src/functions/blankInstanceConstructor';
 
-// describe('test get Prev Debt instance', ()=>{
-//   let years = [
-//     {
-//       debt: {
-//         instances: [
-//           {
-//             id: '123',
-//             value: 20
-//           },
-//           {
-//             id: '124',
-//             value: 30
-//           }
-//         ]
-//       }
-//     },
-//     {
-//       debt: {
-//         instances: {
-//           id: '123',
-//           value: 50
-//         }
-//       }
-//     }
-//   ]
-
-//   let prevDebt = getPreviousDebtInstance(years, 1, '123');
-//   test('Gets previous value', ()=>{
-//     expect(prevDebt.value).toBe(20);
-//   })
-// })
-
 describe('test getPayments', ()=>{
   let testDebt = blankInstanceConstructor();
   testDebt.id = 'debt123';
@@ -77,55 +45,6 @@ describe('test getPayments', ()=>{
   });
 
 });
-
-// describe("Test applyExpenses", ()=>{
-//   let debt1 = blankInstanceConstructor();
-//   let expense1 = blankInstanceConstructor();
-//   debt1.id = 'debt1';
-//   debt1.value = 100;
-//   debt1.linkedPaymentIndex = ['exp1'];
-//   expense1.id = 'exp1';
-//   expense1.value = 25;
-//   expense1.connectedId = 'debt1';
-
-
-
-
-//   let years = [
-//     {
-//       debt: {
-//         instances: [
-//           debt1
-//         ]
-//       },
-//       expenses: {
-//         instances: [
-//           expense1
-//         ]
-//       }
-//     },
-//     {
-//       debt: {
-//         instances: [
-//           debt1
-//         ]
-//       },
-//       expenses: {
-//         instances: [
-//           expense1
-//         ]
-//       }
-//     }
-//   ];
-
-//   test('Test at Year 0', ()=>{
-//     expect(applyExpenses(years, 0, debt1).value).toBe(100);
-//   });
-
-//   test('Test at year 1', ()=>{
-//     expect(applyExpenses(years, 1, debt1).value).toBe(75);
-//   })
-// })
 
 describe('test main function', ()=>{
   let debt1 = blankInstanceConstructor();
@@ -176,20 +95,78 @@ describe('test main function', ()=>{
       }
     },
   ]
+
+  let debtI1 = blankInstanceConstructor();
+  debtI1.value = 100;
+  debtI1.linkedPaymentIndex = ['exp123'];
+  debtI1.id = 'deb123';
+  debtI1.interest = 10;
+
+  let yearsI = [
+    {
+      debt: {
+        instances: [
+          debtI1
+        ]
+      },
+      expenses: {
+        instances: [
+          expense1
+        ]
+      }
+    },
+    {
+      debt: {
+        instances: [
+          debtI1
+        ]
+      },
+      expenses: {
+        instances: [
+          expense1
+        ]
+      }
+    },
+    {
+      debt: {
+        instances: [
+          debtI1
+        ]
+      },
+      expenses: {
+        instances: [
+          expense1
+        ]
+      }
+    },
+  ]
   test('it outputs', ()=>{
     expect(alterDebtValues(years)).toBe.Ok;
   })
   test('it outputs array of size input', ()=>{
     expect(alterDebtValues(years)).toHaveLength(3);
   })
-  test('it expects correct outputs', ()=>{
+
+  test('it works w/ no interest @ year1', ()=>{
     expect(alterDebtValues(years)[0].debt.instances[0].value).toBe(100);
     expect(alterDebtValues(years)[0].expenses.instances[0].value).toBe(50);
   })
-  test('it works at year 2', ()=>{
+  test('it works w/ no interest @ year2', ()=>{
     expect(alterDebtValues(years)[1].debt.instances[0].value).toBe(50);
   })
-  test('it works at yea r3 ', ()=>{
+  test('it works w/ no interest @ year3', ()=>{
     expect(alterDebtValues(years)[2].debt.instances[0].value).toBe(0);
+  })
+
+
+  test('it works w/ interest @ year1', ()=>{
+    expect(alterDebtValues(yearsI)[0].debt.instances[0].value).toBe(100);
+    expect(alterDebtValues(yearsI)[0].expenses.instances[0].value).toBe(50);
+  })
+  test('it works w/ interest @ year2', ()=>{
+    expect(alterDebtValues(yearsI)[1].debt.instances[0].value).toBeCloseTo(60);
+  })
+  test('it works w/ interest @ year3', ()=>{
+    expect(alterDebtValues(yearsI)[2].debt.instances[0].value).toBeCloseTo(16);
   })
 });
