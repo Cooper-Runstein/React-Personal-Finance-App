@@ -218,8 +218,9 @@ class App extends Component {
     }
     this.changeInstanceAt(yearIndex, type, instanceIndex, newInstance);
 
-    (type === 'debt' || type === 'savings') ?
-    this.extendInstance(yearIndex, type, instanceIndex, newInstance) : (type === 'expenses' ?  this.alterDebtValues() : null)
+
+    // (type === 'debt' || type === 'savings') ?
+    // this.extendInstance(yearIndex, type, instanceIndex, newInstance) : (type === 'expenses' ?  this.alterDebtValues() : null)
   }
 
   extendInstance = (yearIndex, type, instanceIndex, newInstance) =>{

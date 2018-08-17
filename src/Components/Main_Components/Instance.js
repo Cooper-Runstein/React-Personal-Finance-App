@@ -4,65 +4,72 @@ import PropTypes from 'prop-types';
 import Title from "./Title";
 import Value from "./Value";
 import Interest from "./Interest";
+import LinkComponent from "./LinkComponent";
 
 
 const Instance = (props) =>{
     return(
+      <div className="main-instance">
+          <Title
+            title = {props.title}
+            yearIndex = {props.yearIndex}
+            type = {props.type}
+            instanceIndex = {props.instanceIndex}
 
-            <div className="main-instance">
-                <Title
-                  title = {props.title}
-                  yearIndex = {props.yearIndex}
-                  type = {props.type}
-                  instanceIndex = {props.instanceIndex}
+            isEditing = {props.isEditing}
+            pendingTitle = {props.pendingTitle}
+            onChange = {props.onChange}
+          />
 
-                  isEditing = {props.isEditing}
-                  pendingTitle = {props.pendingTitle}
-                  onChange = {props.onChange}
-                />
+          <Value
+            interest = {props.interest}
+            yearIndex = {props.yearIndex}
+            type = {props.type}
+            instanceIndex = {props.instanceIndex}
 
-                <Value
-                  interest = {props.interest}
-                  yearIndex = {props.yearIndex}
-                  type = {props.type}
-                  instanceIndex = {props.instanceIndex}
+            value = {props.value}
+            isEditing = {props.isEditing}
+            pendingValue = {props.pendingValue}
+            onChange = {props.onChange}
+          />
 
-                  value = {props.value}
-                  isEditing = {props.isEditing}
-                  pendingValue = {props.pendingValue}
-                  onChange = {props.onChange}
-                />
+          {
+            (props.type === 'debt' || props.type === 'savings')
 
-                {
-                  (props.type === 'debt' || props.type === 'savings')
+            ?
 
-                  ?
+            //Interest Component only on debt/savings
+            <Interest
+            isEditing = {props.isEditing}
+            interest = {parseFloat(props.interest)}
+            />
 
-                  <Interest
-                  isEditing = {props.isEditing}
-                  interest = {parseFloat(props.interest)}
+            :
 
-                  />
-
-                  :
-
-                  null
-                }
+            <LinkComponent
+            connectedId = { props.connectedId }
+            />
+          }
 
 
-                {
-              !props.isEditing ?
+      {
+        !props.isEditing ?
 
-              <button
-                onClick = {props.editEntry}>Edit</button>
+        <button
+          className = 'edit-button'
+          onClick = {props.editEntry}>Edit</button>
 
-              :
-                  <button
-                    onClick = {props.onConfirm}>Confirm</button>
-            }
-                <button
-                  onClick = {props.removeInstance}>Remove</button>
-          </div>
+        :
+
+        <button
+          className = 'confirm-button'
+          onClick = {props.onConfirm}>Confirm</button>
+      }
+
+      <button
+        className = 'remove-button'
+        onClick = {props.removeInstance}>Remove</button>
+    </div>
     );
 }
 

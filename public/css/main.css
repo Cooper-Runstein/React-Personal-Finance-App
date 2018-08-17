@@ -1,3 +1,7 @@
+
+#app{
+  font-family: 'Lato', sans-serif;
+}
 .counter-container{
   border-top: 5px black solid;
   background: white;
@@ -39,6 +43,7 @@ td{
   max-width: 60vw;
   border: 1px black solid;
   margin: auto;
+  font-family: 'Lato', sans-serif;
 }
 
 .start-instance-buttons{
@@ -57,6 +62,7 @@ td{
 
 .remove-button{
   background-color: red;
+  border-radius: 10px;
 }
 
 .remove-button:hover{
@@ -65,6 +71,7 @@ td{
 
 .confirm-button{
   background-color: royalblue;
+  border-radius: 10px;
 }
 
 .confirm-button:hover{
@@ -73,9 +80,28 @@ td{
 
 .edit-button{
   background-color: yellow;
+  border-radius: 10px;
 }
 .edit-button:hover{
   box-shadow: 1px 1px 20px yellow;
+}
+
+.package-button, .retirement-button{
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rebeccapurple;
+}
+
+.start-submit-container{
+  display: flex;
+  justify-content: space-evenly;
+  min-width: 60vw;
+}
+
+.retirement-container{
+  display: flex;
+  justify-content: space-around;
+  background-color: rgba(0,0,0,.5)
 }
 
 .add-img{
@@ -91,6 +117,13 @@ td{
 .add-img:hover{
   box-shadow: 1px 1px 20px black;
   cursor: pointer;
+}
+
+/*Main Area */
+.category-container{
+  padding: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 /* Info boxes and buttons */

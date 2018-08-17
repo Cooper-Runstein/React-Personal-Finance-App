@@ -102,11 +102,21 @@ describe('test main function', ()=>{
   debtI1.id = 'deb123';
   debtI1.interest = 10;
 
+  let debtNoAttachMents = blankInstanceConstructor();
+  debtNoAttachMents.value = 100;
+  debtNoAttachMents.interest = 10;
+
+  let debtNoAttachMents2 = blankInstanceConstructor();
+  debtNoAttachMents2.value = 100;
+  debtNoAttachMents2.interest = 5;
+
   let yearsI = [
     {
       debt: {
         instances: [
-          debtI1
+          debtI1,
+          debtNoAttachMents,
+          debtNoAttachMents2
         ]
       },
       expenses: {
@@ -118,7 +128,9 @@ describe('test main function', ()=>{
     {
       debt: {
         instances: [
-          debtI1
+          debtI1,
+          debtNoAttachMents,
+          debtNoAttachMents2
         ]
       },
       expenses: {
@@ -130,7 +142,9 @@ describe('test main function', ()=>{
     {
       debt: {
         instances: [
-          debtI1
+          debtI1,
+          debtNoAttachMents,
+          debtNoAttachMents2
         ]
       },
       expenses: {
@@ -168,5 +182,13 @@ describe('test main function', ()=>{
   })
   test('it works w/ interest @ year3', ()=>{
     expect(alterDebtValues(yearsI)[2].debt.instances[0].value).toBeCloseTo(16);
+  })
+
+  test('it applies interest without attatchments', ()=>{
+    expect(alterDebtValues(yearsI)[1].debt.instances[1].value).toBeCloseTo(110);
+  })
+
+  test('it applies interest without attatchments', ()=>{
+    expect(alterDebtValues(yearsI)[1].debt.instances[2].value).toBeCloseTo(105);
   })
 });

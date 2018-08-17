@@ -321,29 +321,35 @@ class Start extends React.Component {
           onChangeAt = {this.onChangeAt}
           onConfirmAt = {this.onConfirmAt}
         />
-        <button onClick={()=> this.confirmAll()}>Confirm All</button>
+        {/* <button onClick={()=> this.confirmAll()}>Confirm All</button> */}
         <hr/>
-        <input
-          placeholder="Enter your target retirement age"
-          onChange={(event)=>{this.setState({
-            ...this.state,
-            pendingRetirment: event.target.value
-          })}}
-        />
-        <button
-          onClick={()=>{
-            this.setState({
-              ...this.state,
-              retirmentYear: parseInt(this.state.pendingRetirment, 10)
-            });
-            setTimeout(this.confirmAll, 100);
-          }}>Confirm retirement year</button>
+        <div className='start-submit-container'>
+          <span className='retirement-container'>
+            <input
+              placeholder="Enter your target retirement age"
+              onChange={(event)=>{this.setState({
+                ...this.state,
+                pendingRetirment: event.target.value
+              })}}
+            />
+          </span>
           <button
-            onClick={()=> {
-              console.log('data packaged');
-              this.packageData();
-            }}
-          >Create my Chart</button>
+            className='retirement-button'
+            onClick={()=>{
+              this.setState({
+                ...this.state,
+                retirmentYear: parseInt(this.state.pendingRetirment, 10)
+              });
+              setTimeout(this.confirmAll, 100);
+            }}>Confirm retirement year</button>
+            <button
+              className = "package-button"
+              onClick={()=> {
+                console.log('data packaged');
+                this.packageData();
+              }}
+            >Create my Chart</button>
+          </div>
       </div>
          )
   }

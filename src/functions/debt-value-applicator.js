@@ -11,6 +11,17 @@ const getPaymentValues = (year, expensesIdsArray)=>{
 
 
 const alterDebtValues = (years)=> {
+  let getMultiplier = (num) =>{
+    if (num < 10){
+      return parseFloat(`1.0${num}`)
+    } else if(num < 100){
+      return parseFloat(`1.${num}`)
+    }else{
+      return parseFloat(1 + num/100)
+    }
+
+  }
+
   let recursiveDebtApplicator = (years, final)=>{
     if (years.length === 0){
       return final;
@@ -22,7 +33,7 @@ const alterDebtValues = (years)=> {
         let newDebtsInstances = prevYear.debt.instances.map(debt => {
 
           let payments = getPaymentValues(prevYear, debt.linkedPaymentIndex);
-          let appliedInterestDebt = debt.value * (parseFloat(`1.${debt.interest}`));
+          let appliedInterestDebt = debt.value * getMultiplier(debt.interest);
           let newDebtValue = appliedInterestDebt - payments;
           return {
             ...debt,

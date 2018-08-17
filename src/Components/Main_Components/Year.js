@@ -12,6 +12,7 @@ const Year =(props)=>{
                 <td>
                   <div className='category-container'>
                   <h2>Income</h2>
+                  <div className='instances-container'>
                   {props.year.income.instances.map((e,i)=>{
                       return <Instance
                         key = {i}
@@ -29,9 +30,11 @@ const Year =(props)=>{
                         removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'income', i)}
                         onChange = {props.onChange}
                         onConfirm = {()=> props.onConfirmAt(props.yearIndex, 'income', i)}
+                        connectedIndex = { e.connectedIndex }
 
                       />
                   })}
+                  </div>
                   <button
                     onClick={()=> props.addInstance(props.yearIndex, 'income')}>Add</button>
                 </div>
@@ -55,6 +58,7 @@ const Year =(props)=>{
                           removeInstance = {()=>props.removeInstanceAt(props.yearIndex, 'expenses', i)}
                           onConfirm = { ()=> props.onConfirmAt(props.yearIndex, 'expenses', i) }
                           onChange = {props.onChange}
+                          connectedId = { e.connectedId }
                       />
                   })}
                   </div>
